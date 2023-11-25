@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.item-filter{
+  @apply cursor-pointer hover:text-dark-blue-02 text-neutral-01 py-2
+}
