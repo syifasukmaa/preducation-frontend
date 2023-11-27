@@ -1,10 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import Courses from '@/data/Coursedummy.json';
+import CoursePayment from '@/data/CoursePaymentdummy.json';
 import SearchButton from '@/components/button/SearchButton';
 import FilterButton from '@/components/button/FilterButton';
 import FilterPopup from '@/components/popup/FilterPopup';
-
 import SearchPopup from '@/components/popup/SearchPopup';
 
 export default function Page() {
@@ -78,7 +77,7 @@ export default function Page() {
               </tr>
             </thead>
             <tbody className="text-gray-700 whitespace-nowrap text-[10px]">
-              {Courses.map((course) => (
+              {CoursePayment.map((course) => (
                 <tr key={course.id}>
                   <td className="py-4 px-4 font-bold text-gray-05">
                     {course.ID}
