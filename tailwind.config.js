@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors:{
+        DARKBLUE05: '#6148FF',
+        DARKBLUE04: '#6148FF57',
+        DARKBLUE03: '#489CFF',
+        DARKBLUE02: '#D0B7E6',
+        DARKBLUE01: '#E2D4F0',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -14,5 +21,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [],
 }
