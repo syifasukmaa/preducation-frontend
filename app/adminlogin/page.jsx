@@ -107,7 +107,7 @@ const LoginPage = () => {
       {/* Bagian Kiri */}
       <div className="bg-DARKBLUE05 p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image
-          src="/Belajar_white 3.svg"
+          src="/icon_belajar.svg"
           alt="logo"
           width={150}
           height={150}
@@ -147,7 +147,7 @@ const LoginPage = () => {
             <p className="float-left">Password</p>
 
             <p className="float-right">
-              <a href="/remake_password" className="text-DARKBLUE05">
+              <a href="/forgotpassword" className="text-DARKBLUE05">
                 Lupa Kata Sandi
               </a>
             </p>
