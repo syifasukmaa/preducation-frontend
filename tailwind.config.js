@@ -13,6 +13,8 @@ module.exports = {
         DARKBLUE03: '#489CFF',
         DARKBLUE02: '#D0B7E6',
         DARKBLUE01: '#E2D4F0',
+        "alert-green": "#73CA5C",
+        "alert-red": '#FF0000',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

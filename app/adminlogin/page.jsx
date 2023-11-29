@@ -50,9 +50,9 @@ const LoginPage = () => {
     alertElement.classList.add("translate-x-[-50%]");
 
     if (type === "success") {
-      alertElement.classList.add("/");
+      alertElement.classList.add("bg-alert-green");
     } else if (type === "error") {
-      alertElement.classList.add("/");
+      alertElement.classList.add("bg-alert-red");
     }
 
     alertElement.textContent = message;
