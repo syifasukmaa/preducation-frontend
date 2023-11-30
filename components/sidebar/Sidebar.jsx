@@ -5,19 +5,23 @@ import { IoMdClose } from 'react-icons/io';
 import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
 import { SiGoogleclassroom } from 'react-icons/si';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Sidebar() {
+  const url = usePathname();
+  console.log(url);
+
   const [open, setOpen] = useState(true);
-  const [activeItem, setActiveItem] = useState('dashboard');
+  const [activeItem, setActiveItem] = useState('/admin/dashboard');
 
   const toggleSidebar = () => {
     setOpen(!open);
   };
 
   const sidebarItems = [
-    { id: 'dashboard', icon: <LuLayoutDashboard />, label: 'Dashboard' },
+    { id: '/admin/dashboard', icon: <LuLayoutDashboard />, label: 'Dashboard' },
     {
-      id: 'kelolakelas',
+      id: '/admin/course',
       icon: <SiGoogleclassroom />,
       label: 'Kelola Kelas',
     },
@@ -63,10 +67,10 @@ export default function Sidebar() {
             <li
               key={item.id}
               className={` text-white py-3 ${
-                activeItem === item.id ? 'bg-dark-blue-03' : ''
+                url.startsWith(item.id) ? 'bg-dark-blue-03' : ''
               }`}
             >
-              <Link href={`/admin/${item.id}`}>
+              <Link href={item.id}>
                 <button
                   className={`flex items-center px-4`}
                   onClick={() => handleClick(item.id)}
@@ -78,7 +82,7 @@ export default function Sidebar() {
                     } font-bold`}
                   >
                     {item.label}
-                  </span>{' '}
+                  </span>
                 </button>
               </Link>
             </li>

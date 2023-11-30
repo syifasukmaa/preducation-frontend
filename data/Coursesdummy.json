@@ -4,7 +4,7 @@
     "KodeKelas": "UIUX123",
     "Kategori": "UI/UX Design",
     "NamaKelas": "Belajar Web Design dengan Figma",
-    "TipeKelas": "GRATIS",
+    "TipeKelas": "FREE",
     "Level": "Beginner",
     "HargaKelas": "0"
   },
@@ -13,7 +13,7 @@
     "KodeKelas": "DS0233",
     "Kategori": "Data Science",
     "NamaKelas": "Data Cleaning untuk pemula",
-    "TipeKelas": "GRATIS",
+    "TipeKelas": "FREE",
     "Level": "Beginner",
     "HargaKelas": "0"
   },
@@ -49,7 +49,7 @@
     "KodeKelas": "AD0123",
     "Kategori": "Android Development",
     "NamaKelas": "Mengenal Android Studio",
-    "TipeKelas": "GRATIS",
+    "TipeKelas": "FREE",
     "Level": "Beginner",
     "HargaKelas": "0"
   },
@@ -58,7 +58,7 @@
     "KodeKelas": "wd1123",
     "Kategori": "Web Development",
     "NamaKelas": "CSS dan HTML dalma seminggu",
-    "TipeKelas": "GRATIS",
+    "TipeKelas": "FREE",
     "Level": "Beginner",
     "HargaKelas": "0"
   }

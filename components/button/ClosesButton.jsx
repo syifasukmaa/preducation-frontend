@@ -7,7 +7,7 @@ export default function ClosesButton({ style, onClick }) {
       className={style}
       onClick={onClick}
     >
-      <IoMdClose className="text-neutral-01" />
+      <IoMdClose />
     </button>
   );
 }
