@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Courses from '@/data/Coursesdummy.json';
 import SearchButton from '@/components/button/SearchButton';
 import FilterButton from '@/components/button/FilterButton';
@@ -8,19 +9,40 @@ import SearchPopup from '@/components/popup/SearchPopup';
 import AddButton from '@/components/button/AddButton';
 import ActionButton from '@/components/button/ActionButton';
 import Checkbox from './components/Checkbox';
+import ModalCourse from './components/ModalCourse';
 
 export default function Page() {
+  const router = useRouter();
+
+  const goToChapter = (chapterId) => {
+    router.push(`/admin/course/chapter/${chapterId}`);
+  };
+
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
   });
+
+  const [editMode, setEditMode] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleEditCourse = () => {
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const handleAddCourse = () => {
+    setEditMode(false);
+    setShowModal(true);
+  };
 
   return (
     <div className={`md:px-12 px-4`}>
       <div className="md:pt-2 flex items-center justify-between relative">
         <p className="text-xl font-bold">Kelola Kelas</p>
         <div className="flex items-center relative">
-          <AddButton />
+          <AddButton onClick={() => handleAddCourse()} />
 
           <FilterButton
             onClick={() =>
@@ -45,7 +67,7 @@ export default function Page() {
 
         {showElements.showFilter && (
           <FilterPopup
-            clickClose={(clickClose) =>
+            clickClose={() =>
               setShowElements({ ...showElements, showFilter: false })
             }
           >
@@ -100,10 +122,18 @@ export default function Page() {
                     Rp {course.HargaKelas}
                   </td>
                   <td className="py-3 px-4 font-bold">
-                    <ActionButton styles={'bg-alert-green'}>
+                    <ActionButton
+                      styles={'bg-alert-green'}
+                      onClick={() => goToChapter(course.id)}
+                    >
                       Chapter
                     </ActionButton>
-                    <ActionButton styles={'bg-dark-blue-05'}>Ubah</ActionButton>
+                    <ActionButton
+                      styles={'bg-dark-blue-05'}
+                      onClick={() => handleEditCourse()}
+                    >
+                      Ubah
+                    </ActionButton>
                     <ActionButton styles={'bg-alert-red'}>Hapus</ActionButton>
                   </td>
                 </tr>
@@ -112,6 +142,13 @@ export default function Page() {
           </table>
         </div>
       </div>
+
+      {showModal && (
+        <ModalCourse
+          onClose={() => setShowModal(false)}
+          editMode={editMode}
+        />
+      )}
     </div>
   );
 }

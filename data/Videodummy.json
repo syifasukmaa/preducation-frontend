@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nama": "Tujuan Mengikuti Kelas Design System",
+    "durasi": "3",
+    "url": "https://youtu.be/ixOd42SEUF0"
+  },
+  {
+    "id": 2,
+    "nama": "Pengenalan Design System",
+    "durasi": "5",
+    "url": "https://youtu.be/DwTkyMJi890"
+  },
+  {
+    "id": 3,
+    "nama": "Contoh dalam membangun design",
+    "durasi": "2.5",
+    "url": "https://youtu.be/rd-590n3H6w"
+  }
+]

@@ -8,7 +8,7 @@ export default function FilterPopup({ children, clickClose }) {
         <div className="">
           {children}
           <ClosesButton
-            style={'absolute top-2 right-2'}
+            style={'absolute top-2 right-2 text-neutral-01'}
             onClick={clickClose}
           />
         </div>
