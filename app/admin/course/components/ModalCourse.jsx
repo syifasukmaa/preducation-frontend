@@ -50,18 +50,26 @@ export default function ModalCourse({ onClose, editMode }) {
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
     >
       {editMode && (
-        <div className="mt-3 w-full">
-          <label className="label-modal">Upload Gambar</label>
-          <div className="input-modal-wrapper">
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={handleImageChange}
-              className="input-modal"
-            />
+        <>
+          <div className="mt-3 w-full">
+            <label className="label-modal">Upload Gambar</label>
+            <div className="input-modal-wrapper">
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleImageChange}
+                className="input-modal"
+              />
+            </div>
           </div>
-        </div>
+          <Input
+            label="Target Audience"
+            name="targetAudience"
+            placeholder="Target Audience"
+            textarea
+          />
+        </>
       )}
       <Input
         type={'text'}

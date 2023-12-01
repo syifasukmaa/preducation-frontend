@@ -19,7 +19,7 @@ export default function ModalVideo({ onClose, editMode }) {
   };
   return (
     <Modal
-      title={editMode ? 'Edit Chapter' : 'Tambah Chapter'}
+      title={editMode ? 'Edit Video' : 'Tambah Video'}
       onClose={onClose}
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
     >
