@@ -96,7 +96,7 @@ const ResetPass = () => {
       {/* Bagian Kiri */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
-          <h1 className="font-bold text-2xl text-DARKbg-dark-blue-05 mb-8 lg:mb-12 text-left">
+          <h1 className="font-bold text-2xl text-primary-dark-blue  mb-8 lg:mb-12 text-left">
             Reset Password
           </h1>
 
@@ -173,7 +173,7 @@ const ResetPass = () => {
 
           {/* Login button */}
           <button
-            className="text-white bg-dark-blue-05 rounded-xl w-full p-2 mb-10"
+            className="text-white bg-orange-05 rounded-xl w-full p-2 mb-10"
             onClick={validasi}
           >
             Masuk
@@ -186,9 +186,9 @@ const ResetPass = () => {
 
       {/* Bagian Kanan */}
 
-      <div className="bg-dark-blue-05 p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
+      <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image
-          src="/icon_belajar.svg"
+          src="/img/iconPreducation.png"
           alt="logo"
           width={150}
           height={150}

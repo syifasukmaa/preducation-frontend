@@ -105,9 +105,9 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col lg:flex-row w-full min-h-screen">
       {/* Bagian Kiri */}
-      <div className="bg-dark-blue-05 p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
+      <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image
-          src="/icon_belajar.svg"
+          src="/img/iconPreducation.png"
           alt="logo"
           width={150}
           height={150}
@@ -119,7 +119,7 @@ const LoginPage = () => {
       {/* Bagian Kanan */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
-          <h1 className="font-bold text-xl text-dark-blue-05 mb-8 lg:mb-12 text-center">
+          <h1 className="font-bold text-xl text-orange-05 mb-8 lg:mb-12 text-center">
             Login
           </h1>
 
@@ -149,7 +149,7 @@ const LoginPage = () => {
             <p className="float-right">
               <a
                 href="/forgotpassword"
-                className="text-dark-blue-05"
+                className="text-orange-05"
               >
                 Lupa Kata Sandi
               </a>
@@ -188,7 +188,7 @@ const LoginPage = () => {
 
           {/* Login button */}
           <button
-            className="text-white bg-dark-blue-05 rounded-lg w-full p-2 mb-10"
+            className="text-white bg-orange-05 rounded-lg w-full p-2 mb-10"
             onClick={validasi}
           >
             Masuk
