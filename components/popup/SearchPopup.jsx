@@ -8,11 +8,11 @@ export default function SearchPopup({ onClick }) {
         <input
           type="text"
           placeholder="Cari..."
-          className="border solid border-dark-blue-05 px-6 py-1 rounded-md"
+          className="border solid border-orange-05 px-6 py-1 rounded-md"
         />
         <ClosesButton
           onClick={onClick}
-          style={'bg-dark-blue-05 ml-1 text-white px-3 py-1 rounded'}
+          style={'bg-orange-05 ml-1 text-white px-3 py-1 rounded'}
         />
       </div>
     </div>
