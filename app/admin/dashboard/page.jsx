@@ -15,7 +15,9 @@ export default function Page() {
   return (
     <div className={`md:px-12 px-4`}>
       <div className="md:pt-2 flex items-center justify-between relative">
-        <p className="text-xl font-bold">Status Pembayaran</p>
+        <p className="text-xl font-bold text-primary-dark-blue">
+          Status Pembayaran
+        </p>
         <div className="flex items-center relative">
           <FilterButton
             onClick={() =>
@@ -64,7 +66,7 @@ export default function Page() {
       <div className="overflow-x-auto mt-4 mb-24 lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="bg-light-blue-05 font-semibold text-neutral-05 text-xs">
+            <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
               <tr>
                 <td className="py-3 px-4">ID</td>
                 <td className="py-3 px-4">Kategori</td>

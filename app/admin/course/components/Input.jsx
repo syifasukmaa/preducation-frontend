@@ -9,7 +9,6 @@ export default function Input({
   textarea,
   onChange,
 }) {
-  const InputComponent = textarea ? 'textarea' : 'input';
   return (
     <div className="mt-3 w-full">
       <label

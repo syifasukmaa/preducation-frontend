@@ -80,7 +80,7 @@ export default function Page() {
       <div className="overflow-x-auto mt-4 mb-24 lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="bg-light-blue-05 font-semibold text-neutral-05 text-xs">
+            <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
               <tr>
                 <td className="py-3 px-4">Id Chapter</td>
                 <td className="py-3 px-4">Nama Chapter</td>
@@ -116,13 +116,15 @@ export default function Page() {
                   </td>
                   <td className="py-3 px-4 font-bold">
                     <ActionButton
-                      styles={'bg-alert-green hover:border-alert-green'}
+                      styles={
+                        'bg-secondary-dark-blue hover:border-secondary-dark-blue'
+                      }
                       onClick={() => goToChapter(chapter.id)}
                     >
                       Video
                     </ActionButton>
                     <ActionButton
-                      styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
+                      styles={'bg-light-green hover:border-light-green'}
                       onClick={() => handleEditChapter()}
                     >
                       Ubah

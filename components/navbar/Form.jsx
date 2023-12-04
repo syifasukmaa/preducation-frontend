@@ -2,15 +2,15 @@ import React from 'react';
 
 export default function Form() {
   return (
-    <form className="flex items-center w-6/12 md:w-fit">
+    <form className="flex items-center w-6/12 md:w-fit ">
       <div className="relative">
         <input
           type="text"
           placeholder="Cari"
-          className="py-2 md:py-3 pl-4 pr-12 md:pl-4 md:pr-12 rounded-[12px] md:rounded-[16px] focus:outline-none bg-neutral-01 box-border"
+          className="py-2 md:py-3 pl-4 pr-12 md:pl-4 md:pr-12 rounded-[12px] md:rounded-[16px] focus:outline-none box-border bg-neutral-02 text-orange-05"
           style={{ width: 'calc(100% - 12px)' }}
         />
-        <button className="h-8 bg-dark-blue-05 w-8 rounded-[10px] absolute right-6 top-1/2 transform -translate-y-1/2">
+        <button className="h-8 bg-orange-05 w-8 rounded-[10px] absolute right-6 top-1/2 transform -translate-y-1/2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

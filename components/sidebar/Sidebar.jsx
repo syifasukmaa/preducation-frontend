@@ -33,7 +33,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`bg-dark-blue-05 text-white w-60 md:w-3/12 lg:w-[15%]
+      className={`bg-primary-dark-blue text-white w-60 md:w-3/12 lg:w-[15%]
       transition-all duration-300 ease-in-out  ${
         open ? 'translate-x-0' : '-translate-x-3/4 md:translate-x-0'
       }
@@ -47,7 +47,7 @@ export default function Sidebar() {
       </button>
 
       <img
-        src="/img/icon_belajar.svg"
+        src="/img/iconPreducation.png"
         className={`overflow-hidden transition-all w-1/2 ml-5 md:m-auto ${
           open ? 'w-32' : 'w-0'
         }`}
@@ -66,7 +66,7 @@ export default function Sidebar() {
             <li
               key={item.id}
               className={` text-white py-3 ${
-                url.startsWith(item.id) ? 'bg-dark-blue-03' : ''
+                url.startsWith(item.id) ? 'bg-orange-05' : ''
               }`}
             >
               <Link href={item.id}>

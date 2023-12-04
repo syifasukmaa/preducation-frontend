@@ -55,7 +55,7 @@ export default function page() {
       <div className="overflow-x-auto mt-4 mb-24 lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="bg-light-blue-05 font-semibold text-neutral-05 text-xs">
+            <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
               <tr className="">
                 <td className="py-3 px-4">Id</td>
                 <td className="py-3 px-4">Nama Video</td>
@@ -73,7 +73,7 @@ export default function page() {
                 return (
                   <tr
                     key={video.id}
-                    className=" border-y border-dark-blue-03"
+                    className=" border-y border-orange-04"
                   >
                     <td className="p-4 font-bold text-gray-05">{video.id}</td>
                     <td className="p-4 font-bold text-gray-04">{video.nama}</td>
@@ -103,7 +103,7 @@ export default function page() {
                       </span>
                     </td>
                     <td className="py-3 px-4 font-bold">
-                      <button className=" bg-dark-blue-03  text-white mr-2 mb-2 px-1 py-1 rounded">
+                      <button className=" bg-light-green  text-white mr-2 mb-2 px-1 py-1 rounded">
                         <MdUpgrade size={20} />
                       </button>
                       <button className=" bg-alert-red text-white mr-2 mb-2  px-1 py-1 rounded">
