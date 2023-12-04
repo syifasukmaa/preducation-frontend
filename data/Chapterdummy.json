@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "NamaChapter": "Chapter 1 - Pendahuluan",
+    "TotalDurasi": "10 min",
+    "LinkVideo": [
+      "https://youtu.be/ixOd42SEUF0",
+      "https://youtu.be/DwTkyMJi890",
+      "https://youtu.be/rd-590n3H6w"
+    ]
+  },
+  {
+    "id": 2,
+    "NamaChapter": "Chapter 1 - Dasar Penggunaan Figma",
+    "TotalDurasi": "20 min",
+    "LinkVideo": [
+      "https://youtu.be/HYfG_uCOlhc",
+      "https://youtu.be/DmxXl1k0X5g",
+      "https://youtu.be/1eJzLj9OE0Q",
+      "https://youtu.be/6hIUgd6WuFw",
+      "https://youtu.be/6hXoBeIQd-o"
+    ]
+  }
+]
