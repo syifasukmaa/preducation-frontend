@@ -123,18 +123,22 @@ export default function Page() {
                   </td>
                   <td className="py-3 px-4 font-bold">
                     <ActionButton
-                      styles={'bg-alert-green'}
+                      styles={'bg-alert-green hover:border-alert-green'}
                       onClick={() => goToChapter(course.id)}
                     >
                       Chapter
                     </ActionButton>
                     <ActionButton
-                      styles={'bg-dark-blue-05'}
+                      styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
                       onClick={() => handleEditCourse()}
                     >
                       Ubah
                     </ActionButton>
-                    <ActionButton styles={'bg-alert-red'}>Hapus</ActionButton>
+                    <ActionButton
+                      styles={'bg-alert-red hover:border-alert-red'}
+                    >
+                      Hapus
+                    </ActionButton>
                   </td>
                 </tr>
               ))}

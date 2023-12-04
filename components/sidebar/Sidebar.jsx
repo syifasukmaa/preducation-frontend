@@ -9,9 +9,8 @@ import { usePathname } from 'next/navigation';
 
 export default function Sidebar() {
   const url = usePathname();
-  console.log(url);
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('/admin/dashboard');
 
   const toggleSidebar = () => {

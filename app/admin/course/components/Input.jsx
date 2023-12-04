@@ -26,7 +26,7 @@ export default function Input({
             id={name}
             value={value}
             onChange={onChange}
-            className="input-modal"
+            className="input-modal h-32"
             placeholder={placeholder}
           />
         ) : (

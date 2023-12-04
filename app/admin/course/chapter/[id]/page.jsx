@@ -116,13 +116,13 @@ export default function Page() {
                   </td>
                   <td className="py-3 px-4 font-bold">
                     <ActionButton
-                      styles={'bg-alert-green'}
+                      styles={'bg-alert-green hover:border-alert-green'}
                       onClick={() => goToChapter(chapter.id)}
                     >
                       Video
                     </ActionButton>
                     <ActionButton
-                      styles={'bg-dark-blue-05'}
+                      styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
                       onClick={() => handleEditChapter()}
                     >
                       Ubah

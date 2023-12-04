@@ -4,7 +4,10 @@ import SearchIcon from '@/components/icons/SearchIcon';
 
 export default function SearchButton({ onClick }) {
   return (
-    <button onClick={onClick}>
+    <button
+      onClick={onClick}
+      className="hover:scale-110 transition-all"
+    >
       <SearchIcon />
     </button>
   );
