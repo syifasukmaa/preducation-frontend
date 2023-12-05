@@ -33,10 +33,8 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`bg-dark-blue-05 text-white w-60 md:w-3/12 lg:w-[15%]
-      transition-all duration-300 ease-in-out  ${
-        open ? 'translate-x-0' : '-translate-x-3/4 md:translate-x-0'
-      }
+      className={`bg-primary-dark-blue text-white w-60 md:w-3/12 lg:w-[15%]
+      transition-all duration-300 ease-in-out  ${open ? 'translate-x-0' : '-translate-x-3/4 md:translate-x-0'}
       overflow-y-auto z-50 shadow-lg fixed top-0 left-0 bottom-0 md:pt-0 `}
     >
       <button
@@ -47,27 +45,17 @@ export default function Sidebar() {
       </button>
 
       <img
-        src="/img/icon_belajar.svg"
-        className={`overflow-hidden transition-all w-1/2 ml-5 md:m-auto ${
-          open ? 'w-32' : 'w-0'
-        }`}
+        src="/img/iconPreducation.png"
+        className={`overflow-hidden transition-all w-[65%] ml-5 md:m-auto ${open ? 'w-32' : 'w-0'}`}
         alt="Icon Belajar"
       />
 
       <nav className="mt-6 md:mt-3 py-2">
-        <ul
-          className={`${
-            open
-              ? ''
-              : 'flex flex-col justify-end items-end pr-3 md:pr-0 md:block'
-          }`}
-        >
+        <ul className={`${open ? '' : 'flex flex-col justify-end items-end pr-3 md:pr-0 md:block'}`}>
           {sidebarItems.map((item) => (
             <li
               key={item.id}
-              className={` text-white py-3 ${
-                url.startsWith(item.id) ? 'bg-dark-blue-03' : ''
-              }`}
+              className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
             >
               <Link href={item.id}>
                 <button
@@ -75,13 +63,7 @@ export default function Sidebar() {
                   onClick={() => handleClick(item.id)}
                 >
                   <span>{item.icon}</span>
-                  <span
-                    className={`ml-3 ${
-                      open ? 'block' : 'hidden md:block'
-                    } font-bold`}
-                  >
-                    {item.label}
-                  </span>
+                  <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
                 </button>
               </Link>
             </li>

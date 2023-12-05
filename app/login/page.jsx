@@ -61,14 +61,23 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col lg:flex-row w-full min-h-screen">
       {/* Bagian Kiri */}
-      <div className="bg-dark-blue-05 p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
-        <Image src="/icon_belajar.svg" alt="logo" width={150} height={150} className="mx-auto" priority />
+      <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
+        <Image
+          src="/img/iconPreducation.png"
+          alt="logo"
+          width={150}
+          height={150}
+          className="mx-auto"
+          priority
+        />
       </div>
 
       {/* Bagian Kanan */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
-          <h1 className="font-bold text-xl text-dark-blue-05 mb-8 lg:mb-12 text-center">Login</h1>
+          <h1 className="font-bold text-xl text-orange-05 mb-8 lg:mb-12 text-center">
+            Login
+          </h1>
 
           {/* ID ADMIN */}
           <div className="mb-4 lg:mb-8">
@@ -94,7 +103,7 @@ const LoginPage = () => {
             <p className="float-left">Password</p>
 
             <p className="float-right">
-              <Link href="/forgot-password" className="text-dark-blue-05">
+              <Link href="/forgot-password" className="text-orange-05">
                 Lupa Kata Sandi
               </Link>
             </p>
@@ -118,7 +127,7 @@ const LoginPage = () => {
           <br />
 
           {/* Login button */}
-          <button disabled={isLoading ? true : false} onClick={handleSubmit} className={`text-white bg-dark-blue-05 rounded-lg w-full px-2 h-10 mb-10 flex items-center justify-center ${isLoading ? "cursor-not-allowed" : ""}`}>
+          <button disabled={isLoading ? true : false} onClick={handleSubmit} className={`text-white bg-orange-05 rounded-lg w-full px-2 h-10 mb-10 flex items-center justify-center ${isLoading ? "cursor-not-allowed" : ""}`}>
             {isLoading ? <AiOutlineLoading3Quarters className="animate-spin" size={20} /> : "Masuk"}
           </button>
           <br />
