@@ -1,18 +1,23 @@
-'use client';
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Courses from '@/data/Coursesdummy.json';
-import SearchButton from '@/components/button/SearchButton';
-import FilterButton from '@/components/button/FilterButton';
-import FilterPopup from '@/components/popup/FilterPopup';
-import SearchPopup from '@/components/popup/SearchPopup';
-import AddButton from '@/components/button/AddButton';
-import ActionButton from '@/components/button/ActionButton';
-import Checkbox from './components/Checkbox';
-import ModalCourse from './components/ModalCourse';
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import SearchButton from "@/components/button/SearchButton";
+import FilterButton from "@/components/button/FilterButton";
+import FilterPopup from "@/components/popup/FilterPopup";
+import SearchPopup from "@/components/popup/SearchPopup";
+import AddButton from "@/components/button/AddButton";
+import ActionButton from "@/components/button/ActionButton";
+import Checkbox from "./components/Checkbox";
+import ModalCourse from "./components/ModalCourse";
+import { useSession } from "next-auth/react";
+import { useCourse } from "@/utils/swr";
 
 export default function Page() {
+  const [title, setTitle] = useState("");
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
   const router = useRouter();
+  const { course: courses, isLoading, mutate } = useCourse(token, null, "", title);
 
   const goToChapter = (chapterId) => {
     router.push(`/admin/course/chapter/${chapterId}`);
@@ -44,33 +49,21 @@ export default function Page() {
         <div className="flex items-center relative">
           <AddButton onClick={() => handleAddCourse()} />
 
-          <FilterButton
-            onClick={() =>
-              setShowElements({ ...showElements, showFilter: true })
-            }
-          />
+          <FilterButton onClick={() => setShowElements({ ...showElements, showFilter: true })} />
 
-          <SearchButton
-            onClick={() =>
-              setShowElements({ ...showElements, showInput: true })
-            }
-          />
+          <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
 
           {showElements.showInput && (
             <SearchPopup
-              onClick={() =>
-                setShowElements({ ...showElements, showInput: false })
-              }
+              onClick={() => setShowElements({ ...showElements, showInput: false })}
+              title={title}
+              setTitle={setTitle}
             />
           )}
         </div>
 
         {showElements.showFilter && (
-          <FilterPopup
-            clickClose={() =>
-              setShowElements({ ...showElements, showFilter: false })
-            }
-          >
+          <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
             <Checkbox label="Data Science" />
             <Checkbox label="Web Development" />
             <Checkbox label="Android Development" />
@@ -94,65 +87,50 @@ export default function Page() {
                 <td className="py-3 px-4">Aksi</td>
               </tr>
             </thead>
-            <tbody className="text-gray-700  text-[10px]">
-              {Courses.map((course) => (
-                <tr key={course.id}>
-                  <td className="py-4 px-4 font-bold text-gray-05">
-                    {course.KodeKelas}
-                  </td>
-                  <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">
-                    {course.Kategori}
-                  </td>
-                  <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
-                    {course.NamaKelas}
-                  </td>
-                  <td
-                    className={`py-3 px-4 font-bold ${
-                      course.TipeKelas === 'PREMIUM'
-                        ? 'text-dark-blue-05'
-                        : 'text-alert-green'
-                    }`}
-                  >
-                    {course.TipeKelas}
-                  </td>
-                  <td className="py-3 px-4 font-bold text-black w-[12%]">
-                    {course.Level}
-                  </td>
-                  <td className="py-3 px-4 font-bold text-black">
-                    Rp {course.HargaKelas}
-                  </td>
-                  <td className="py-3 px-4 font-bold">
-                    <ActionButton
-                      styles={'bg-alert-green hover:border-alert-green'}
-                      onClick={() => goToChapter(course.id)}
+            {isLoading ? (
+              <p>Loading</p>
+            ) : (
+              <tbody className="text-gray-700  text-[10px]">
+                {courses?.map((course) => (
+                  <tr key={course._id}>
+                    <td className="py-4 px-4 font-bold text-gray-05">{course.classCode}</td>
+                    <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
+                    <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
+                      {course.title}
+                    </td>
+                    <td
+                      className={`py-3 px-4 font-bold ${
+                        course.TipeKelas === "PREMIUM" ? "text-dark-blue-05" : "text-alert-green"
+                      }`}
                     >
-                      Chapter
-                    </ActionButton>
-                    <ActionButton
-                      styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
-                      onClick={() => handleEditCourse()}
-                    >
-                      Ubah
-                    </ActionButton>
-                    <ActionButton
-                      styles={'bg-alert-red hover:border-alert-red'}
-                    >
-                      Hapus
-                    </ActionButton>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                      {course.typeClass}
+                    </td>
+                    <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
+                    <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
+                    <td className="py-3 px-4 font-bold">
+                      <ActionButton
+                        styles={"bg-alert-green hover:border-alert-green"}
+                        onClick={() => goToChapter(course.id)}
+                      >
+                        Chapter
+                      </ActionButton>
+                      <ActionButton
+                        styles={"bg-dark-blue-05 hover:border-dark-blue-05"}
+                        onClick={() => handleEditCourse()}
+                      >
+                        Ubah
+                      </ActionButton>
+                      <ActionButton styles={"bg-alert-red hover:border-alert-red"}>Hapus</ActionButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
       </div>
 
-      {showModal && (
-        <ModalCourse
-          onClose={() => setShowModal(false)}
-          editMode={editMode}
-        />
-      )}
+      {showModal && <ModalCourse onClose={() => setShowModal(false)} editMode={editMode} />}
     </div>
   );
 }

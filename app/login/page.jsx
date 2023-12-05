@@ -44,7 +44,7 @@ const LoginPage = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         setInterval(() => {
-          router.push("/admin/dashboard");
+          router.replace("/admin/dashboard");
         }, 2000);
         setIsLoading(false);
       } else {
