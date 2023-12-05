@@ -1,105 +1,61 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import dummy from '../../data/dummy';
-import { PiEye } from 'react-icons/pi';
-import { PiEyeSlash } from 'react-icons/pi';
+import React, { useState } from "react";
+import Image from "next/image";
+import { PiEye } from "react-icons/pi";
+import { PiEyeSlash } from "react-icons/pi";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { signIn } from "next-auth/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginPage = () => {
-  //useState untuk password
-  const [passValue, setPassValue] = useState({
-    password: '',
-    showPass: false,
-  });
+  const [idAdmin, setIdAdmin] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  //useState untuk idAdmin
-  const [idAdmin, setIdAdmin] = useState('');
-
-  //handle onchange password
-  const handlePass = (event) => {
-    setPassValue({ ...passValue, password: event.target.value });
-  };
-
-  //buat ganti dari type password ke type text
   const toggleVisibility = () => {
-    setPassValue({ ...passValue, showPass: !passValue.showPass });
-  };
-
-  //function buat bikin alert
-  const showAlert = (message, type = 'info', duration = 5000) => {
-    const tempatAlert = document.querySelector('.tempatAlert');
-    const alertElement = document.createElement('div');
-    alertElement.classList.add('custom-alert');
-    alertElement.classList.add('text-white');
-    alertElement.classList.add('rounded-lg');
-    alertElement.classList.add('w-[250px]');
-    alertElement.classList.add('items-center');
-    alertElement.classList.add('text-center');
-    alertElement.classList.add('py-2');
-    alertElement.classList.add('px-5');
-    alertElement.classList.add('text-xs');
-    alertElement.classList.add('bottom-6');
-    alertElement.classList.add('transition');
-    alertElement.classList.add('ease-in-out');
-    alertElement.classList.add('duration-300');
-    alertElement.classList.add('mx-auto');
-    alertElement.classList.add('absolute');
-    alertElement.classList.add('bottom-[20px]');
-    alertElement.classList.add('left-[50%]');
-    alertElement.classList.add('translate-x-[-50%]');
-
-    if (type === 'success') {
-      alertElement.classList.add('bg-alert-green');
-    } else if (type === 'error') {
-      alertElement.classList.add('bg-alert-red');
-    }
-
-    alertElement.textContent = message;
-    tempatAlert.appendChild(alertElement);
-
-    setTimeout(() => {
-      alertElement.style.display = 'none';
-      tempatAlert.removeChild(alertElement);
-    }, duration);
-  };
-  const inputIdMerah = () => {
-    const IdInput = document.querySelector('#IdInput');
-    IdInput.classList.add('border-red-500');
-
-    setTimeout(() => {
-      IdInput.classList.remove('border-red-500');
-    }, 5000);
+    setShowPassword((prev) => !prev);
   };
 
   const inputPassMerah = () => {
-    const passInput = document.querySelector('#passInput');
-    passInput.classList.add('border-red-500');
+    const passInput = document.querySelector("#passInput");
+    passInput.classList.add("border-red-500");
 
     setTimeout(() => {
-      passInput.classList.remove('border-red-500');
+      passInput.classList.remove("border-red-500");
     }, 5000);
   };
 
-  const validasi = () => {
-    if (idAdmin === dummy.idAdmin && passValue.password !== dummy.password) {
-      showAlert('Maaf kata sandi salah', 'error');
-      inputPassMerah();
-    } else if (
-      idAdmin === dummy.idAdmin &&
-      passValue.password === dummy.password
-    ) {
-      showAlert('Berhasil masuk', 'success');
-    } else if (
-      idAdmin !== dummy.idAdmin &&
-      passValue.password === dummy.password
-    ) {
-      showAlert('Alamat email tidak terdaftar!', 'error');
-      inputIdMerah();
-    } else {
-      showAlert('Maaf kata sandi salah atau email tidak terdaftar', 'error');
-      inputIdMerah();
-      inputPassMerah();
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const response = await signIn("credentials", {
+        username: idAdmin,
+        password: password,
+        redirect: false,
+      });
+      if (response.ok) {
+        toast.success("Anda berhasil masuk!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setInterval(() => {
+          router.replace("/admin/dashboard");
+        }, 2000);
+        setIsLoading(false);
+      } else {
+        toast.error("Username atau password salah", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        inputPassMerah();
+        setIsLoading(false);
+      }
+    } catch (error) {
+      throw new Error("Internal server error");
     }
   };
   return (
@@ -147,55 +103,35 @@ const LoginPage = () => {
             <p className="float-left">Password</p>
 
             <p className="float-right">
-              <a
-                href="/forgotpassword"
-                className="text-orange-05"
-              >
+              <Link href="/forgot-password" className="text-orange-05">
                 Lupa Kata Sandi
-              </a>
+              </Link>
             </p>
             <br />
             <input
-              type={passValue.showPass ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               name="password"
               id="passInput"
               placeholder="Password"
               className="float-left border-2 rounded-lg w-full p-2"
-              value={passValue.password}
-              onChange={handlePass}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
 
-            <button
-              className="absolute right-4 top-14"
-              onClick={toggleVisibility}
-            >
-              {!passValue.showPass ? (
-                <PiEye
-                  color="grey"
-                  size={30}
-                />
-              ) : (
-                <PiEyeSlash
-                  color="grey"
-                  size={30}
-                />
-              )}
+            <button className="absolute right-4 top-14" onClick={toggleVisibility}>
+              {!showPassword ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
             </button>
           </div>
           <br />
           <br />
 
           {/* Login button */}
-          <button
-            className="text-white bg-orange-05 rounded-lg w-full p-2 mb-10"
-            onClick={validasi}
-          >
-            Masuk
+          <button disabled={isLoading ? true : false} onClick={handleSubmit} className={`text-white bg-orange-05 rounded-lg w-full px-2 h-10 mb-10 flex items-center justify-center ${isLoading ? "cursor-not-allowed" : ""}`}>
+            {isLoading ? <AiOutlineLoading3Quarters className="animate-spin" size={20} /> : "Masuk"}
           </button>
           <br />
-          {/* div kosong buat tempat alert */}
-          <div className="tempatAlert fixed bottom-6 lg:bottom-2 lg:left-[67%] left-1/2  transform -translate-x-1/2 flex justify-center items-center w-full lg:w-auto sm:bottom-2"></div>
+          <ToastContainer />
         </div>
       </div>
     </div>

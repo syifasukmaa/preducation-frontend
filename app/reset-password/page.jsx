@@ -185,7 +185,6 @@ const ResetPass = () => {
       </div>
 
       {/* Bagian Kanan */}
-
       <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image
           src="/img/iconPreducation.png"
