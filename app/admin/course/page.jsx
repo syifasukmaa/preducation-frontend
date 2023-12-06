@@ -1,40 +1,36 @@
-"use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import SearchButton from "@/components/button/SearchButton";
-import FilterButton from "@/components/button/FilterButton";
-import FilterPopup from "@/components/popup/FilterPopup";
-import SearchPopup from "@/components/popup/SearchPopup";
-import AddButton from "@/components/button/AddButton";
-import ActionButton from "@/components/button/ActionButton";
-import Checkbox from "./components/Checkbox";
-import ModalCourse from "./components/ModalCourse";
-import { useSession } from "next-auth/react";
-import { useCourse } from "@/utils/swr";
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import SearchButton from '@/components/button/SearchButton';
+import FilterButton from '@/components/button/FilterButton';
+import FilterPopup from '@/components/popup/FilterPopup';
+import SearchPopup from '@/components/popup/SearchPopup';
+import AddButton from '@/components/button/AddButton';
+import ActionButton from '@/components/button/ActionButton';
+import Checkbox from './components/Checkbox';
+import ModalCourse from './components/ModalCourse';
+import { useSession } from 'next-auth/react';
+import { useCourse } from '@/utils/swr';
+import { deleteCourse } from '@/utils/fetch';
 
 export default function Page() {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
+
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
   const router = useRouter();
-  const { course: courses, isLoading, mutate } = useCourse(token, null, "", title);
-
-  const goToChapter = (chapterId) => {
-    router.push(`/admin/course/chapter/${chapterId}`);
-  };
+  const { course: courses, isLoading, mutate } = useCourse(token, null, '', title);
 
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
   });
-
   const [editMode, setEditMode] = useState(false);
-
+  const [courseId, setCourseId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const handleEditCourse = () => {
-    setEditMode(true);
-    setShowModal(true);
+  const goToChapter = (chapterId) => {
+    router.push(`/admin/course/chapter/${chapterId}`);
   };
 
   const handleAddCourse = () => {
@@ -42,6 +38,16 @@ export default function Page() {
     setShowModal(true);
   };
 
+  const handleEditCourse = (courseId) => {
+    setEditMode(true);
+    setShowModal(true);
+    setCourseId(courseId);
+  };
+
+  const handleDeleteCourse = async (courseId) => {
+    const response = await deleteCourse(token, courseId);
+    if (response.ok) mutate();
+  };
   return (
     <div className={`md:px-12 px-4`}>
       <div className="md:pt-2 flex items-center justify-between relative">
@@ -88,7 +94,9 @@ export default function Page() {
               </tr>
             </thead>
             {isLoading ? (
-              <p>Loading</p>
+              <tr>
+                <td colSpan="7">Loading</td>
+              </tr>
             ) : (
               <tbody className="text-gray-700  text-[10px]">
                 {courses?.map((course) => (
@@ -100,7 +108,7 @@ export default function Page() {
                     </td>
                     <td
                       className={`py-3 px-4 font-bold ${
-                        course.TipeKelas === "PREMIUM" ? "text-orange-05" : "text-alert-green"
+                        course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
                       }`}
                     >
                       {course.typeClass}
@@ -109,18 +117,23 @@ export default function Page() {
                     <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
                     <td className="py-3 px-4 font-bold">
                       <ActionButton
-                        styles={"bg-light-green hover:border-light-green"}
-                        onClick={() => goToChapter(course.id)}
+                        styles={'bg-light-green hover:border-light-green'}
+                        onClick={() => goToChapter(course._id)}
                       >
                         Chapter
                       </ActionButton>
                       <ActionButton
-                        styles={"bg-dark-blue-05 hover:border-dark-blue-05"}
-                        onClick={() => handleEditCourse()}
+                        styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
+                        onClick={() => handleEditCourse(course._id)}
                       >
                         Ubah
                       </ActionButton>
-                      <ActionButton styles={"bg-alert-red hover:border-alert-red"}>Hapus</ActionButton>
+                      <ActionButton
+                        styles={'bg-alert-red hover:border-alert-red'}
+                        onClick={() => handleDeleteCourse(course._id)}
+                      >
+                        Hapus
+                      </ActionButton>
                     </td>
                   </tr>
                 ))}
@@ -130,7 +143,15 @@ export default function Page() {
         </div>
       </div>
 
-      {showModal && <ModalCourse onClose={() => setShowModal(false)} editMode={editMode} />}
+      {showModal && (
+        <ModalCourse
+          onClose={() => setShowModal(false)}
+          editMode={editMode}
+          token={token}
+          mutate={mutate}
+          courseId={courseId}
+        />
+      )}
     </div>
   );
 }

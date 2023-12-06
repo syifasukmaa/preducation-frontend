@@ -11,7 +11,7 @@ export default function Sidebar() {
   const url = usePathname();
 
   const [open, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('/admin/dashboard');
+  const [activeItem, setActiveItem] = useState('');
 
   const toggleSidebar = () => {
     setOpen(!open);
@@ -39,7 +39,7 @@ export default function Sidebar() {
     >
       <button
         onClick={toggleSidebar}
-        className="md:hidden fixed z-50 right-4 top-14 bg-dark-blue-03 text-white px-3 py-2 rounded"
+        className="md:hidden fixed z-50 right-4 top-14 bg-orange-05 text-white px-3 py-2 rounded"
       >
         {open ? <IoMdClose /> : <RxHamburgerMenu />}
       </button>

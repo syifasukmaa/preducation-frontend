@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR from 'swr';
 
 export const fetcher = async (url, token) => {
   const res = await fetch(url, {
@@ -11,8 +11,8 @@ export const fetcher = async (url, token) => {
 };
 
 export const useCourse = (token, id, category, title) => {
-  let categoryQuery = "";
-  let titleQuery = "";
+  let categoryQuery = '';
+  let titleQuery = '';
   if (category) {
     categoryQuery = category;
   }
@@ -26,7 +26,7 @@ export const useCourse = (token, id, category, title) => {
         ? [`${process.env.API_URL}/courses/${id}`, token]
         : [`${process.env.API_URL}/courses/?category=${categoryQuery}&title=${titleQuery}`, token]
       : null,
-    ([url, token]) => fetcher(url, token)
+    ([url, token]) => fetcher(url, token),
   );
   return {
     course: data?.data,

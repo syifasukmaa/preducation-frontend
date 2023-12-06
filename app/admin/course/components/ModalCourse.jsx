@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from './Dropdown';
 import Input from './Input';
 import Modal from './Modal';
+import { createNewCourse, updateCourse } from '@/utils/fetch';
+import { useCourse } from '@/utils/swr';
 
-export default function ModalCourse({ onClose, editMode }) {
+export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
+  const { course } = useCourse(token, courseId, null, null);
+
   const [selectedOption, setSelectedOption] = useState('');
-
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
 
   const [formData, setFormData] = useState({
     namaKelas: '',
@@ -17,9 +17,78 @@ export default function ModalCourse({ onClose, editMode }) {
     level: '',
     harga: 0,
     Materi: '',
-    Thumbnail: null,
+    targetAudience: '',
+    thumbnail: null,
   });
 
+  useEffect(() => {
+    if (editMode && course) {
+      setFormData({
+        namaKelas: course.title,
+        Materi: course.description,
+        kodeKelas: course.classCode,
+        tipeKelas: course.typeClass,
+        level: course.level,
+        harga: course.price,
+        targetAudience: course.targetAudience,
+        thumbnail: course.thumbnail,
+      });
+      setSelectedOption(course.category._id);
+    }
+  }, [editMode, course]);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      let newCourseData = {
+        title: formData.namaKelas,
+        description: formData.Materi,
+        classCode: formData.kodeKelas,
+        category: selectedOption,
+        typeClass: formData.tipeKelas,
+        level: formData.level,
+        price: formData.harga,
+      };
+
+      if (editMode) {
+        const updatedImage = formData.thumbnail !== course.thumbnail ? formData.thumbnail : course.thumbnail;
+        newCourseData = {
+          ...newCourseData,
+          thumbnail: updatedImage,
+        };
+
+        const updatedTargetAudience =
+          formData.targetAudience !== course.targetAudience ? formData.targetAudience : course.targetAudience;
+        newCourseData = {
+          ...newCourseData,
+          targetAudience: updatedTargetAudience,
+        };
+
+        const response = await updateCourse(token, courseId, newCourseData);
+
+        if (response.ok) {
+          mutate();
+        }
+        console.log(newCourseData);
+        console.log(response);
+      } else {
+        const response = await createNewCourse(token, newCourseData);
+
+        if (response.ok) {
+          mutate();
+        }
+        console.log(response);
+        console.log(newCourseData);
+      }
+    } catch (error) {
+      console.error('Error creating a new course:', error);
+    }
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+    console.log(selectedOption);
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -32,15 +101,18 @@ export default function ModalCourse({ onClose, editMode }) {
     const imageFile = e.target.files[0];
     setFormData((prevData) => ({
       ...prevData,
-      image: imageFile,
+      thumbnail: imageFile.name,
     }));
   };
 
   const options = [
-    { label: 'UI/UX Design', value: 'jenis1' },
-    { label: 'Web Development', value: 'jenis2' },
-    { label: 'Android Development', value: 'jenis3' },
-    { label: 'Product Management', value: 'jenis4' },
+    { label: 'Category', value: 'judul' },
+    { label: 'UI/UX Design', value: '6569b03463e7a9d96bbe4fc6' },
+    { label: 'Data Science', value: '6569b03463e7a9d96bbe4fcb' },
+    { label: 'Web Development', value: '6569b03463e7a9d96bbe4fc8' },
+    { label: 'Android Development', value: '6569b03463e7a9d96bbe4fc9' },
+    { label: 'IOS Development', value: '6569b03463e7a9d96bbe4fca' },
+    { label: 'Product Management', value: '6569b03463e7a9d96bbe4fc7' },
   ];
 
   return (
@@ -48,6 +120,7 @@ export default function ModalCourse({ onClose, editMode }) {
       title={editMode ? 'Edit Kelas' : 'Tambah Kelas'}
       onClose={onClose}
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
+      handleSave={handleSave}
     >
       {editMode && (
         <>
@@ -57,7 +130,7 @@ export default function ModalCourse({ onClose, editMode }) {
               <input
                 type="file"
                 accept="image/*"
-                name="image"
+                thumbnail="image"
                 onChange={handleImageChange}
                 className="input-modal"
               />
@@ -67,6 +140,8 @@ export default function ModalCourse({ onClose, editMode }) {
             label="Target Audience"
             name="targetAudience"
             placeholder="Target Audience"
+            value={formData.targetAudience}
+            onChange={handleInputChange}
             textarea
           />
         </>
@@ -118,8 +193,10 @@ export default function ModalCourse({ onClose, editMode }) {
       />
       <Input
         label="Materi"
-        name="materi"
+        name="Materi"
         placeholder="Materi"
+        value={formData.Materi}
+        onChange={handleInputChange}
         textarea
       />
     </Modal>
