@@ -1,5 +1,5 @@
-import React from "react";
-import ClosesButton from "../button/ClosesButton";
+import React from 'react';
+import ClosesButton from '../button/ClosesButton';
 
 export default function SearchPopup({ onClick, title, setTitle }) {
   return (
@@ -12,7 +12,10 @@ export default function SearchPopup({ onClick, title, setTitle }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <ClosesButton onClick={onClick} style={"bg-orange-05 ml-1 text-white px-3 py-1 rounded"} />
+        <ClosesButton
+          onClick={onClick}
+          style={'bg-orange-05 ml-1 text-white px-3 py-1 rounded'}
+        />
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ module.exports = {
         'neutral-01': '#FFFFFF',
         'neutral-03': '#8A8A8A',
         'neutral-02': '#FFF4F2',
-
         'dark-blue-05': '#6148FF',
         'dark-blue-04': '#6148FF57',
         'dark-blue-03': '#489CFF',
