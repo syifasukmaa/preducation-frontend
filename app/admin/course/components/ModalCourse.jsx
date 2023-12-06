@@ -1,29 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import Dropdown from './Dropdown';
-import Input from './Input';
-import Modal from './Modal';
-import { createNewCourse, updateCourse } from '@/utils/fetch';
-import { useCourse } from '@/utils/swr';
+import React, { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
+import Input from "./Input";
+import Modal from "./Modal";
+import { createNewCourse, updateCourse } from "@/utils/fetch";
+import { useCourse } from "@/utils/swr";
+
+const options = [
+  { label: "Category", value: "judul" },
+  { label: "UI/UX Design", value: "6569b03463e7a9d96bbe4fc6" },
+  { label: "Data Science", value: "6569b03463e7a9d96bbe4fcb" },
+  { label: "Web Development", value: "6569b03463e7a9d96bbe4fc8" },
+  { label: "Android Development", value: "6569b03463e7a9d96bbe4fc9" },
+  { label: "IOS Development", value: "6569b03463e7a9d96bbe4fca" },
+  { label: "Product Management", value: "6569b03463e7a9d96bbe4fc7" },
+];
 
 export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
-  const { course } = useCourse(token, courseId, null, null);
+  const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
 
-  const [selectedOption, setSelectedOption] = useState('');
-
-  const [formData, setFormData] = useState({
-    namaKelas: '',
-    kodeKelas: '',
-    tipeKelas: '',
-    level: '',
+  const [selectedOption, setSelectedOption] = useState("");
+  const [form, setForm] = useState({
+    namaKelas: "",
+    kodeKelas: "",
+    tipeKelas: "",
+    level: "",
     harga: 0,
-    Materi: '',
-    targetAudience: '',
+    Materi: "",
+    targetAudience: "",
     thumbnail: null,
   });
 
   useEffect(() => {
     if (editMode && course) {
-      setFormData({
+      setForm({
         namaKelas: course.title,
         Materi: course.description,
         kodeKelas: course.classCode,
@@ -40,58 +49,52 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      let newCourseData = {
-        title: formData.namaKelas,
-        description: formData.Materi,
-        classCode: formData.kodeKelas,
-        category: selectedOption,
-        typeClass: formData.tipeKelas,
-        level: formData.level,
-        price: formData.harga,
-      };
-
       if (editMode) {
-        const updatedImage = formData.thumbnail !== course.thumbnail ? formData.thumbnail : course.thumbnail;
-        newCourseData = {
-          ...newCourseData,
-          thumbnail: updatedImage,
-        };
+        const formData = new FormData();
+        formData.append("title", form.namaKelas);
+        formData.append("description", form.Materi);
+        formData.append("classCode", form.kodeKelas);
+        formData.append("category", selectedOption);
+        formData.append("typeClass", form.tipeKelas);
+        formData.append("level", form.level);
+        formData.append("price", form.harga);
+        formData.append("targetAudience", form.targetAudience);
+        formData.append("thumbnail", form.thumbnail);
 
-        const updatedTargetAudience =
-          formData.targetAudience !== course.targetAudience ? formData.targetAudience : course.targetAudience;
-        newCourseData = {
-          ...newCourseData,
-          targetAudience: updatedTargetAudience,
-        };
-
-        const response = await updateCourse(token, courseId, newCourseData);
+        const response = await updateCourse(token, courseId, formData);
 
         if (response.ok) {
-          mutate();
+          alert("sukses");
+          singleMutate();
         }
-        console.log(newCourseData);
-        console.log(response);
       } else {
+        const newCourseData = {
+          title: form.namaKelas,
+          description: form.Materi,
+          classCode: form.kodeKelas,
+          category: selectedOption,
+          typeClass: form.tipeKelas,
+          level: form.level,
+          price: form.harga,
+        };
+
         const response = await createNewCourse(token, newCourseData);
 
         if (response.ok) {
           mutate();
         }
-        console.log(response);
-        console.log(newCourseData);
       }
     } catch (error) {
-      console.error('Error creating a new course:', error);
+      console.error("Error creating a new course:", error);
     }
   };
 
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
-    console.log(selectedOption);
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setForm((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -99,27 +102,17 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
-    setFormData((prevData) => ({
+    setForm((prevData) => ({
       ...prevData,
-      thumbnail: imageFile.name,
+      thumbnail: imageFile,
     }));
   };
 
-  const options = [
-    { label: 'Category', value: 'judul' },
-    { label: 'UI/UX Design', value: '6569b03463e7a9d96bbe4fc6' },
-    { label: 'Data Science', value: '6569b03463e7a9d96bbe4fcb' },
-    { label: 'Web Development', value: '6569b03463e7a9d96bbe4fc8' },
-    { label: 'Android Development', value: '6569b03463e7a9d96bbe4fc9' },
-    { label: 'IOS Development', value: '6569b03463e7a9d96bbe4fca' },
-    { label: 'Product Management', value: '6569b03463e7a9d96bbe4fc7' },
-  ];
-
   return (
     <Modal
-      title={editMode ? 'Edit Kelas' : 'Tambah Kelas'}
+      title={editMode ? "Edit Kelas" : "Tambah Kelas"}
       onClose={onClose}
-      nameButton={editMode ? 'Perbarui' : 'Simpan'}
+      nameButton={editMode ? "Perbarui" : "Simpan"}
       handleSave={handleSave}
     >
       {editMode && (
@@ -140,54 +133,50 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
             label="Target Audience"
             name="targetAudience"
             placeholder="Target Audience"
-            value={formData.targetAudience}
+            value={form.targetAudience}
             onChange={handleInputChange}
             textarea
           />
         </>
       )}
       <Input
-        type={'text'}
+        type={"text"}
         label="Nama Kelas"
         name="namaKelas"
         placeholder="Nama Kelas"
-        value={formData.namaKelas}
+        value={form.namaKelas}
         onChange={handleInputChange}
       />
-      <Dropdown
-        value={selectedOption}
-        onChange={handleSelectChange}
-        options={options}
-      />
+      <Dropdown value={selectedOption} onChange={handleSelectChange} options={options} />
       <Input
         label="Kode Kelas"
         name="kodeKelas"
         placeholder="Kode Kelas"
-        value={formData.kodeKelas}
+        value={form.kodeKelas}
         onChange={handleInputChange}
       />
       <Input
-        type={'text'}
+        type={"text"}
         label="Tipe Kelas"
         name="tipeKelas"
         placeholder="Tipe Kelas"
-        value={formData.tipeKelas}
+        value={form.tipeKelas}
         onChange={handleInputChange}
       />
       <Input
-        type={'text'}
+        type={"text"}
         label="Level"
         name="level"
         placeholder="Level"
-        value={formData.level}
+        value={form.level}
         onChange={handleInputChange}
       />
       <Input
-        type={'number'}
+        type={"number"}
         label="Harga"
         name="harga"
         placeholder="Harga"
-        value={formData.harga}
+        value={form.harga}
         onChange={handleInputChange}
         l
       />
@@ -195,7 +184,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         label="Materi"
         name="Materi"
         placeholder="Materi"
-        value={formData.Materi}
+        value={form.Materi}
         onChange={handleInputChange}
         textarea
       />
