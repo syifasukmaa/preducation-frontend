@@ -13,13 +13,13 @@ export default function Dropdown({ value, onChange, options }) {
       <select
         value={value}
         onChange={onChange}
-        className="block w-full border bg-white border-gray-300 py-3 px-3 rounded-2xl text-[12px] focus:outline-none focus:border-indigo-600"
+        className="block w-full border bg-white border-gray-300 py-3 px-3 rounded-2xl text-[14px] focus:outline-none focus:border-indigo-600"
       >
         {options.map((option) => (
           <option
             key={option.value}
             value={option.value}
-            className="text-[12px]"
+            className="text-[14px]"
           >
             {option.label}
           </option>

@@ -1,9 +1,9 @@
 export const loginAdmin = async (username, password) => {
   try {
     const response = await fetch(`${process.env.API_URL}/auths/admin/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         username,
@@ -19,9 +19,9 @@ export const loginAdmin = async (username, password) => {
 export const createNewCourse = async (token, courseData) => {
   try {
     const response = await fetch(`${process.env.API_URL}/courses`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(courseData),
@@ -29,7 +29,7 @@ export const createNewCourse = async (token, courseData) => {
 
     return response;
   } catch (error) {
-    console.error("Error creating a new course:", error);
+    console.error('Error creating a new course:', error);
     throw error;
   }
 };
@@ -37,7 +37,7 @@ export const createNewCourse = async (token, courseData) => {
 export const updateCourse = async (token, courseId, updatedCourseData) => {
   try {
     const response = await fetch(`${process.env.API_URL}/courses/${courseId}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +46,7 @@ export const updateCourse = async (token, courseId, updatedCourseData) => {
 
     return response;
   } catch (error) {
-    console.error("Error updating the course:", error);
+    console.error('Error updating the course:', error);
     throw error;
   }
 };
@@ -54,16 +54,34 @@ export const updateCourse = async (token, courseId, updatedCourseData) => {
 export const deleteCourse = async (token, courseId) => {
   try {
     const response = await fetch(`${process.env.API_URL}/courses/${courseId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
 
     return response;
   } catch (error) {
-    console.error("Error updating the course:", error);
+    console.error('Error updating the course:', error);
+    throw error;
+  }
+};
+
+export const createNewChapter = async (token, chapterData, chapterId) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/chapters/?courseId=${chapterId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(chapterData),
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error creating a new course:', error);
     throw error;
   }
 };

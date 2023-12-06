@@ -34,3 +34,4 @@ export const useCourse = (token, id, category, title) => {
     mutate,
   };
 };
+

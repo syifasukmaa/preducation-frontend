@@ -16,15 +16,31 @@ import { deleteCourse } from '@/utils/fetch';
 export default function Page() {
   const [title, setTitle] = useState('');
 
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
-  const router = useRouter();
-  const { course: courses, isLoading, mutate } = useCourse(token, null, '', title);
-
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
   });
+
+  const [selectedCategories, setSelectedCategories] = useState({
+    'Data Science': false,
+    'Web Development': false,
+    'Android Development': false,
+    'UI/UX Design': false,
+    'Data Science': false,
+    'Ios Developmet': false,
+    'Product Management': false,
+  });
+
+  const selectedCategoryKeys = Object.entries(selectedCategories)
+    .filter(([key, value]) => value === true)
+    .map(([key]) => key);
+
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
+  const router = useRouter();
+
+  const { course: courses, isLoading, mutate } = useCourse(token, null, selectedCategoryKeys, title);
+
   const [editMode, setEditMode] = useState(false);
   const [courseId, setCourseId] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -48,6 +64,14 @@ export default function Page() {
     const response = await deleteCourse(token, courseId);
     if (response.ok) mutate();
   };
+
+  const handleCheckboxChange = (label) => {
+    setSelectedCategories({
+      ...selectedCategories,
+      [label]: !selectedCategories[label],
+    });
+  };
+
   return (
     <div className={`md:px-12 px-4`}>
       <div className="md:pt-2 flex items-center justify-between relative">
@@ -70,11 +94,36 @@ export default function Page() {
 
         {showElements.showFilter && (
           <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-            <Checkbox label="Data Science" />
-            <Checkbox label="Web Development" />
-            <Checkbox label="Android Development" />
-            <Checkbox label="UI/UX Design" />
-            <Checkbox label="Product Management" />
+            <Checkbox
+              label="Data Science"
+              checked={selectedCategories['Data Science']}
+              onChange={() => handleCheckboxChange('Data Science')}
+            />
+            <Checkbox
+              label="Web Development"
+              checked={selectedCategories['Web Development']}
+              onChange={() => handleCheckboxChange('Web Development')}
+            />
+            <Checkbox
+              label="Android Development"
+              checked={selectedCategories['Android Development']}
+              onChange={() => handleCheckboxChange('Android Development')}
+            />
+            <Checkbox
+              label="IOS Development"
+              checked={selectedCategories['Ios Developmet']}
+              onChange={() => handleCheckboxChange('Ios Developmet')}
+            />
+            <Checkbox
+              label="UI/UX Design"
+              checked={selectedCategories['UI/UX Design']}
+              onChange={() => handleCheckboxChange('UI/UX Design')}
+            />
+            <Checkbox
+              label="Product Management"
+              checked={selectedCategories.productManagement}
+              onChange={() => handleCheckboxChange('Product Management')}
+            />
           </FilterPopup>
         )}
       </div>
@@ -103,9 +152,7 @@ export default function Page() {
                   <tr key={course._id}>
                     <td className="py-4 px-4 font-bold text-gray-05">{course.classCode}</td>
                     <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
-                    <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
-                      {course.title}
-                    </td>
+                    <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">{course.title}</td>
                     <td
                       className={`py-3 px-4 font-bold ${
                         course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'

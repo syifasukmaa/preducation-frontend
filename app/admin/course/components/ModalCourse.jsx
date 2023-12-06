@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import Dropdown from "./Dropdown";
-import Input from "./Input";
-import Modal from "./Modal";
-import { createNewCourse, updateCourse } from "@/utils/fetch";
-import { useCourse } from "@/utils/swr";
+import React, { useEffect, useState } from 'react';
+import Dropdown from './Dropdown';
+import Input from './Input';
+import Modal from './Modal';
+import { createNewCourse, updateCourse } from '@/utils/fetch';
+import { useCourse } from '@/utils/swr';
 
 const options = [
-  { label: "Category", value: "judul" },
-  { label: "UI/UX Design", value: "6569b03463e7a9d96bbe4fc6" },
-  { label: "Data Science", value: "6569b03463e7a9d96bbe4fcb" },
-  { label: "Web Development", value: "6569b03463e7a9d96bbe4fc8" },
-  { label: "Android Development", value: "6569b03463e7a9d96bbe4fc9" },
-  { label: "IOS Development", value: "6569b03463e7a9d96bbe4fca" },
-  { label: "Product Management", value: "6569b03463e7a9d96bbe4fc7" },
+  { label: 'Category', value: 'judul' },
+  { label: 'UI/UX Design', value: '6569b03463e7a9d96bbe4fc6' },
+  { label: 'Data Science', value: '6569b03463e7a9d96bbe4fcb' },
+  { label: 'Web Development', value: '6569b03463e7a9d96bbe4fc8' },
+  { label: 'Android Development', value: '6569b03463e7a9d96bbe4fc9' },
+  { label: 'IOS Development', value: '6569b03463e7a9d96bbe4fca' },
+  { label: 'Product Management', value: '6569b03463e7a9d96bbe4fc7' },
 ];
 
 export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
   const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
   const [form, setForm] = useState({
-    namaKelas: "",
-    kodeKelas: "",
-    tipeKelas: "",
-    level: "",
+    namaKelas: '',
+    kodeKelas: '',
+    tipeKelas: '',
+    level: '',
     harga: 0,
-    Materi: "",
-    targetAudience: "",
+    Materi: '',
+    targetAudience: '',
     thumbnail: null,
   });
 
@@ -51,20 +51,32 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
     try {
       if (editMode) {
         const formData = new FormData();
-        formData.append("title", form.namaKelas);
-        formData.append("description", form.Materi);
-        formData.append("classCode", form.kodeKelas);
-        formData.append("category", selectedOption);
-        formData.append("typeClass", form.tipeKelas);
-        formData.append("level", form.level);
-        formData.append("price", form.harga);
-        formData.append("targetAudience", form.targetAudience);
-        formData.append("thumbnail", form.thumbnail);
+        formData.append('title', form.namaKelas);
+        formData.append('description', form.Materi);
+        formData.append('classCode', form.kodeKelas);
+        formData.append('category', selectedOption);
+        formData.append('typeClass', form.tipeKelas);
+        formData.append('level', form.level);
+        formData.append('price', form.harga);
+        formData.append('targetAudience', form.targetAudience);
+        formData.append('thumbnail', form.thumbnail);
 
         const response = await updateCourse(token, courseId, formData);
 
         if (response.ok) {
-          alert("sukses");
+          alert('Sukses Edit Data');
+          setTimeout(() => {
+            setForm({
+              namaKelas: '',
+              kodeKelas: '',
+              tipeKelas: '',
+              level: '',
+              harga: 0,
+              Materi: '',
+              targetAudience: '',
+              thumbnail: null,
+            });
+          }, 1000);
           singleMutate();
         }
       } else {
@@ -81,11 +93,20 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         const response = await createNewCourse(token, newCourseData);
 
         if (response.ok) {
+          alert('Sukses Menambahkan Kelas Baru');
           mutate();
+          setForm({
+            namaKelas: '',
+            kodeKelas: '',
+            tipeKelas: '',
+            level: '',
+            harga: 0,
+            Materi: '',
+          });
         }
       }
     } catch (error) {
-      console.error("Error creating a new course:", error);
+      console.error('Error creating or update course', error);
     }
   };
 
@@ -110,9 +131,9 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
 
   return (
     <Modal
-      title={editMode ? "Edit Kelas" : "Tambah Kelas"}
+      title={editMode ? 'Edit Kelas' : 'Tambah Kelas'}
       onClose={onClose}
-      nameButton={editMode ? "Perbarui" : "Simpan"}
+      nameButton={editMode ? 'Perbarui' : 'Simpan'}
       handleSave={handleSave}
     >
       {editMode && (
@@ -140,14 +161,18 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         </>
       )}
       <Input
-        type={"text"}
+        type={'text'}
         label="Nama Kelas"
         name="namaKelas"
         placeholder="Nama Kelas"
         value={form.namaKelas}
         onChange={handleInputChange}
       />
-      <Dropdown value={selectedOption} onChange={handleSelectChange} options={options} />
+      <Dropdown
+        value={selectedOption}
+        onChange={handleSelectChange}
+        options={options}
+      />
       <Input
         label="Kode Kelas"
         name="kodeKelas"
@@ -156,7 +181,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         onChange={handleInputChange}
       />
       <Input
-        type={"text"}
+        type={'text'}
         label="Tipe Kelas"
         name="tipeKelas"
         placeholder="Tipe Kelas"
@@ -164,7 +189,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         onChange={handleInputChange}
       />
       <Input
-        type={"text"}
+        type={'text'}
         label="Level"
         name="level"
         placeholder="Level"
@@ -172,7 +197,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         onChange={handleInputChange}
       />
       <Input
-        type={"number"}
+        type={'number'}
         label="Harga"
         name="harga"
         placeholder="Harga"
