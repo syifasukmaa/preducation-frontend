@@ -1,14 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import dummy from '../../data/dummy';
 import { PiEye } from 'react-icons/pi';
 import { PiEyeSlash } from 'react-icons/pi';
+import { resetPassword } from '@/utils/fetch';
 
 const ResetPass = () => {
   //useState untuk password
+  const searchParams = useSearchParams();
+  const resetPasswordToken = searchParams.get('token');
+  console.log(resetPasswordToken);
+
   const [passValue, setPassValue] = useState({
     password: '',
     showPass: false,
@@ -17,6 +22,25 @@ const ResetPass = () => {
     password: '',
     showPass: false,
   });
+  console.log(passValue.password, passValue2.password);
+
+  const handleSubmit = async () => {
+    try {
+      const response = await resetPassword(
+        '09d1b1d763dedba491d31f9cf40b0d59cd826402f6ed5cc35ead8e1ad0b4e417',
+        passValue.password,
+        passValue2.password,
+      );
+      const data = await response.json();
+      if (response.ok) {
+        alert('berhasil reset password');
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      throw err;
+    }
+  };
 
   //handle onchange password
   const handlePass = (event) => {
@@ -73,32 +97,26 @@ const ResetPass = () => {
   };
 
   //validasi saat tombol di pencet
-  const validasi = () => {
-    if (
-      passValue.password === passValue2.password &&
-      passValue.password !== '' &&
-      passValue2.password !== ''
-    ) {
-      showAlert('Reset password berhasil!', 'success');
-      dummy.password = passValue2.password;
+  // const validasi = () => {
+  //   if (passValue.password === passValue2.password && passValue.password !== '' && passValue2.password !== '') {
+  //     showAlert('Reset password berhasil!', 'success');
+  //     dummy.password = passValue2.password;
 
-      setTimeout(() => {
-        window.location.href = '/adminLogin';
-      }, 3000);
-    } else if (passValue.password === '' && passValue2.password === '') {
-      showAlert('Password harus diisi!', 'error');
-    } else {
-      showAlert('Password tidak sama!', 'error');
-    }
-  };
+  //     setTimeout(() => {
+  //       window.location.href = '/adminLogin';
+  //     }, 3000);
+  //   } else if (passValue.password === '' && passValue2.password === '') {
+  //     showAlert('Password harus diisi!', 'error');
+  //   } else {
+  //     showAlert('Password tidak sama!', 'error');
+  //   }
+  // };
   return (
     <div className="flex flex-col lg:flex-row w-full min-h-screen">
       {/* Bagian Kiri */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
-          <h1 className="font-bold text-2xl text-primary-dark-blue  mb-8 lg:mb-12 text-left">
-            Reset Password
-          </h1>
+          <h1 className="font-bold text-2xl text-primary-dark-blue  mb-8 lg:mb-12 text-left">Reset Password</h1>
 
           {/* PASSWORD 1 */}
           <div className="mt-2 relative block mb-4 lg:mb-8">
@@ -174,9 +192,9 @@ const ResetPass = () => {
           {/* Login button */}
           <button
             className="text-white bg-orange-05 rounded-xl w-full p-2 mb-10"
-            onClick={validasi}
+            onClick={handleSubmit}
           >
-            Masuk
+            Ganti
           </button>
           <br />
           {/* div kosong buat tempat alert */}

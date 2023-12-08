@@ -47,13 +47,14 @@ export const useChapter = (token, id) => {
   };
 };
 
-export const usePayment = (token, id) => {
+export const usePayment = (token, status) => {
+  let statusQuery = '';
+  if (status) {
+    statusQuery = status;
+  }
+
   const { data, isLoading, mutate } = useSWR(
-    token
-      ? id
-        ? [`${process.env.API_URL}/courses/${id}`, token]
-        : [`${process.env.API_URL}/payments/all`, token]
-      : null,
+    token ? [`${process.env.API_URL}/payments/all/?status=${statusQuery}`, token] : null,
     ([url, token]) => fetcher(url, token),
   );
   return {
