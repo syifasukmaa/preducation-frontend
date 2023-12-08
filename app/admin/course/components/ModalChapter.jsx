@@ -1,25 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
 import Input from './Input';
-import { createNewChapter } from '@/utils/fetch';
+import { createNewChapter, updateChapter } from '@/utils/fetch';
+import { useChapter } from '@/utils/swr';
 
 export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
   const [titleChapter, setTitleChapter] = useState('');
 
+  const { chapter, isLoding, mutate: singleMutate } = useChapter(token, Id);
+
+  useEffect(() => {
+    if (editMode && chapter) {
+      setTitleChapter(chapter.title);
+    }
+  }, [editMode, chapter]);
+
   const handleInputChange = (e) => {
     setTitleChapter(e.target.value);
   };
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
       const chapterData = { title: titleChapter };
 
-      const response = await createNewChapter(token, chapterData, Id);
+      if (editMode) {
+        setTitleChapter(chapter.title);
+        const response = await updateChapter(token, chapterData, Id);
+        if (response.ok) {
+          alert('Sukses Edit Capther');
+          setTitleChapter('');
+          singleMutate();
+        }
+      } else {
+        const response = await createNewChapter(token, chapterData, Id);
+        console.log(response);
 
-      if (response.ok) {
-        alert('Sukses Membuat Capther Baru');
-        setTitleChapter('');
-        mutate();
+        if (response.ok) {
+          alert('Sukses Membuat Capther Baru');
+          setTitleChapter('');
+          mutate();
+        }
       }
     } catch (err) {
       console.error('Error creating or update chapter', err);
@@ -39,6 +60,7 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
         placeholder="Nama Chapter"
         value={titleChapter}
         onChange={handleInputChange}
+        required
       />
     </Modal>
   );

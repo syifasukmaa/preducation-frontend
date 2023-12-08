@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import Chapters from '@/data/Chapterdummy.json';
 import AddButton from '@/components/button/AddButton';
 import SearchButton from '@/components/button/SearchButton';
 import FilterPopup from '@/components/popup/FilterPopup';
@@ -11,7 +10,7 @@ import ActionButton from '@/components/button/ActionButton';
 import ModalChapter from '../../components/ModalChapter';
 import SearchPopup from '@/components/popup/SearchPopup';
 import { useSession } from 'next-auth/react';
-import { useChapter, useCourse } from '@/utils/swr';
+import { useCourse } from '@/utils/swr';
 
 export default function Page() {
   const params = useParams();
@@ -36,9 +35,10 @@ export default function Page() {
   const [editMode, setEditMode] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const handleEditChapter = () => {
+  const handleEditChapter = (id) => {
     setEditMode(true);
     setShowModal(true);
+    setId(id);
   };
 
   const handleAddChapter = (id) => {
@@ -76,12 +76,12 @@ export default function Page() {
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
             <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
-              <tr>
-                <td className="py-3 px-4">Id Chapter</td>
-                <td className="py-3 px-4">Nama Chapter</td>
-                <td className="py-3 px-4">Total Durasi</td>
-                <td className="py-3 px-4">Link Video</td>
-                <td className="py-3 px-4">Aksi</td>
+              <tr className="text-left">
+                <th className="py-3 px-4">No</th>
+                <th className="py-3 px-4">Nama Chapter</th>
+                <th className="py-3 px-4">Total Durasi</th>
+                <th className="py-3 px-4">Link Video</th>
+                <th className="py-3 px-4">Aksi</th>
               </tr>
             </thead>
 
@@ -95,13 +95,13 @@ export default function Page() {
               ) : (
                 course &&
                 course.chapters &&
-                course.chapters.map((chapter) => (
+                course.chapters.map((chapter, index) => (
                   <tr key={chapter._id}>
                     <td className="py-4 px-4 font-bold text-gray-05">{chapter._id}</td>
                     <td className="py-4 px-4 font-bold text-gray-04">{chapter.title}</td>
                     <td className="py-4 px-4 font-bold text-gray-04">{chapter.totalDuration}</td>
                     <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
-                      {chapter.videos?.map((link) => (
+                      {chapter.videos?.map((link, index) => (
                         <div
                           key={link._id}
                           className="text-orange-05"
@@ -116,16 +116,16 @@ export default function Page() {
                         </div>
                       ))}
                     </td>
-                    <td className="py-3 px-4 font-bold">
+                    <td className="py-3 px-4 font-bold grid xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-secondary-dark-blue hover:border-secondary-dark-blue'}
-                        onClick={() => goToChapter(chapter.id)}
+                        onClick={() => goToChapter(chapter._id)}
                       >
                         Video
                       </ActionButton>
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green'}
-                        onClick={() => handleEditChapter()}
+                        onClick={() => handleEditChapter(chapter._id)}
                       >
                         Ubah
                       </ActionButton>

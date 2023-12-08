@@ -4,14 +4,14 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoMdClose } from 'react-icons/io';
 import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
 import { SiGoogleclassroom } from 'react-icons/si';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 export default function Sidebar() {
   const url = usePathname();
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('');
 
   const toggleSidebar = () => {
     setOpen(!open);
@@ -24,11 +24,11 @@ export default function Sidebar() {
       icon: <SiGoogleclassroom />,
       label: 'Kelola Kelas',
     },
-    { id: 'keluar', icon: <LuLogOut />, label: 'Keluar' },
   ];
 
   const handleClick = (itemId) => {
-    setActiveItem(itemId);
+    // setActiveItem(itemId);
+    router.push(itemId);
   };
 
   return (
@@ -52,22 +52,33 @@ export default function Sidebar() {
 
       <nav className="mt-6 md:mt-3 py-2">
         <ul className={`${open ? '' : 'flex flex-col justify-end items-end pr-3 md:pr-0 md:block'}`}>
-          {sidebarItems.map((item) => (
+          {sidebarItems?.map((item, index) => (
             <li
-              key={item.id}
+              key={index}
               className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
             >
-              <Link href={item.id}>
-                <button
-                  className={`flex items-center px-4`}
-                  onClick={() => handleClick(item.id)}
-                >
-                  <span>{item.icon}</span>
-                  <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
-                </button>
-              </Link>
+              <button
+                href={item.id}
+                className={`flex items-center px-4`}
+                onClick={() => handleClick(item.id)}
+              >
+                <span>{item.icon}</span>
+                <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
+              </button>
             </li>
           ))}
+
+          <li className={`text-white py-3 bg-orange-05}`}>
+            <button
+              className={`flex items-center px-4`}
+              onClick={() => signOut()}
+            >
+              <span>
+                <LuLogOut />
+              </span>
+              <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>Keluar</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </aside>

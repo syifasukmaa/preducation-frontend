@@ -2,7 +2,7 @@ import { loginAdmin } from "@/utils/fetch";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const nextAuthOptions = {
+export const nextAuthOptions = {
   session: {
     strategy: "jwt",
   },

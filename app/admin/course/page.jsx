@@ -37,6 +37,7 @@ export default function Page() {
 
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
+
   const router = useRouter();
 
   const { course: courses, isLoading, mutate } = useCourse(token, null, selectedCategoryKeys, title);
@@ -133,19 +134,21 @@ export default function Page() {
           <table className="min-w-full bg-white rounded-lg">
             <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
               <tr>
-                <td className="py-3 px-4">Kode Kelas</td>
-                <td className="py-3 px-4">Kategori</td>
-                <td className="py-3 px-4">Nama Kelas</td>
-                <td className="py-3 px-4">Tipe Kelas</td>
-                <td className="py-3 px-4">Level</td>
-                <td className="py-3 px-4">Harga Kelas</td>
-                <td className="py-3 px-4">Aksi</td>
+                <th className="py-3 px-4 text-left">Kode Kelas</th>
+                <th className="py-3 px-4 text-left">Kategori</th>
+                <th className="py-3 px-4 text-left">Nama Kelas</th>
+                <th className="py-3 px-4 text-left">Tipe Kelas</th>
+                <th className="py-3 px-4 text-left">Level</th>
+                <th className="py-3 px-4 text-left">Harga Kelas</th>
+                <th className="py-3 px-4 text-left">Aksi</th>
               </tr>
             </thead>
             {isLoading ? (
-              <tr>
-                <td colSpan="7">Loading</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td colSpan="7">Loading</td>
+                </tr>
+              </tbody>
             ) : (
               <tbody className="text-gray-700  text-[10px]">
                 {courses?.map((course) => (
@@ -162,7 +165,7 @@ export default function Page() {
                     </td>
                     <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
                     <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
-                    <td className="py-3 px-4 font-bold">
+                    <td className="py-3 px-4 font-bold grid xl:grid-cols-3">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green'}
                         onClick={() => goToChapter(course._id)}
