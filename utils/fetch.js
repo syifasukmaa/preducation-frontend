@@ -68,9 +68,9 @@ export const deleteCourse = async (token, courseId) => {
   }
 };
 
-export const createNewChapter = async (token, chapterData, chapterId) => {
+export const createNewChapter = async (token, chapterData, courseId) => {
   try {
-    const response = await fetch(`${process.env.API_URL}/chapters/?courseId=${chapterId}`, {
+    const response = await fetch(`${process.env.API_URL}/chapters/?courseId=${courseId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -82,6 +82,77 @@ export const createNewChapter = async (token, chapterData, chapterId) => {
     return response;
   } catch (error) {
     console.error('Error creating a new course:', error);
+    throw error;
+  }
+};
+
+export const updateChapter = async (token, chapterData, chapterId) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/chapters/${chapterId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(chapterData),
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error creating a new course:', error);
+    throw error;
+  }
+};
+
+export const createNewVideo = async (token, videoData, Id) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/videos/?chapterId=${Id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(videoData),
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error creating a new course:', error);
+    throw error;
+  }
+};
+
+export const updateVideo = async (token, videoData, Id) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/videos/${Id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(videoData),
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error creating a new course:', error);
+    throw error;
+  }
+};
+
+export const deleteVideo = async (token, videoId) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/videos/${videoId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error updating the course:', error);
     throw error;
   }
 };

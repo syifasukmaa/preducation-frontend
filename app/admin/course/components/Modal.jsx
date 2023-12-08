@@ -15,13 +15,13 @@ export default function Modal({ title, nameButton, onClose, handleSave, children
 
           <button
             type="submit"
-            className="mt-10 lg:px-32 py-3  bg-orange-05 w-full text-white rounded-[25px] font-bold shadow-xl"
+            className="mt-10 lg:px-32 py-3 bg-orange-05 w-full text-white rounded-[25px] font-bold shadow-xl border-2 hover:border-orange-05 hover:text-black hover:bg-white"
           >
             {nameButton}
           </button>
         </form>
         <ClosesButton
-          style={'absolute top-5 right-3 text-orange-05 '}
+          style={'absolute top-5 right-3 text-orange-05 hover:text-black'}
           onClick={onClose}
         />
       </div>

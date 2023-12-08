@@ -35,3 +35,30 @@ export const useCourse = (token, id, category, title) => {
   };
 };
 
+export const useChapter = (token, id) => {
+  const { data, isLoading, mutate } = useSWR(
+    token ? [`${process.env.API_URL}/chapters/${id}`, token] : null,
+    ([url, token]) => fetcher(url, token),
+  );
+  return {
+    chapter: data?.data,
+    isLoading,
+    mutate,
+  };
+};
+
+export const usePayment = (token, id) => {
+  const { data, isLoading, mutate } = useSWR(
+    token
+      ? id
+        ? [`${process.env.API_URL}/courses/${id}`, token]
+        : [`${process.env.API_URL}/payments/all`, token]
+      : null,
+    ([url, token]) => fetcher(url, token),
+  );
+  return {
+    payment: data?.data,
+    isLoading,
+    mutate,
+  };
+};

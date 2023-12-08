@@ -6,7 +6,7 @@ import { createNewCourse, updateCourse } from '@/utils/fetch';
 import { useCourse } from '@/utils/swr';
 
 const options = [
-  { label: 'Category', value: 'judul' },
+  { label: 'Category', value: '' },
   { label: 'UI/UX Design', value: '6569b03463e7a9d96bbe4fc6' },
   { label: 'Data Science', value: '6569b03463e7a9d96bbe4fcb' },
   { label: 'Web Development', value: '6569b03463e7a9d96bbe4fc8' },
@@ -18,7 +18,7 @@ const options = [
 export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
   const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
 
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState('judul');
   const [form, setForm] = useState({
     namaKelas: '',
     kodeKelas: '',
@@ -113,6 +113,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
@@ -157,6 +158,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
             value={form.targetAudience}
             onChange={handleInputChange}
             textarea
+            required
           />
         </>
       )}
@@ -167,11 +169,13 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         placeholder="Nama Kelas"
         value={form.namaKelas}
         onChange={handleInputChange}
+        required
       />
       <Dropdown
         value={selectedOption}
         onChange={handleSelectChange}
         options={options}
+        required
       />
       <Input
         label="Kode Kelas"
@@ -179,6 +183,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         placeholder="Kode Kelas"
         value={form.kodeKelas}
         onChange={handleInputChange}
+        required
       />
       <Input
         type={'text'}
@@ -187,6 +192,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         placeholder="Tipe Kelas"
         value={form.tipeKelas}
         onChange={handleInputChange}
+        required
       />
       <Input
         type={'text'}
@@ -195,6 +201,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         placeholder="Level"
         value={form.level}
         onChange={handleInputChange}
+        required
       />
       <Input
         type={'number'}
@@ -203,7 +210,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         placeholder="Harga"
         value={form.harga}
         onChange={handleInputChange}
-        l
+        required
       />
       <Input
         label="Materi"
@@ -212,6 +219,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         value={form.Materi}
         onChange={handleInputChange}
         textarea
+        required
       />
     </Modal>
   );
