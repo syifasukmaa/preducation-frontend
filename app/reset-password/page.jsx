@@ -26,11 +26,7 @@ const ResetPass = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await resetPassword(
-        '09d1b1d763dedba491d31f9cf40b0d59cd826402f6ed5cc35ead8e1ad0b4e417',
-        passValue.password,
-        passValue2.password,
-      );
+      const response = await resetPassword('09d1b1d763dedba491d31f9cf40b0d59cd826402f6ed5cc35ead8e1ad0b4e417', passValue.password, passValue2.password);
       const data = await response.json();
       if (response.ok) {
         alert('berhasil reset password');
