@@ -158,14 +158,16 @@ export const deleteVideo = async (token, videoId) => {
 };
 
 export const resetPassword = async (passwordResetToken, password, confirmPassword) => {
-  console.log(`ini password reset: ${passwordResetToken}`);
   try {
     const response = await fetch(`${process.env.API_URL}/auths/reset-password/${passwordResetToken}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(password, confirmPassword),
+      body: JSON.stringify({
+        password,
+        confirmPassword,
+      }),
     });
 
     return response;

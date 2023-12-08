@@ -22,15 +22,10 @@ const ResetPass = () => {
     password: '',
     showPass: false,
   });
-  console.log(passValue.password, passValue2.password);
 
   const handleSubmit = async () => {
     try {
-      const response = await resetPassword(
-        '09d1b1d763dedba491d31f9cf40b0d59cd826402f6ed5cc35ead8e1ad0b4e417',
-        passValue.password,
-        passValue2.password,
-      );
+      const response = await resetPassword(resetPasswordToken, passValue.password, passValue2.password);
       const data = await response.json();
       if (response.ok) {
         alert('berhasil reset password');
@@ -135,21 +130,8 @@ const ResetPass = () => {
               required
             />
 
-            <button
-              className="absolute right-4 top-14"
-              onClick={toggleVisibility1}
-            >
-              {!passValue.showPass ? (
-                <PiEye
-                  color="grey"
-                  size={30}
-                />
-              ) : (
-                <PiEyeSlash
-                  color="grey"
-                  size={30}
-                />
-              )}
+            <button className="absolute right-4 top-14" onClick={toggleVisibility1}>
+              {!passValue.showPass ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
             </button>
           </div>
 
@@ -169,31 +151,15 @@ const ResetPass = () => {
               required
             />
 
-            <button
-              className="absolute right-4 top-14"
-              onClick={toggleVisibility2}
-            >
-              {!passValue2.showPass ? (
-                <PiEye
-                  color="grey"
-                  size={30}
-                />
-              ) : (
-                <PiEyeSlash
-                  color="grey"
-                  size={30}
-                />
-              )}
+            <button className="absolute right-4 top-14" onClick={toggleVisibility2}>
+              {!passValue2.showPass ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
             </button>
           </div>
           <br />
           <br />
 
           {/* Login button */}
-          <button
-            className="text-white bg-orange-05 rounded-xl w-full p-2 mb-10"
-            onClick={handleSubmit}
-          >
+          <button className="text-white bg-orange-05 rounded-xl w-full p-2 mb-10" onClick={handleSubmit}>
             Ganti
           </button>
           <br />
@@ -204,14 +170,7 @@ const ResetPass = () => {
 
       {/* Bagian Kanan */}
       <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
-        <Image
-          src="/img/iconPreducation.png"
-          alt="logo"
-          width={150}
-          height={150}
-          className="mx-auto"
-          priority
-        />
+        <Image src="/img/iconPreducation.png" alt="logo" width={150} height={150} className="mx-auto" priority />
       </div>
     </div>
   );
