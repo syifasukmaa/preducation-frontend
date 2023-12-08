@@ -26,6 +26,7 @@ const ResetPass = () => {
   const handleSubmit = async () => {
     try {
       const response = await resetPassword(resetPasswordToken, passValue.password, passValue2.password);
+
       const data = await response.json();
       if (response.ok) {
         alert('berhasil reset password');
