@@ -6,6 +6,7 @@ import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
 import { SiGoogleclassroom } from 'react-icons/si';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Sidebar() {
   const url = usePathname();
@@ -27,7 +28,6 @@ export default function Sidebar() {
   ];
 
   const handleClick = (itemId) => {
-    // setActiveItem(itemId);
     router.push(itemId);
   };
 
@@ -44,10 +44,14 @@ export default function Sidebar() {
         {open ? <IoMdClose /> : <RxHamburgerMenu />}
       </button>
 
-      <img
+      <Image
         src="/img/iconPreducation.png"
-        className={`overflow-hidden transition-all w-[65%] ml-5 md:m-auto ${open ? 'w-32' : 'w-0'}`}
+        // className={`overflow-hidden transition-all w-[65%] ml-5 md:m-auto ${open ? 'w-32' : 'w-0'}`}
+        className={`md:m-auto`}
         alt="Icon Belajar"
+        width={110}
+        height={110}
+        priority
       />
 
       <nav className="mt-6 md:mt-3 py-2">

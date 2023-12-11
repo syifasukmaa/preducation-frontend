@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import CoursePayment from '@/data/CoursePaymentdummy.json';
 import SearchButton from '@/components/button/SearchButton';
 import FilterButton from '@/components/button/FilterButton';
 import FilterPopup from '@/components/popup/FilterPopup';
@@ -12,14 +11,30 @@ export default function Page() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
-  const { payment: payments, isLoading, mutate } = usePayment(token, null);
-  console.log(payments);
+  const { payment: payments, isLoading } = usePayment(token, null);
 
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
+    filter: '',
   });
 
+  const filterCourses = (filterOption) => {
+    setShowElements({
+      ...showElements,
+      filter: filterOption,
+      showFilter: false,
+    });
+  };
+
+  const filterPayments = (payment, showFilter) => {
+    if (showFilter === 'Paid') {
+      return payment.status === 'paid';
+    } else if (showFilter === 'On Progress') {
+      return payment.status === 'On Progress';
+    }
+    return true;
+  };
   return (
     <div className={`md:px-12 px-4`}>
       <div className="md:pt-2 flex items-center justify-between relative">
@@ -38,16 +53,16 @@ export default function Page() {
           <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
             <p
               className="item-filter"
-              onClick={() => console.log('sudah bayar')}
+              onClick={() => filterCourses('Paid')}
             >
-              Sudah Bayar
+              Paid
             </p>
             <hr />
             <p
               className="item-filter"
-              onClick={() => console.log('belum bayar')}
+              onClick={() => filterCourses('On Progress')}
             >
-              Belum Bayar
+              On Progress
             </p>
           </FilterPopup>
         )}
@@ -75,22 +90,24 @@ export default function Page() {
             ) : (
               <tbody className="text-gray-700 whitespace-nowrap text-[10px]">
                 {payments &&
-                  payments.map((payment) => (
-                    <tr key={payment._id}>
-                      <td className="py-4 px-4 font-bold text-gray-05">{payment.userId.name}</td>
-                      <td className="py-3 pl-4 pr-3 font-bold text-gray-05">{payment.courseId.category.name}</td>
-                      <td className="py-3 px-4 font-bold text-gray-04">{payment.courseId.level}</td>
-                      <td
-                        className={`py-3 px-4 font-bold ${
-                          payment.status === 'BELUM BAYAR' ? 'text-alert-red' : 'text-alert-green'
-                        }`}
-                      >
-                        {payment.status}
-                      </td>
-                      <td className="py-3 px-4 lg:pl-4 lg:pr-0 font-bold text-gray-04">{payment.paymentType}</td>
-                      <td className="py-3 px-4 lg:pl-0 lg:pr-1 pl-4 font-bold text-gray-05">{payment.createdAt}</td>
-                    </tr>
-                  ))}
+                  payments
+                    .filter((payment) => filterPayments(payment, showElements.filter))
+                    .map((payment) => (
+                      <tr key={payment._id}>
+                        <td className="py-4 px-4 font-bold text-gray-05">{payment.userId.username}</td>
+                        <td className="py-3 pl-4 pr-3 font-bold text-gray-05">{payment.courseId.category.name}</td>
+                        <td className="py-3 px-4 font-bold text-gray-04">{payment.courseId.level}</td>
+                        <td
+                          className={`py-3 px-4 font-bold ${
+                            payment.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
+                          }`}
+                        >
+                          {payment.status}
+                        </td>
+                        <td className="py-3 px-4 lg:pl-4 lg:pr-0 font-bold text-gray-04">{payment.paymentType}</td>
+                        <td className="py-3 px-4 lg:pl-0 lg:pr-1 pl-4 font-bold text-gray-05">{payment.createdAt}</td>
+                      </tr>
+                    ))}
               </tbody>
             )}
           </table>
