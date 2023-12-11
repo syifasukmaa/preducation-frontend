@@ -1,37 +1,65 @@
 'use client';
 
 import React, { useState } from 'react';
-
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import dummy from '../../data/dummy';
 import { PiEye } from 'react-icons/pi';
 import { PiEyeSlash } from 'react-icons/pi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { resetPassword } from '@/utils/fetch';
 
 const ResetPass = () => {
-  //useState untuk password
-  const [passValue, setPassValue] = useState({
+  const searchParams = useSearchParams();
+  const resetPasswordToken = searchParams.get('token');
+
+  const [password, setPassword] = useState({
     password: '',
     showPass: false,
   });
-  const [passValue2, setPassValue2] = useState({
+  const [confirmPassword, setConfirmPassword] = useState({
     password: '',
     showPass: false,
   });
 
-  //handle onchange password
+  const handleSubmit = async () => {
+    try {
+      const response = await resetPassword(resetPasswordToken, password.password, confirmPassword.password);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success('Anda berhasil mengubah password', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPassword({ ...password, password: '' });
+        setConfirmPassword({ ...confirmPassword, password: '' });
+      } else if (password.password !== confirmPassword.password) {
+        showAlert('Password tidak sama!', 'error');
+      } else if (password.password === '' && confirmPassword.password === '') {
+        showAlert('Password harus diisi!', 'error');
+      } else {
+        toast.error(`${data.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (err) {
+      throw err;
+    }
+  };
+
   const handlePass = (event) => {
-    setPassValue({ ...passValue, password: event.target.value });
+    setPassword({ ...password, password: event.target.value });
   };
   const handlePass2 = (event) => {
-    setPassValue2({ ...passValue2, password: event.target.value });
+    setConfirmPassword({ ...confirmPassword, password: event.target.value });
   };
 
-  //buat ganti dari type password ke type text
   const toggleVisibility1 = () => {
-    setPassValue({ ...passValue, showPass: !passValue.showPass });
+    setPassword({ ...password, showPass: !password.showPass });
   };
   const toggleVisibility2 = () => {
-    setPassValue2({ ...passValue2, showPass: !passValue2.showPass });
+    setConfirmPassword({ ...confirmPassword, showPass: !confirmPassword.showPass });
   };
 
   //function buat bikin alert
@@ -72,33 +100,12 @@ const ResetPass = () => {
     }, duration);
   };
 
-  //validasi saat tombol di pencet
-  const validasi = () => {
-    if (
-      passValue.password === passValue2.password &&
-      passValue.password !== '' &&
-      passValue2.password !== ''
-    ) {
-      showAlert('Reset password berhasil!', 'success');
-      dummy.password = passValue2.password;
-
-      setTimeout(() => {
-        window.location.href = '/adminLogin';
-      }, 3000);
-    } else if (passValue.password === '' && passValue2.password === '') {
-      showAlert('Password harus diisi!', 'error');
-    } else {
-      showAlert('Password tidak sama!', 'error');
-    }
-  };
   return (
     <div className="flex flex-col lg:flex-row w-full min-h-screen">
       {/* Bagian Kiri */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
-          <h1 className="font-bold text-2xl text-primary-dark-blue  mb-8 lg:mb-12 text-left">
-            Reset Password
-          </h1>
+          <h1 className="font-bold text-2xl text-primary-dark-blue  mb-8 lg:mb-12 text-left">Reset Password</h1>
 
           {/* PASSWORD 1 */}
           <div className="mt-2 relative block mb-4 lg:mb-8">
@@ -107,12 +114,12 @@ const ResetPass = () => {
 
             <br />
             <input
-              type={passValue.showPass ? 'text' : 'password'}
+              type={password.showPass ? 'text' : 'password'}
               name="password"
               id="passInput"
               placeholder="Password"
               className="float-left border-2 rounded-lg w-full p-2"
-              value={passValue.password}
+              value={password.password}
               onChange={handlePass}
               required
             />
@@ -121,7 +128,7 @@ const ResetPass = () => {
               className="absolute right-4 top-14"
               onClick={toggleVisibility1}
             >
-              {!passValue.showPass ? (
+              {!password.showPass ? (
                 <PiEye
                   color="grey"
                   size={30}
@@ -135,18 +142,17 @@ const ResetPass = () => {
             </button>
           </div>
 
-          {/* PASSWORD mastiin*/}
           <div className="mt-2 relative block mb-4 lg:mb-8">
             <br />
             <p className="float-left">Ulangi Password Baru</p>
             <br />
             <input
-              type={passValue2.showPass ? 'text' : 'password'}
+              type={confirmPassword.showPass ? 'text' : 'password'}
               name="password"
               id="passInput"
               placeholder="Password"
               className="float-left border-2 rounded-lg w-full p-2"
-              value={passValue2.password}
+              value={confirmPassword.password}
               onChange={handlePass2}
               required
             />
@@ -155,7 +161,7 @@ const ResetPass = () => {
               className="absolute right-4 top-14"
               onClick={toggleVisibility2}
             >
-              {!passValue2.showPass ? (
+              {!confirmPassword.showPass ? (
                 <PiEye
                   color="grey"
                   size={30}
@@ -171,15 +177,13 @@ const ResetPass = () => {
           <br />
           <br />
 
-          {/* Login button */}
           <button
             className="text-white bg-orange-05 rounded-xl w-full p-2 mb-10"
-            onClick={validasi}
+            onClick={handleSubmit}
           >
-            Masuk
+            Ganti
           </button>
           <br />
-          {/* div kosong buat tempat alert */}
           <div className="tempatAlert fixed bottom-6 lg:bottom-2 lg:left-[33%] left-1/2  transform -translate-x-1/2 flex justify-center items-center w-full lg:w-auto sm:bottom-2"></div>
         </div>
       </div>
@@ -195,6 +199,7 @@ const ResetPass = () => {
           priority
         />
       </div>
+      <ToastContainer />
     </div>
   );
 };

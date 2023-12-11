@@ -156,3 +156,23 @@ export const deleteVideo = async (token, videoId) => {
     throw error;
   }
 };
+
+export const resetPassword = async (passwordResetToken, password, confirmPassword) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/auths/reset-password/${passwordResetToken}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        password,
+        confirmPassword,
+      }),
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error creating a new course:', error);
+    throw error;
+  }
+};

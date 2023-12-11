@@ -7,6 +7,7 @@ export default function SearchButton({ onClick }) {
     <button
       onClick={onClick}
       className="hover:scale-110 transition-all"
+      aria-label="search"
     >
       <SearchIcon />
     </button>

@@ -144,49 +144,73 @@ export default function Page() {
               </tr>
             </thead>
             {isLoading ? (
-              <tbody>
+              <tbody className="text-[10px]">
                 <tr>
-                  <td colSpan="7">Loading</td>
+                  <td
+                    colSpan="7"
+                    className="text-center py-8"
+                  >
+                    <div className="flex justify-center items-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+                      <span className="ml-2">Loading...</span>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             ) : (
-              <tbody className="text-gray-700  text-[10px]">
-                {courses?.map((course) => (
-                  <tr key={course._id}>
-                    <td className="py-4 px-4 font-bold text-gray-05">{course.classCode}</td>
-                    <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
-                    <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">{course.title}</td>
+              <tbody className="text-gray-700 text-[10px]">
+                {courses ? (
+                  courses.map((course) => (
+                    <tr key={course._id}>
+                      <td className="py-4 px-4 font-bold text-gray-05">{course.classCode}</td>
+                      <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
+                      <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
+                        {course.title}
+                      </td>
+                      <td
+                        className={`py-3 px-4 font-bold ${
+                          course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
+                        }`}
+                      >
+                        {course.typeClass}
+                      </td>
+                      <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
+                      <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
+                      <td className="py-3 px-4 font-bold grid xl:grid-cols-3">
+                        <ActionButton
+                          styles={'bg-light-green hover:border-light-green'}
+                          onClick={() => goToChapter(course._id)}
+                        >
+                          Chapter
+                        </ActionButton>
+                        <ActionButton
+                          styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
+                          onClick={() => handleEditCourse(course._id)}
+                        >
+                          Ubah
+                        </ActionButton>
+                        <ActionButton
+                          styles={'bg-alert-red hover:border-alert-red'}
+                          onClick={() => handleDeleteCourse(course._id)}
+                        >
+                          Hapus
+                        </ActionButton>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
                     <td
-                      className={`py-3 px-4 font-bold ${
-                        course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
-                      }`}
+                      colSpan="7"
+                      className="text-center py-8"
                     >
-                      {course.typeClass}
-                    </td>
-                    <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
-                    <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
-                    <td className="py-3 px-4 font-bold grid xl:grid-cols-3">
-                      <ActionButton
-                        styles={'bg-light-green hover:border-light-green'}
-                        onClick={() => goToChapter(course._id)}
-                      >
-                        Chapter
-                      </ActionButton>
-                      <ActionButton
-                        styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
-                        onClick={() => handleEditCourse(course._id)}
-                      >
-                        Ubah
-                      </ActionButton>
-                      <ActionButton
-                        styles={'bg-alert-red hover:border-alert-red'}
-                        onClick={() => handleDeleteCourse(course._id)}
-                      >
-                        Hapus
-                      </ActionButton>
+                      <div className="flex justify-center items-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+                        <span className="ml-2">Loading...</span>
+                      </div>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             )}
           </table>
