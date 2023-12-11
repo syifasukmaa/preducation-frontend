@@ -33,17 +33,17 @@ const ResetPass = () => {
 
       if (response.ok) {
         toast.success('Anda berhasil mengubah password', {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_CENTER,
         })
         setPassword({ ...password, password: '' })
         setConfirmPassword({ ...confirmPassword, password: '' })
       } else if (data.message === 'Password reset token already expired') {
         toast.error('Tautan invalid atau kedaluwarsa', {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_CENTER,
         })
       } else if (data.message === 'Minimum password 8 characters') {
         toast.error('Password min 8 karakter', {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_CENTER,
         })
       }
     } catch (err) {
@@ -148,7 +148,7 @@ const ResetPass = () => {
       <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image src="/img/iconPreducation.png" alt="logo" width={150} height={150} className="mx-auto" priority />
       </div>
-      <ToastContainer />
+      <ToastContainer className={'z-50'} />
     </div>
   )
 }
