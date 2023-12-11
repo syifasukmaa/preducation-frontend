@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import SearchButton from '@/components/button/SearchButton';
 import FilterButton from '@/components/button/FilterButton';
 import FilterPopup from '@/components/popup/FilterPopup';
@@ -9,7 +10,7 @@ import AddButton from '@/components/button/AddButton';
 import ActionButton from '@/components/button/ActionButton';
 import Checkbox from './components/Checkbox';
 import ModalCourse from './components/ModalCourse';
-import { useSession } from 'next-auth/react';
+import CourseLoading from '@/components/loading/CourseLoading';
 import { useCourse } from '@/utils/swr';
 import { deleteCourse } from '@/utils/fetch';
 
@@ -40,7 +41,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const { course: courses, isLoading, mutate } = useCourse(token, null, selectedCategoryKeys, title);
+  const { course: courses, isLoading, mutate, error } = useCourse(token, null, selectedCategoryKeys, title);
 
   const [editMode, setEditMode] = useState(false);
   const [courseId, setCourseId] = useState(null);
@@ -75,9 +76,9 @@ export default function Page() {
 
   return (
     <div className={`md:px-12 px-4`}>
-      <div className="md:pt-2 flex items-center justify-between relative">
+      <div className="relative flex items-center justify-between md:pt-2">
         <p className="text-xl font-bold">Kelola Kelas</p>
-        <div className="flex items-center relative">
+        <div className="relative flex items-center">
           <AddButton onClick={() => handleAddCourse()} />
 
           <FilterButton onClick={() => setShowElements({ ...showElements, showFilter: true })} />
@@ -129,88 +130,81 @@ export default function Page() {
         )}
       </div>
 
-      <div className="overflow-x-auto mt-4 mb-24 lg:mb-32 md:mt-6">
+      <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
+            <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr>
-                <th className="py-3 px-4 text-left">Kode Kelas</th>
-                <th className="py-3 px-4 text-left">Kategori</th>
-                <th className="py-3 px-4 text-left">Nama Kelas</th>
-                <th className="py-3 px-4 text-left">Tipe Kelas</th>
-                <th className="py-3 px-4 text-left">Level</th>
-                <th className="py-3 px-4 text-left">Harga Kelas</th>
-                <th className="py-3 px-4 text-left">Aksi</th>
+                <th className="px-4 py-3 text-left">Kode Kelas</th>
+                <th className="px-4 py-3 text-left">Kategori</th>
+                <th className="px-4 py-3 text-left">Nama Kelas</th>
+                <th className="px-4 py-3 text-left">Tipe Kelas</th>
+                <th className="px-4 py-3 text-left">Level</th>
+                <th className="px-4 py-3 text-left">Harga Kelas</th>
+                <th className="px-4 py-3 text-left">Aksi</th>
               </tr>
             </thead>
             {isLoading ? (
               <tbody className="text-[10px]">
+                {[...Array(8)].map((_, index) => (
+                  <CourseLoading key={index} />
+                ))}
+              </tbody>
+            ) : error ? (
+              <tbody className="text-[10px]">
                 <tr>
                   <td
                     colSpan="7"
-                    className="text-center py-8"
+                    className="py-8 text-center"
                   >
-                    <div className="flex justify-center items-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
-                      <span className="ml-2">Loading...</span>
+                    <div className="flex items-center justify-center">
+                      <span>{`Error: ${error}`}</span>
                     </div>
                   </td>
                 </tr>
               </tbody>
             ) : (
               <tbody className="text-gray-700 text-[10px]">
-                {courses ? (
-                  courses.map((course) => (
-                    <tr key={course._id}>
-                      <td className="py-4 px-4 font-bold text-gray-05">{course.classCode}</td>
-                      <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
-                      <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
-                        {course.title}
-                      </td>
-                      <td
-                        className={`py-3 px-4 font-bold ${
-                          course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
-                        }`}
-                      >
-                        {course.typeClass}
-                      </td>
-                      <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
-                      <td className="py-3 px-4 font-bold text-black">Rp {course.price}</td>
-                      <td className="py-3 px-4 font-bold grid xl:grid-cols-3">
-                        <ActionButton
-                          styles={'bg-light-green hover:border-light-green'}
-                          onClick={() => goToChapter(course._id)}
+                {courses
+                  ? courses.map((course) => (
+                      <tr key={course._id}>
+                        <td className="px-4 py-4 font-bold text-gray-05">{course.classCode}</td>
+                        <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
+                        <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
+                          {course.title}
+                        </td>
+                        <td
+                          className={`py-3 px-4 font-bold ${
+                            course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
+                          }`}
                         >
-                          Chapter
-                        </ActionButton>
-                        <ActionButton
-                          styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
-                          onClick={() => handleEditCourse(course._id)}
-                        >
-                          Ubah
-                        </ActionButton>
-                        <ActionButton
-                          styles={'bg-alert-red hover:border-alert-red'}
-                          onClick={() => handleDeleteCourse(course._id)}
-                        >
-                          Hapus
-                        </ActionButton>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="7"
-                      className="text-center py-8"
-                    >
-                      <div className="flex justify-center items-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
-                        <span className="ml-2">Loading...</span>
-                      </div>
-                    </td>
-                  </tr>
-                )}
+                          {course.typeClass}
+                        </td>
+                        <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
+                        <td className="px-4 py-3 font-bold text-black">{ course.price}</td>
+                        <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
+                          <ActionButton
+                            styles={'bg-light-green hover:border-light-green'}
+                            onClick={() => goToChapter(course._id)}
+                          >
+                            Chapter
+                          </ActionButton>
+                          <ActionButton
+                            styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
+                            onClick={() => handleEditCourse(course._id)}
+                          >
+                            Ubah
+                          </ActionButton>
+                          <ActionButton
+                            styles={'bg-alert-red hover:border-alert-red'}
+                            onClick={() => handleDeleteCourse(course._id)}
+                          >
+                            Hapus
+                          </ActionButton>
+                        </td>
+                      </tr>
+                    ))
+                  : [...Array(8)].map((_, index) => <CourseLoading key={index} />)}
               </tbody>
             )}
           </table>

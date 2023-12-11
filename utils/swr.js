@@ -20,7 +20,7 @@ export const useCourse = (token, id, category, title) => {
     titleQuery = title;
   }
 
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading, mutate, error } = useSWR(
     token
       ? id
         ? [`${process.env.API_URL}/courses/${id}`, token]
@@ -32,11 +32,12 @@ export const useCourse = (token, id, category, title) => {
     course: data?.data,
     isLoading,
     mutate,
+    error,
   };
 };
 
 export const useChapter = (token, id) => {
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading, mutate, error } = useSWR(
     token ? [`${process.env.API_URL}/chapters/${id}`, token] : null,
     ([url, token]) => fetcher(url, token),
   );
@@ -44,6 +45,7 @@ export const useChapter = (token, id) => {
     chapter: data?.data,
     isLoading,
     mutate,
+    error,
   };
 };
 
@@ -53,7 +55,7 @@ export const usePayment = (token, status) => {
     statusQuery = status;
   }
 
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading, mutate, error } = useSWR(
     token ? [`${process.env.API_URL}/payments/all/?status=${statusQuery}`, token] : null,
     ([url, token]) => fetcher(url, token),
   );
@@ -61,5 +63,6 @@ export const usePayment = (token, status) => {
     payment: data?.data,
     isLoading,
     mutate,
+    error,
   };
 };

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import AddButton from '@/components/button/AddButton';
 import SearchButton from '@/components/button/SearchButton';
 import FilterPopup from '@/components/popup/FilterPopup';
@@ -9,7 +10,7 @@ import Checkbox from '../../components/Checkbox';
 import ActionButton from '@/components/button/ActionButton';
 import ModalChapter from '../../components/ModalChapter';
 import SearchPopup from '@/components/popup/SearchPopup';
-import { useSession } from 'next-auth/react';
+import ChapterLoading from '@/components/loading/ChapterLoading';
 import { useCourse } from '@/utils/swr';
 
 export default function Page() {
@@ -19,7 +20,7 @@ export default function Page() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
-  const { course, isLoading, mutate } = useCourse(token, idCourse, null, null);
+  const { course, isLoading, mutate, error } = useCourse(token, idCourse, null, null);
 
   const router = useRouter();
 
@@ -87,17 +88,26 @@ export default function Page() {
 
             <tbody className="text-gray-700  text-[10px]">
               {isLoading ? (
+                <>
+                  {[...Array(8)].map((_, index) => (
+                    <ChapterLoading key={index} />
+                  ))}
+                </>
+              ) : error ? (
                 <tr>
-                  <td colSpan="5">
-                    <p className="text-xl">Loading...</p>
+                  <td
+                    colSpan="7"
+                    className="text-center py-8"
+                  >
+                    <div className="flex justify-center items-center">
+                      <span>{`Error: ${error}`}</span>
+                    </div>
                   </td>
                 </tr>
-              ) : (
-                course &&
-                course.chapters &&
+              ) : course && course.chapters ? (
                 course.chapters.map((chapter, index) => (
                   <tr key={chapter._id}>
-                    <td className="py-4 px-4 font-bold text-gray-05">{chapter._id}</td>
+                    <td className="py-4 px-4 font-bold text-gray-05">{index + 1}</td>
                     <td className="py-4 px-4 font-bold text-gray-04">{chapter.title}</td>
                     <td className="py-4 px-4 font-bold text-gray-04">{chapter.totalDuration}</td>
                     <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
@@ -132,6 +142,8 @@ export default function Page() {
                     </td>
                   </tr>
                 ))
+              ) : (
+                [...Array(8)].map((_, index) => <ChapterLoading key={index} />)
               )}
             </tbody>
           </table>
