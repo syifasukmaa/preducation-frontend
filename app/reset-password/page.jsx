@@ -29,19 +29,19 @@ const ResetPass = () => {
 
       if (response.ok) {
         toast.success('Anda berhasil mengubah password', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_RIGHT,
         })
         setPassword('')
         setConfirmPassword('')
         setIsLoading(false)
       } else if (data.message === 'Password reset token already expired') {
         toast.error('Tautan invalid atau kedaluwarsa', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_RIGHT,
         })
         setIsLoading(false)
       } else if (data.message === 'Minimum password 8 characters') {
         toast.error('Password min 8 karakter', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_RIGHT,
         })
         setIsLoading(false)
       }
