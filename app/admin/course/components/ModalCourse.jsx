@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Dropdown from './Dropdown';
 import Input from './Input';
 import Modal from './Modal';
@@ -16,6 +16,7 @@ const options = [
 ];
 
 export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
+  const modalRef = useRef(null);
   const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
 
   const [selectedOption, setSelectedOption] = useState('judul');
@@ -136,10 +137,11 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
       onClose={onClose}
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
       handleSave={handleSave}
+      modalRef={modalRef}
     >
       {editMode && (
         <>
-          <div className="mt-3 w-full">
+          <div className="w-full mt-3">
             <label className="label-modal">Upload Gambar</label>
             <div className="input-modal-wrapper">
               <input
