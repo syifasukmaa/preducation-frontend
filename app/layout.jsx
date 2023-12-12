@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={monserrat.className}
+        className={`${monserrat.className} no-scrollbar`}
         suppressHydrationWarning={true}
       >
         <NextAuthProvider>{children}</NextAuthProvider>

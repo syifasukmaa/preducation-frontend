@@ -166,6 +166,7 @@ export default function Page() {
           token={token}
           Id={Id}
           mutate={mutate}
+          setShowModal={setShowModal}
         />
       )}
     </div>
