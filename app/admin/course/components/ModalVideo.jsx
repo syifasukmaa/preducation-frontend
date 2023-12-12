@@ -5,6 +5,7 @@ import Input from './Input';
 import { useChapter } from '@/utils/swr';
 import { createNewVideo, updateVideo } from '@/utils/fetch';
 import successAlert from '@/components/alert/successAlert';
+import ToastSweet from '@/components/alert/ToastSweet';
 
 export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapterId, setShowModal }) {
   const modalRef = useRef(null);
@@ -31,35 +32,42 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
 
   const handleSave = async (e) => {
     e.preventDefault();
-
-    const videoData = {
-      title: formData.namaVideo,
-      duration: formData.durasi,
-      index: formData.index,
-      videoUrl: formData.videoUrl,
-    };
-
-    if (editMode) {
-      const response = await updateVideo(token, videoData, Id);
-      if (response.ok) {
-        alert('Berhasil edit data video');
-        setTimeout(() => {
-          setFormData({
-            namaVideo: '',
-            durasi: '',
-            index: '',
-            videoUrl: '',
-          });
-        }, 1000);
-        singleMutate();
+    try {
+      if (formData.namaVideo === '' || formData.durasi === '' || formData.index === '' || formData.videoUrl === '') {
+        ToastSweet();
+        return;
       }
-    } else {
-      const response = await createNewVideo(token, videoData, Id);
-      if (response.ok) {
-        setShowModal(false);
-        mutate();
-        successAlert('Video');
+      const videoData = {
+        title: formData.namaVideo,
+        duration: formData.durasi,
+        index: formData.index,
+        videoUrl: formData.videoUrl,
+      };
+
+      if (editMode) {
+        const response = await updateVideo(token, videoData, Id);
+        if (response.ok) {
+          alert('Berhasil edit data video');
+          setTimeout(() => {
+            setFormData({
+              namaVideo: '',
+              durasi: '',
+              index: '',
+              videoUrl: '',
+            });
+          }, 1000);
+          singleMutate();
+        }
+      } else {
+        const response = await createNewVideo(token, videoData, Id);
+        if (response.ok) {
+          setShowModal(false);
+          mutate();
+          successAlert('Video');
+        }
       }
+    } catch (err) {
+      console.error('Error creating or update video', err);
     }
   };
 

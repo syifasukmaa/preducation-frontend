@@ -4,6 +4,7 @@ import Input from './Input';
 import { createNewChapter, updateChapter } from '@/utils/fetch';
 import { useChapter } from '@/utils/swr';
 import successAlert from '@/components/alert/successAlert';
+import ToastSweet from '@/components/alert/ToastSweet';
 
 export default function ModalChapter({ onClose, editMode, token, Id, mutate, setShowModal }) {
   const modalRef = useRef(null);
@@ -24,6 +25,11 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      if (titleChapter === '') {
+        ToastSweet();
+        return;
+      }
+
       const chapterData = { title: titleChapter };
 
       if (editMode) {
@@ -36,7 +42,6 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
         }
       } else {
         const response = await createNewChapter(token, chapterData, Id);
-        console.log(response);
         if (response.ok) {
           setShowModal(false);
           mutate();

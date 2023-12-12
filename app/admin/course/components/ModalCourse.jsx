@@ -6,6 +6,7 @@ import { createNewCourse, updateCourse } from '@/utils/fetch';
 import { useCourse } from '@/utils/swr';
 import Swal from 'sweetalert2';
 import successAlert from '@/components/alert/successAlert';
+import ToastSweet from '@/components/alert/ToastSweet';
 
 const options = [
   { label: 'Category', value: '' },
@@ -52,6 +53,19 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      if (
+        form.namaKelas.trim() === '' ||
+        selectedOption === '' ||
+        form.kodeKelas.trim() === '' ||
+        form.tipeKelas.trim() === '' ||
+        form.level.trim() === '' ||
+        form.harga === 0 ||
+        form.Materi.trim() === ''
+      ) {
+        ToastSweet();
+        return;
+      }
+
       if (editMode) {
         const formData = new FormData();
         formData.append('title', form.namaKelas);
