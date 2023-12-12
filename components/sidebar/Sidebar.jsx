@@ -39,7 +39,7 @@ export default function Sidebar() {
     >
       <button
         onClick={toggleSidebar}
-        className="md:hidden fixed z-50 right-4 top-14 bg-orange-05 text-white px-3 py-2 rounded"
+        className="fixed z-50 px-3 py-2 text-white rounded md:hidden right-4 top-14 bg-orange-05"
       >
         {open ? <IoMdClose /> : <RxHamburgerMenu />}
       </button>
@@ -54,7 +54,7 @@ export default function Sidebar() {
         priority
       />
 
-      <nav className="mt-6 md:mt-3 py-2">
+      <nav className="py-2 mt-6 md:mt-3">
         <ul className={`${open ? '' : 'flex flex-col justify-end items-end pr-3 md:pr-0 md:block'}`}>
           {sidebarItems?.map((item, index) => (
             <li
@@ -72,7 +72,7 @@ export default function Sidebar() {
             </li>
           ))}
 
-          <li className={`text-white py-3 bg-orange-05}`}>
+          <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
             <button
               className={`flex items-center px-4`}
               onClick={() => signOut()}

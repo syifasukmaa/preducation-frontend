@@ -1,6 +1,5 @@
 'use client';
-import React, { useState } from 'react';
-import ActionButton from '@/components/button/ActionButton';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import AddButton from '@/components/button/AddButton';
 import SearchButton from '@/components/button/SearchButton';
@@ -49,10 +48,18 @@ export default function page() {
     if (response.ok) mutate();
   };
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showModal]);
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold">Kelola Kelas</p>
+        <p className="text-xl font-bold">Kelola Video</p>
         <div className="relative flex items-center">
           <AddButton onClick={() => handleAddVideo(idChapter)} />
 
@@ -115,7 +122,7 @@ export default function page() {
                           className="w-full h-full"
                           src={`https://www.youtube.com/embed/${url}`}
                           title="YouTube video player"
-                          allow="autoplay; clipboard-write; encrypted-media; fullscreen; gryscope; picture-in-picture"
+                          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                         ></iframe>
                         <span className="mt-2 lg:flex">
                           <p>Link Youtube:</p>

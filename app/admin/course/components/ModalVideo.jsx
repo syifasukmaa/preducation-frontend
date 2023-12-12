@@ -1,11 +1,13 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from './Modal';
 import Input from './Input';
 import { useChapter } from '@/utils/swr';
 import { createNewVideo, updateVideo } from '@/utils/fetch';
 
 export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapterId }) {
+  const modalRef = useRef(null);
+
   const [formData, setFormData] = useState({
     namaVideo: '',
     durasi: 0,
@@ -82,6 +84,7 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
       onClose={onClose}
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
       handleSave={handleSave}
+      modalRef={modalRef}
     >
       <Input
         type={'text'}

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import SearchButton from '@/components/button/SearchButton';
@@ -11,17 +11,19 @@ import ActionButton from '@/components/button/ActionButton';
 import Checkbox from './components/Checkbox';
 import ModalCourse from './components/ModalCourse';
 import CourseLoading from '@/components/loading/CourseLoading';
+import formatToCurrency from '@/utils/convert';
 import { useCourse } from '@/utils/swr';
 import { deleteCourse } from '@/utils/fetch';
 
 export default function Page() {
   const [title, setTitle] = useState('');
-
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
   });
-
+  const [editMode, setEditMode] = useState(false);
+  const [courseId, setCourseId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState({
     'Data Science': false,
     'Web Development': false,
@@ -42,10 +44,6 @@ export default function Page() {
   const router = useRouter();
 
   const { course: courses, isLoading, mutate, error } = useCourse(token, null, selectedCategoryKeys, title);
-
-  const [editMode, setEditMode] = useState(false);
-  const [courseId, setCourseId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
 
   const goToChapter = (chapterId) => {
     router.push(`/admin/course/chapter/${chapterId}`);
@@ -73,6 +71,15 @@ export default function Page() {
       [label]: !selectedCategories[label],
     });
   };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showModal]);
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -181,7 +188,7 @@ export default function Page() {
                           {course.typeClass}
                         </td>
                         <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
-                        <td className="px-4 py-3 font-bold text-black">{ course.price}</td>
+                        <td className="px-4 py-3 font-bold text-black">{formatToCurrency(course.price)}</td>
                         <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
                           <ActionButton
                             styles={'bg-light-green hover:border-light-green'}
@@ -212,13 +219,15 @@ export default function Page() {
       </div>
 
       {showModal && (
-        <ModalCourse
-          onClose={() => setShowModal(false)}
-          editMode={editMode}
-          token={token}
-          mutate={mutate}
-          courseId={courseId}
-        />
+        <div>
+          <ModalCourse
+            onClose={() => setShowModal(false)}
+            editMode={editMode}
+            token={token}
+            mutate={mutate}
+            courseId={courseId}
+          />
+        </div>
       )}
     </div>
   );

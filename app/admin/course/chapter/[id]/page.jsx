@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -17,6 +17,14 @@ export default function Page() {
   const params = useParams();
   const idCourse = params.id;
 
+  const [showElements, setShowElements] = useState({
+    showInput: false,
+  });
+
+  const [Id, setId] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
@@ -27,14 +35,6 @@ export default function Page() {
   const goToChapter = (chapterId) => {
     router.push(`/admin/course/video/${chapterId}`);
   };
-
-  const [showElements, setShowElements] = useState({
-    showInput: false,
-  });
-
-  const [Id, setId] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleEditChapter = (id) => {
     setEditMode(true);
@@ -48,11 +48,20 @@ export default function Page() {
     setId(id);
   };
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showModal]);
+
   return (
     <div className={`md:px-12 px-4`}>
-      <div className="md:pt-2 flex items-center justify-between relative">
+      <div className="relative flex items-center justify-between md:pt-2">
         <p className="text-xl font-bold">Kelola Chapter</p>
-        <div className="flex items-center relative">
+        <div className="relative flex items-center">
           <AddButton onClick={() => handleAddChapter(idCourse)} />
 
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
@@ -73,16 +82,16 @@ export default function Page() {
         )}
       </div>
 
-      <div className="overflow-x-auto mt-4 mb-24 lg:mb-32 md:mt-6">
+      <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="bg-orange-04 font-semibold text-neutral-05 text-xs">
+            <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr className="text-left">
-                <th className="py-3 px-4">No</th>
-                <th className="py-3 px-4">Nama Chapter</th>
-                <th className="py-3 px-4">Total Durasi</th>
-                <th className="py-3 px-4">Link Video</th>
-                <th className="py-3 px-4">Aksi</th>
+                <th className="px-4 py-3">No</th>
+                <th className="px-4 py-3">Nama Chapter</th>
+                <th className="px-4 py-3">Total Durasi</th>
+                <th className="px-4 py-3">Link Video</th>
+                <th className="px-4 py-3">Aksi</th>
               </tr>
             </thead>
 
@@ -97,9 +106,9 @@ export default function Page() {
                 <tr>
                   <td
                     colSpan="7"
-                    className="text-center py-8"
+                    className="py-8 text-center"
                   >
-                    <div className="flex justify-center items-center">
+                    <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
                   </td>
@@ -107,10 +116,10 @@ export default function Page() {
               ) : course && course.chapters ? (
                 course.chapters.map((chapter, index) => (
                   <tr key={chapter._id}>
-                    <td className="py-4 px-4 font-bold text-gray-05">{index + 1}</td>
-                    <td className="py-4 px-4 font-bold text-gray-04">{chapter.title}</td>
-                    <td className="py-4 px-4 font-bold text-gray-04">{chapter.totalDuration}</td>
-                    <td className="py-3 px-4 font-bold text-gray-04 lg:whitespace-nowrap whitespace-pre-wrap">
+                    <td className="px-4 py-4 font-bold text-gray-05">{index + 1}</td>
+                    <td className="px-4 py-4 font-bold text-gray-04">{chapter.title}</td>
+                    <td className="px-4 py-4 font-bold text-gray-04">{chapter.totalDuration}</td>
+                    <td className="px-4 py-3 font-bold whitespace-pre-wrap text-gray-04 lg:whitespace-nowrap">
                       {chapter.videos?.map((link, index) => (
                         <div
                           key={link._id}
@@ -126,7 +135,7 @@ export default function Page() {
                         </div>
                       ))}
                     </td>
-                    <td className="py-3 px-4 font-bold grid xl:grid-cols-2">
+                    <td className="grid px-4 py-3 font-bold xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-secondary-dark-blue hover:border-secondary-dark-blue'}
                         onClick={() => goToChapter(chapter._id)}

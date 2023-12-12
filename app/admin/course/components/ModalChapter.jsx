@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from './Modal';
 import Input from './Input';
 import { createNewChapter, updateChapter } from '@/utils/fetch';
 import { useChapter } from '@/utils/swr';
 
 export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
+  const modalRef = useRef(null);
   const [titleChapter, setTitleChapter] = useState('');
 
   const { chapter, isLoding, mutate: singleMutate } = useChapter(token, Id);
@@ -34,7 +35,6 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
         }
       } else {
         const response = await createNewChapter(token, chapterData, Id);
-        console.log(response);
 
         if (response.ok) {
           alert('Sukses Membuat Capther Baru');
@@ -52,6 +52,7 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
       onClose={onClose}
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
       handleSave={handleSave}
+      modalRef={modalRef}
     >
       <Input
         type={'text'}
