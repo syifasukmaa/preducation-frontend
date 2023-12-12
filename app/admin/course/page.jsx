@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import SearchButton from '@/components/button/SearchButton';
@@ -14,6 +14,8 @@ import CourseLoading from '@/components/loading/CourseLoading';
 import formatToCurrency from '@/utils/convert';
 import { useCourse } from '@/utils/swr';
 import { deleteCourse } from '@/utils/fetch';
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
 
 export default function Page() {
   const [title, setTitle] = useState('');
@@ -61,8 +63,15 @@ export default function Page() {
   };
 
   const handleDeleteCourse = async (courseId) => {
-    const response = await deleteCourse(token, courseId);
-    if (response.ok) mutate();
+    const isConfirmed = await ConfirmDeleteAlert('Delete Chapter');
+
+    if (isConfirmed) {
+      const response = await deleteCourse(token, courseId);
+      if (response.ok) {
+        mutate();
+        DeleteSuccessAlert('Course');
+      }
+    }
   };
 
   const handleCheckboxChange = (label) => {
@@ -226,6 +235,7 @@ export default function Page() {
             token={token}
             mutate={mutate}
             courseId={courseId}
+            setShowModal={setShowModal}
           />
         </div>
       )}

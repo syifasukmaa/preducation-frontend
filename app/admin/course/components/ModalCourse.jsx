@@ -4,6 +4,8 @@ import Input from './Input';
 import Modal from './Modal';
 import { createNewCourse, updateCourse } from '@/utils/fetch';
 import { useCourse } from '@/utils/swr';
+import Swal from 'sweetalert2';
+import successAlert from '@/components/alert/successAlert';
 
 const options = [
   { label: 'Category', value: '' },
@@ -15,7 +17,7 @@ const options = [
   { label: 'Product Management', value: '6569b03463e7a9d96bbe4fc7' },
 ];
 
-export default function ModalCourse({ onClose, editMode, token, courseId, mutate }) {
+export default function ModalCourse({ onClose, editMode, token, courseId, mutate, setShowModal }) {
   const modalRef = useRef(null);
   const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
 
@@ -65,20 +67,9 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         const response = await updateCourse(token, courseId, formData);
 
         if (response.ok) {
-          alert('Sukses Edit Data');
-          setTimeout(() => {
-            setForm({
-              namaKelas: '',
-              kodeKelas: '',
-              tipeKelas: '',
-              level: '',
-              harga: 0,
-              Materi: '',
-              targetAudience: '',
-              thumbnail: null,
-            });
-          }, 1000);
+          setShowModal(false);
           singleMutate();
+          successAlert('edit', 'Course');
         }
       } else {
         const newCourseData = {
@@ -94,16 +85,9 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         const response = await createNewCourse(token, newCourseData);
 
         if (response.ok) {
-          alert('Sukses Menambahkan Kelas Baru');
+          setShowModal(false);
           mutate();
-          setForm({
-            namaKelas: '',
-            kodeKelas: '',
-            tipeKelas: '',
-            level: '',
-            harga: 0,
-            Materi: '',
-          });
+          successAlert('membuat', 'Course');
         }
       }
     } catch (error) {

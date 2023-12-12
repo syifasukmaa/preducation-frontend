@@ -3,8 +3,9 @@ import Modal from './Modal';
 import Input from './Input';
 import { createNewChapter, updateChapter } from '@/utils/fetch';
 import { useChapter } from '@/utils/swr';
+import successAlert from '@/components/alert/successAlert';
 
-export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
+export default function ModalChapter({ onClose, editMode, token, Id, mutate, setShowModal }) {
   const modalRef = useRef(null);
   const [titleChapter, setTitleChapter] = useState('');
 
@@ -35,11 +36,11 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate }) {
         }
       } else {
         const response = await createNewChapter(token, chapterData, Id);
-
+        console.log(response);
         if (response.ok) {
-          alert('Sukses Membuat Capther Baru');
-          setTitleChapter('');
+          setShowModal(false);
           mutate();
+          successAlert('Chapter');
         }
       }
     } catch (err) {

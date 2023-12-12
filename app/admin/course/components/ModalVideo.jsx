@@ -4,8 +4,9 @@ import Modal from './Modal';
 import Input from './Input';
 import { useChapter } from '@/utils/swr';
 import { createNewVideo, updateVideo } from '@/utils/fetch';
+import successAlert from '@/components/alert/successAlert';
 
-export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapterId }) {
+export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapterId, setShowModal }) {
   const modalRef = useRef(null);
 
   const [formData, setFormData] = useState({
@@ -55,14 +56,9 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
     } else {
       const response = await createNewVideo(token, videoData, Id);
       if (response.ok) {
-        alert('Berhasil menambahkan data video');
-        setFormData({
-          namaVideo: '',
-          durasi: '',
-          index: '',
-          videoUrl: '',
-        });
+        setShowModal(false);
         mutate();
+        successAlert('Video');
       }
     }
   };
@@ -75,9 +71,6 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
     }));
   };
 
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
   return (
     <Modal
       title={editMode ? 'Edit Video' : 'Tambah Video'}

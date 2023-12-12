@@ -11,44 +11,51 @@ import { MdUpgrade } from 'react-icons/md';
 import { useSession } from 'next-auth/react';
 import { useChapter } from '@/utils/swr';
 import { deleteVideo } from '@/utils/fetch';
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
 
 export default function page() {
-  const params = useParams()
-  const idChapter = params.id
+  const params = useParams();
+  const idChapter = params.id;
 
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
 
   const [showElements, setShowElements] = useState({
     showInput: false,
-  })
+  });
 
-  const [Id, setId] = useState(null)
-
+  const [Id, setId] = useState(null);
 
   const { chapter, mutate, isLoading, error } = useChapter(token, idChapter);
 
+  const [editMode, setEditMode] = useState(false);
 
-  const [editMode, setEditMode] = useState(false)
-
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const handleEditVideo = (id) => {
-    setEditMode(true)
-    setShowModal(true)
-    setId(id)
-  }
+    setEditMode(true);
+    setShowModal(true);
+    setId(id);
+  };
 
   const handleAddVideo = (id) => {
-    setEditMode(false)
-    setShowModal(true)
-    setId(id)
-  }
+    setEditMode(false);
+    setShowModal(true);
+    setId(id);
+  };
 
   const handleDeleteVideo = async (id) => {
-    const response = await deleteVideo(token, id)
-    if (response.ok) mutate()
-  }
+    const isConfirmed = await ConfirmDeleteAlert('Delete Video');
+
+    if (isConfirmed) {
+      const response = await deleteVideo(token, id);
+      if (response.ok) {
+        mutate();
+        DeleteSuccessAlert('Video');
+      }
+    }
+  };
 
   useEffect(() => {
     if (showModal) {
@@ -106,12 +113,15 @@ export default function page() {
                 </tr>
               ) : chapter && chapter.videos ? (
                 chapter.videos.map((video, index) => {
-                  const youtubetUrl = video.videoUrl
-                  const splitUrl = youtubetUrl.split('/')
-                  const url = splitUrl[splitUrl.length - 1]
+                  const youtubetUrl = video.videoUrl;
+                  const splitUrl = youtubetUrl.split('/');
+                  const url = splitUrl[splitUrl.length - 1];
 
                   return (
-                    <tr key={video._id} className=" border-y border-orange-04">
+                    <tr
+                      key={video._id}
+                      className=" border-y border-orange-04"
+                    >
                       <td className="p-4 font-bold text-gray-05">{index + 1}</td>
                       <td className="p-4 font-bold text-gray-04">{video.title}</td>
                       <td className="p-4 font-bold text-gray-04">{video.duration} min</td>
@@ -125,7 +135,11 @@ export default function page() {
                         ></iframe>
                         <span className="mt-2 lg:flex">
                           <p>Link Youtube:</p>
-                          <a href={url} target="_blank" className="underline text-dark-blue-03 hover:text-dark-blue-05">
+                          <a
+                            href={url}
+                            target="_blank"
+                            className="underline text-dark-blue-03 hover:text-dark-blue-05"
+                          >
                             {video.videoUrl}
                           </a>
                         </span>
@@ -163,8 +177,9 @@ export default function page() {
           mutate={mutate}
           Id={Id}
           chapterId={idChapter}
+          setShowModal={setShowModal}
         />
       )}
     </div>
-  )
+  );
 }

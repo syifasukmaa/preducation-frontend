@@ -1,12 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoMdClose } from 'react-icons/io';
 import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
 import { SiGoogleclassroom } from 'react-icons/si';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import Image from 'next/image';
+import Swal from 'sweetalert2';
 
 export default function Sidebar() {
   const url = usePathname();
@@ -29,6 +30,21 @@ export default function Sidebar() {
 
   const handleClick = (itemId) => {
     router.push(itemId);
+  };
+
+  const handleLogOut = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#167F71',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut();
+      }
+    });
   };
 
   return (
@@ -75,7 +91,7 @@ export default function Sidebar() {
           <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
             <button
               className={`flex items-center px-4`}
-              onClick={() => signOut()}
+              onClick={handleLogOut}
             >
               <span>
                 <LuLogOut />
