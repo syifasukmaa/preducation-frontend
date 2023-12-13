@@ -8,7 +8,7 @@ export default function Dropdown({ value, onChange, options, required }) {
     setClicked(true);
   };
   return (
-    <div className="mt-3 w-full">
+    <div className="w-full mt-3">
       <label
         htmlFor="dropdown"
         className="block text-[10px] font-semibold leading-6 text-gray-900"
@@ -23,7 +23,7 @@ export default function Dropdown({ value, onChange, options, required }) {
           required && clicked && !value ? 'ring-1 ring-inset ring-red-600' : value ? 'ring-1 ring-inset ring-black' : ''
         }`}
       >
-        {options.map((option) => (
+        {options?.map((option) => (
           <option
             key={option.value}
             value={option.value}

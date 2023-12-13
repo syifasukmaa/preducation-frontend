@@ -3,24 +3,17 @@ import Dropdown from './Dropdown';
 import Input from './Input';
 import Modal from './Modal';
 import { createNewCourse, updateCourse } from '@/utils/fetch';
-import { useCourse } from '@/utils/swr';
+import { useCategory, useCourse } from '@/utils/swr';
 import Swal from 'sweetalert2';
 import successAlert from '@/components/alert/successAlert';
 import ToastSweet from '@/components/alert/ToastSweet';
 
-const options = [
-  { label: 'Category', value: '' },
-  { label: 'UI/UX Design', value: '6569b03463e7a9d96bbe4fc6' },
-  { label: 'Data Science', value: '6569b03463e7a9d96bbe4fcb' },
-  { label: 'Web Development', value: '6569b03463e7a9d96bbe4fc8' },
-  { label: 'Android Development', value: '6569b03463e7a9d96bbe4fc9' },
-  { label: 'IOS Development', value: '6569b03463e7a9d96bbe4fca' },
-  { label: 'Product Management', value: '6569b03463e7a9d96bbe4fc7' },
-];
-
 export default function ModalCourse({ onClose, editMode, token, courseId, mutate, setShowModal }) {
   const modalRef = useRef(null);
-  const { course, mutate: singleMutate } = useCourse(token, courseId, null, null);
+  const { course } = useCourse(token, courseId, null, null);
+  const { categories } = useCategory(token);
+
+  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
 
   const [selectedOption, setSelectedOption] = useState('judul');
   const [form, setForm] = useState({
@@ -82,7 +75,7 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
 
         if (response.ok) {
           setShowModal(false);
-          singleMutate();
+          mutate();
           successAlert('edit', 'Course');
         }
       } else {
