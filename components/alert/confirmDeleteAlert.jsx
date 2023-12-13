@@ -10,6 +10,7 @@ export default async function ConfirmDeleteAlert(message) {
     confirmButtonColor: '#167F71',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Batal',
   });
 
   return result.isConfirmed;

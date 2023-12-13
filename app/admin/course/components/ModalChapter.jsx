@@ -36,7 +36,7 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
         setTitleChapter(chapter.title);
         const response = await updateChapter(token, chapterData, Id);
         if (response.ok) {
-          alert('Sukses Edit Capther');
+          successAlert('edit', 'Chapter');
           setTitleChapter('');
           singleMutate();
         }
@@ -45,7 +45,7 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
         if (response.ok) {
           setShowModal(false);
           mutate();
-          successAlert('Chapter');
+          successAlert('membuat', 'Chapter');
         }
       }
     } catch (err) {

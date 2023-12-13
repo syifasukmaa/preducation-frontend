@@ -20,7 +20,7 @@ export default function Page() {
   const [showElements, setShowElements] = useState({
     showInput: false,
   });
-
+  const [title, setTitle] = useState('');
   const [Id, setId] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -47,6 +47,12 @@ export default function Page() {
     setShowModal(true);
     setId(id);
   };
+  const searchChapter = (chapter) => {
+    const titleLower = title.toLowerCase();
+
+    const isTitleMatch = chapter.title?.toLowerCase().includes(titleLower);
+    return isTitleMatch;
+  };
 
   useEffect(() => {
     if (showModal) {
@@ -67,7 +73,11 @@ export default function Page() {
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
 
           {showElements.showInput && (
-            <SearchPopup onClick={() => setShowElements({ ...showElements, showInput: false })} />
+            <SearchPopup
+              onClick={() => setShowElements({ ...showElements, showInput: false })}
+              title={title}
+              setTitle={setTitle}
+            />
           )}
         </div>
 
@@ -88,7 +98,7 @@ export default function Page() {
             <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr className="text-left">
                 <th className="px-4 py-3">No</th>
-                <th className="px-4 py-3">Nama Chapter</th>
+                <th className="px-4 py-3 w-72">Nama Chapter</th>
                 <th className="px-4 py-3">Total Durasi</th>
                 <th className="px-4 py-3">Link Video</th>
                 <th className="px-4 py-3">Aksi</th>
@@ -114,43 +124,45 @@ export default function Page() {
                   </td>
                 </tr>
               ) : course && course.chapters ? (
-                course.chapters.map((chapter, index) => (
-                  <tr key={chapter._id}>
-                    <td className="px-4 py-4 font-bold text-gray-05">{index + 1}</td>
-                    <td className="px-4 py-4 font-bold text-gray-04">{chapter.title}</td>
-                    <td className="px-4 py-4 font-bold text-gray-04">{chapter.totalDuration}</td>
-                    <td className="px-4 py-3 font-bold whitespace-pre-wrap text-gray-04 lg:whitespace-nowrap">
-                      {chapter.videos?.map((link, index) => (
-                        <div
-                          key={link._id}
-                          className="text-orange-05"
-                        >
-                          <a
-                            href={link.videoUrl}
-                            target="_blank"
-                            className="hover:text-dark-blue-05"
+                course.chapters
+                  .filter((chapter) => searchChapter(chapter))
+                  .map((chapter, index) => (
+                    <tr key={chapter._id}>
+                      <td className="px-4 py-4 font-bold text-gray-05">{index + 1}</td>
+                      <td className="px-4 py-4 font-bold text-gray-04">{chapter.title}</td>
+                      <td className="px-4 py-4 font-bold text-gray-04">{chapter.totalDuration}</td>
+                      <td className="px-4 py-3 font-bold whitespace-pre-wrap text-gray-04 lg:whitespace-nowrap">
+                        {chapter.videos?.map((link, index) => (
+                          <div
+                            key={link._id}
+                            className="text-orange-05"
                           >
-                            {link.videoUrl}
-                          </a>
-                        </div>
-                      ))}
-                    </td>
-                    <td className="grid px-4 py-3 font-bold xl:grid-cols-2">
-                      <ActionButton
-                        styles={'bg-secondary-dark-blue hover:border-secondary-dark-blue'}
-                        onClick={() => goToChapter(chapter._id)}
-                      >
-                        Video
-                      </ActionButton>
-                      <ActionButton
-                        styles={'bg-light-green hover:border-light-green'}
-                        onClick={() => handleEditChapter(chapter._id)}
-                      >
-                        Ubah
-                      </ActionButton>
-                    </td>
-                  </tr>
-                ))
+                            <a
+                              href={link.videoUrl}
+                              target="_blank"
+                              className="hover:text-dark-blue-05"
+                            >
+                              {link.videoUrl}
+                            </a>
+                          </div>
+                        ))}
+                      </td>
+                      <td className="grid px-4 py-3 font-bold xl:grid-cols-2">
+                        <ActionButton
+                          styles={'bg-secondary-dark-blue hover:border-secondary-dark-blue'}
+                          onClick={() => goToChapter(chapter._id)}
+                        >
+                          Video
+                        </ActionButton>
+                        <ActionButton
+                          styles={'bg-light-green hover:border-light-green'}
+                          onClick={() => handleEditChapter(chapter._id)}
+                        >
+                          Ubah
+                        </ActionButton>
+                      </td>
+                    </tr>
+                  ))
               ) : (
                 [...Array(8)].map((_, index) => <ChapterLoading key={index} />)
               )}

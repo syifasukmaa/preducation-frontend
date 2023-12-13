@@ -88,8 +88,8 @@ export default function Page() {
           <table className="min-w-full bg-white rounded-lg">
             <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr>
-                <td className="px-4 py-3">ID</td>
-                <td className="px-4 py-3">Kategori</td>
+                <td className="w-24 px-4 py-3">ID</td>
+                <td className="w-32 px-4 py-3">Kategori</td>
                 <td className="px-4 py-3">Kelas Premium</td>
                 <td className="px-4 py-3">Status</td>
                 <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>

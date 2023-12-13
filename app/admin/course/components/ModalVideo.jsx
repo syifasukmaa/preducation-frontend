@@ -47,15 +47,7 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
       if (editMode) {
         const response = await updateVideo(token, videoData, Id);
         if (response.ok) {
-          alert('Berhasil edit data video');
-          setTimeout(() => {
-            setFormData({
-              namaVideo: '',
-              durasi: '',
-              index: '',
-              videoUrl: '',
-            });
-          }, 1000);
+          successAlert('edit', 'Video');
           singleMutate();
         }
       } else {
@@ -63,7 +55,7 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
         if (response.ok) {
           setShowModal(false);
           mutate();
-          successAlert('Video');
+          successAlert('membuat', 'Video');
         }
       }
     } catch (err) {
