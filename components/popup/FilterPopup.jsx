@@ -4,7 +4,7 @@ import ClosesButton from '../button/ClosesButton';
 export default function FilterPopup({ children, clickClose }) {
   return (
     <>
-      <div className="absolute bg-orange-05 top-12 right-0 py-4 pl-4 pr-10 rounded-lg z-30">
+      <div className="bg-orange-05 py-4 pl-4 pr-10 rounded-lg">
         <div className="">
           {children}
           <ClosesButton

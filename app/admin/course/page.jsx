@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import SearchButton from '@/components/button/SearchButton';
@@ -35,6 +35,8 @@ export default function Page() {
     'Ios Developmet': false,
     'Product Management': false,
   });
+
+  const overLay=useRef(null)
 
   const selectedCategoryKeys = Object.entries(selectedCategories)
     .filter(([key, value]) => value === true)
@@ -80,6 +82,23 @@ export default function Page() {
       [label]: !selectedCategories[label],
     });
   };
+  const handleOutsideClick = (e) => {
+    if (!overLay.current.contains(e.target)) {
+      setShowElements({ showFilter: false });
+    }
+  };
+
+  useEffect(() => {
+    if (showElements.showFilter) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [showElements.showFilter]);
 
   useEffect(() => {
     if (showModal) {
@@ -111,7 +130,8 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-          <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
+         <div className='absolute top-12 right-0 z-30' ref={overLay}>
+           <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
             <Checkbox
               label="Data Science"
               checked={selectedCategories['Data Science']}
@@ -139,10 +159,11 @@ export default function Page() {
             />
             <Checkbox
               label="Product Management"
-              checked={selectedCategories.productManagement}
+              checked={selectedCategories['Product Management']}
               onChange={() => handleCheckboxChange('Product Management')}
             />
           </FilterPopup>
+         </div>
         )}
       </div>
 
