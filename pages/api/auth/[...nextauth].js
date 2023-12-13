@@ -1,24 +1,25 @@
-import { loginAdmin } from "@/utils/fetch";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { loginAdmin } from '@/utils/fetch';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const nextAuthOptions = {
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
+    maxAge: 3 * 60 * 60 * 24,
   },
   providers: [
     CredentialsProvider({
-      type: "credentials",
+      type: 'credentials',
       credentials: {
         username: {
-          label: "Username",
-          type: "text",
-          placeholder: "Username",
+          label: 'Username',
+          type: 'text',
+          placeholder: 'Username',
         },
         password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Password',
         },
       },
       async authorize(credentials, req) {
@@ -34,7 +35,7 @@ export const nextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   callbacks: {
     async session({ session, token }) {

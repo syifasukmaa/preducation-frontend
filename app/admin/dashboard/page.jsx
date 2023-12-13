@@ -13,7 +13,7 @@ export default function Page() {
   const token = session?.user?.accessToken;
 
   const { payment: payments, isLoading, error } = usePayment(token, null);
-
+  const [title, setTitle] = useState('');
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
@@ -36,6 +36,16 @@ export default function Page() {
     }
     return true;
   };
+
+  const searchPayments = (payment) => {
+    const titleLower = title.toLowerCase();
+
+    const isUsernameMatch = payment.userId.username?.toLowerCase().includes(titleLower);
+    const isNameMatch = payment.courseId.category.name?.toLowerCase().includes(titleLower);
+    const isPaymentMethodMatch = payment.paymentType?.toLowerCase().includes(titleLower);
+    const isLeveleMatch = payment.courseId.level?.toLowerCase().includes(titleLower);
+    return isUsernameMatch || isNameMatch || isPaymentMethodMatch || isLeveleMatch;
+  };
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
@@ -46,7 +56,11 @@ export default function Page() {
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
 
           {showElements.showInput && (
-            <SearchPopup onClick={() => setShowElements({ ...showElements, showInput: false })} />
+            <SearchPopup
+              onClick={() => setShowElements({ ...showElements, showInput: false })}
+              title={title}
+              setTitle={setTitle}
+            />
           )}
         </div>
 
@@ -74,8 +88,8 @@ export default function Page() {
           <table className="min-w-full bg-white rounded-lg">
             <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr>
-                <td className="px-4 py-3">ID</td>
-                <td className="px-4 py-3">Kategori</td>
+                <td className="w-24 px-4 py-3">ID</td>
+                <td className="w-32 px-4 py-3">Kategori</td>
                 <td className="px-4 py-3">Kelas Premium</td>
                 <td className="px-4 py-3">Status</td>
                 <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>
@@ -104,6 +118,7 @@ export default function Page() {
               ) : payments ? (
                 payments
                   .filter((payment) => filterPayments(payment, showElements.filter))
+                  .filter((payment) => searchPayments(payment))
                   .map((payment) => (
                     <tr key={payment._id}>
                       <td className="px-4 py-4 font-bold text-gray-05">{payment.userId.username}</td>

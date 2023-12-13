@@ -25,12 +25,10 @@ export default function page() {
     showInput: false,
   });
 
+  const [title, setTitle] = useState('');
   const [Id, setId] = useState(null);
-
   const { chapter, mutate, isLoading, error } = useChapter(token, idChapter);
-
   const [editMode, setEditMode] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
 
   const handleEditVideo = (id) => {
@@ -57,6 +55,13 @@ export default function page() {
     }
   };
 
+  const searchVideos = (video) => {
+    const titleLower = title.toLowerCase();
+
+    const isTitleMatch = video.title?.toLowerCase().includes(titleLower);
+    return isTitleMatch;
+  };
+
   useEffect(() => {
     if (showModal) {
       document.body.classList.add('overflow-hidden');
@@ -75,7 +80,11 @@ export default function page() {
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
 
           {showElements.showInput && (
-            <SearchPopup onClick={() => setShowElements({ ...showElements, showInput: false })} />
+            <SearchPopup
+              onClick={() => setShowElements({ ...showElements, showInput: false })}
+              title={title}
+              setTitle={setTitle}
+            />
           )}
         </div>
       </div>
@@ -86,7 +95,7 @@ export default function page() {
             <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
               <tr className="">
                 <th className="p-4 text-left">No</th>
-                <th className="p-4 text-left">Nama Video</th>
+                <th className="p-4 text-left w-72">Nama Video</th>
                 <th className="p-4 text-left">Total Durasi</th>
                 <th className="p-4 text-left">Index</th>
                 <th className="px-4 py-3 text-left">Video</th>
@@ -112,55 +121,57 @@ export default function page() {
                   </td>
                 </tr>
               ) : chapter && chapter.videos ? (
-                chapter.videos.map((video, index) => {
-                  const youtubetUrl = video.videoUrl;
-                  const splitUrl = youtubetUrl.split('/');
-                  const url = splitUrl[splitUrl.length - 1];
+                chapter.videos
+                  .filter((video) => searchVideos(video))
+                  .map((video, index) => {
+                    const youtubetUrl = video.videoUrl;
+                    const splitUrl = youtubetUrl.split('/');
+                    const url = splitUrl[splitUrl.length - 1];
 
-                  return (
-                    <tr
-                      key={video._id}
-                      className=" border-y border-orange-04"
-                    >
-                      <td className="p-4 font-bold text-gray-05">{index + 1}</td>
-                      <td className="p-4 font-bold text-gray-04">{video.title}</td>
-                      <td className="p-4 font-bold text-gray-04">{video.duration} min</td>
-                      <td className="p-4 font-bold text-gray-04">{video.index}</td>
-                      <td className="px-4 py-3 font-bold text-gray-04">
-                        <iframe
-                          className="w-full h-full"
-                          src={`https://www.youtube.com/embed/${url}`}
-                          title="YouTube video player"
-                          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        ></iframe>
-                        <span className="mt-2 lg:flex">
-                          <p>Link Youtube:</p>
-                          <a
-                            href={url}
-                            target="_blank"
-                            className="underline text-dark-blue-03 hover:text-dark-blue-05"
+                    return (
+                      <tr
+                        key={video._id}
+                        className=" border-y border-orange-04"
+                      >
+                        <td className="p-4 font-bold text-gray-05">{index + 1}</td>
+                        <td className="p-4 font-bold text-gray-04">{video.title}</td>
+                        <td className="p-4 font-bold text-gray-04">{video.duration} min</td>
+                        <td className="p-4 font-bold text-gray-04">{video.index}</td>
+                        <td className="px-4 py-3 font-bold text-gray-04">
+                          <iframe
+                            className="w-full h-full"
+                            src={`https://www.youtube.com/embed/${url}`}
+                            title="YouTube video player"
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                          ></iframe>
+                          <span className="mt-2 lg:flex">
+                            <p>Link Youtube:</p>
+                            <a
+                              href={url}
+                              target="_blank"
+                              className="underline text-dark-blue-03 hover:text-dark-blue-05"
+                            >
+                              {video.videoUrl}
+                            </a>
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-bold">
+                          <button
+                            className="px-1 py-1 mb-2 mr-2 text-white rounded bg-light-green"
+                            onClick={() => handleEditVideo(video._id)}
                           >
-                            {video.videoUrl}
-                          </a>
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-bold">
-                        <button
-                          className="px-1 py-1 mb-2 mr-2 text-white rounded bg-light-green"
-                          onClick={() => handleEditVideo(video._id)}
-                        >
-                          <MdUpgrade size={20} />
-                        </button>
-                        <button
-                          className="px-1 py-1 mb-2 mr-2 text-white rounded bg-alert-red"
-                          onClick={() => handleDeleteVideo(video._id)}
-                        >
-                          <MdDeleteOutline size={20} />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                            <MdUpgrade size={20} />
+                          </button>
+                          <button
+                            className="px-1 py-1 mb-2 mr-2 text-white rounded bg-alert-red"
+                            onClick={() => handleDeleteVideo(video._id)}
+                          >
+                            <MdDeleteOutline size={20} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
               ) : (
                 [...Array(3)].map((_, index) => <VideoLoading key={index} />)
               )}
