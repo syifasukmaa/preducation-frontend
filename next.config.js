@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
@@ -7,9 +7,9 @@ const nextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   webpack: (config) => {
-    config.resolve.alias["@"] = path.resolve(__dirname);
-    return config;
+    config.resolve.alias['@'] = path.resolve(__dirname)
+    return config
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
