@@ -3,8 +3,8 @@ import Swal from 'sweetalert2';
 
 export default function DeleteSuccessAlert(item) {
   Swal.fire({
-    title: 'Deleted!',
-    text: `${item} has been deleted.`,
+    title: 'Berhasil!',
+    text: `${item} berhasil dihapus.`,
     icon: 'success',
   });
 

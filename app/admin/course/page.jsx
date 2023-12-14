@@ -36,7 +36,7 @@ export default function Page() {
     'Product Management': false,
   });
 
-  const overLay=useRef(null)
+  const overLay = useRef(null);
 
   const selectedCategoryKeys = Object.entries(selectedCategories)
     .filter(([key, value]) => value === true)
@@ -65,7 +65,7 @@ export default function Page() {
   };
 
   const handleDeleteCourse = async (courseId) => {
-    const isConfirmed = await ConfirmDeleteAlert('Delete Chapter');
+    const isConfirmed = await ConfirmDeleteAlert('Delete Course');
 
     if (isConfirmed) {
       const response = await deleteCourse(token, courseId);
@@ -130,40 +130,43 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-         <div className='absolute top-12 right-0 z-30' ref={overLay}>
-           <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-            <Checkbox
-              label="Data Science"
-              checked={selectedCategories['Data Science']}
-              onChange={() => handleCheckboxChange('Data Science')}
-            />
-            <Checkbox
-              label="Web Development"
-              checked={selectedCategories['Web Development']}
-              onChange={() => handleCheckboxChange('Web Development')}
-            />
-            <Checkbox
-              label="Android Development"
-              checked={selectedCategories['Android Development']}
-              onChange={() => handleCheckboxChange('Android Development')}
-            />
-            <Checkbox
-              label="IOS Development"
-              checked={selectedCategories['Ios Developmet']}
-              onChange={() => handleCheckboxChange('Ios Developmet')}
-            />
-            <Checkbox
-              label="UI/UX Design"
-              checked={selectedCategories['UI/UX Design']}
-              onChange={() => handleCheckboxChange('UI/UX Design')}
-            />
-            <Checkbox
-              label="Product Management"
-              checked={selectedCategories['Product Management']}
-              onChange={() => handleCheckboxChange('Product Management')}
-            />
-          </FilterPopup>
-         </div>
+          <div
+            className="absolute right-0 z-30 top-12"
+            ref={overLay}
+          >
+            <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
+              <Checkbox
+                label="Data Science"
+                checked={selectedCategories['Data Science']}
+                onChange={() => handleCheckboxChange('Data Science')}
+              />
+              <Checkbox
+                label="Web Development"
+                checked={selectedCategories['Web Development']}
+                onChange={() => handleCheckboxChange('Web Development')}
+              />
+              <Checkbox
+                label="Android Development"
+                checked={selectedCategories['Android Development']}
+                onChange={() => handleCheckboxChange('Android Development')}
+              />
+              <Checkbox
+                label="IOS Development"
+                checked={selectedCategories['Ios Developmet']}
+                onChange={() => handleCheckboxChange('Ios Developmet')}
+              />
+              <Checkbox
+                label="UI/UX Design"
+                checked={selectedCategories['UI/UX Design']}
+                onChange={() => handleCheckboxChange('UI/UX Design')}
+              />
+              <Checkbox
+                label="Product Management"
+                checked={selectedCategories['Product Management']}
+                onChange={() => handleCheckboxChange('Product Management')}
+              />
+            </FilterPopup>
+          </div>
         )}
       </div>
 

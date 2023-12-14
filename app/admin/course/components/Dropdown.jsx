@@ -23,9 +23,9 @@ export default function Dropdown({ value, onChange, options, required }) {
           required && clicked && !value ? 'ring-1 ring-inset ring-red-600' : value ? 'ring-1 ring-inset ring-black' : ''
         }`}
       >
-        {options?.map((option) => (
+        {options?.map((option, index) => (
           <option
-            key={option.value}
+            key={index}
             value={option.value}
             className="text-[14px]"
           >

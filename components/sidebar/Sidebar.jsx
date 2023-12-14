@@ -34,12 +34,13 @@ export default function Sidebar() {
 
   const handleLogOut = () => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Apakah yakin?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#167F71',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Logout',
+      confirmButtonText: 'Keluar',
+      cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
         signOut();
@@ -62,7 +63,6 @@ export default function Sidebar() {
 
       <Image
         src="/img/iconPreducation.png"
-        // className={`overflow-hidden transition-all w-[65%] ml-5 md:m-auto ${open ? 'w-32' : 'w-0'}`}
         className={`md:m-auto`}
         alt="Icon Belajar"
         width={110}
@@ -76,11 +76,11 @@ export default function Sidebar() {
             <li
               key={index}
               className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
+              onClick={() => handleClick(item.id)}
             >
               <button
                 href={item.id}
                 className={`flex items-center px-4`}
-                onClick={() => handleClick(item.id)}
               >
                 <span>{item.icon}</span>
                 <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
@@ -88,16 +88,14 @@ export default function Sidebar() {
             </li>
           ))}
 
-          <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
-            <button
-              className={`flex items-center px-4`}
-              onClick={handleLogOut}
-            >
-              <span>
-                <LuLogOut />
-              </span>
-              <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>Keluar</span>
-            </button>
+          <li
+            className={`text-white py-3 bg-orange-05} active:bg-orange-05 flex items-center px-4`}
+            onClick={handleLogOut}
+          >
+            <span>
+              <LuLogOut />
+            </span>
+            <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>Keluar</span>
           </li>
         </ul>
       </nav>
