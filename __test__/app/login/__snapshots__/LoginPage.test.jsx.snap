@@ -85,6 +85,7 @@ exports[`Login Page Should render 1`] = `
               />
               <button
                 class="absolute right-4 top-14"
+                title="button-visibility"
               >
                 <svg
                   color="grey"
@@ -200,6 +201,7 @@ exports[`Login Page Should render 1`] = `
             />
             <button
               class="absolute right-4 top-14"
+              title="button-visibility"
             >
               <svg
                 color="grey"

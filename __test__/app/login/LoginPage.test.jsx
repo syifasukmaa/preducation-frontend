@@ -19,6 +19,22 @@ describe('Login Page', () => {
     expect(page).toMatchSnapshot()
   })
 
+  it('Should contain Text Login', () => {
+    render(<LoginPage />)
+    expect(screen.getByRole('heading')).toHaveTextContent('Login')
+  })
+
+  it('Should toggles password visibility when eye icon is clicked', () => {
+    render(<LoginPage />)
+    const eyeIcon = screen.getByTitle('button-visibility')
+    const passwordInput = screen.getByPlaceholderText('Password')
+
+    expect(passwordInput.type).toBe('password')
+
+    fireEvent.click(eyeIcon)
+    expect(passwordInput.type).toBe('text')
+  })
+
   it('handles form submission successfully', async () => {
     signIn.mockResolvedValueOnce({ ok: true })
     render(<LoginPage />)
