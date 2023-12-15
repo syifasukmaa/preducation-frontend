@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import CardAdminItem from './CardAdminItem'
 import ClassIcon from '../icons/ClassIcon'
