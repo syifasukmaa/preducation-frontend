@@ -1,51 +1,72 @@
-'use client';
-import React, { useState } from 'react';
-import SearchButton from '@/components/button/SearchButton';
-import FilterButton from '@/components/button/FilterButton';
-import FilterPopup from '@/components/popup/FilterPopup';
-import SearchPopup from '@/components/popup/SearchPopup';
-import { useSession } from 'next-auth/react';
-import { usePayment } from '@/utils/swr';
-import PaymentLoading from '@/components/loading/PaymentLoading';
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
+import SearchButton from '@/components/button/SearchButton'
+import FilterButton from '@/components/button/FilterButton'
+import FilterPopup from '@/components/popup/FilterPopup'
+import SearchPopup from '@/components/popup/SearchPopup'
+import { useSession } from 'next-auth/react'
+import { usePayment } from '@/utils/swr'
+import PaymentLoading from '@/components/loading/PaymentLoading'
 
 export default function Page() {
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const { payment: payments, isLoading, error } = usePayment(token, null);
-  const [title, setTitle] = useState('');
+  const { payment: payments, isLoading, error } = usePayment(token, null)
+  const [title, setTitle] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
     filter: '',
-  });
+  })
+
+  const overLay = useRef(null)
 
   const filterCourses = (filterOption) => {
     setShowElements({
       ...showElements,
       filter: filterOption,
       showFilter: false,
-    });
-  };
+    })
+  }
 
   const filterPayments = (payment, showFilter) => {
     if (showFilter === 'Paid') {
-      return payment.status === 'paid';
+      return payment.status === 'paid'
     } else if (showFilter === 'On Progress') {
-      return payment.status === 'On Progress';
+      return payment.status === 'On Progress'
     }
-    return true;
-  };
+    return true
+  }
 
   const searchPayments = (payment) => {
-    const titleLower = title.toLowerCase();
+    const titleLower = title.toLowerCase()
 
-    const isUsernameMatch = payment.userId.username?.toLowerCase().includes(titleLower);
-    const isNameMatch = payment.courseId.category.name?.toLowerCase().includes(titleLower);
-    const isPaymentMethodMatch = payment.paymentType?.toLowerCase().includes(titleLower);
-    const isLeveleMatch = payment.courseId.level?.toLowerCase().includes(titleLower);
-    return isUsernameMatch || isNameMatch || isPaymentMethodMatch || isLeveleMatch;
-  };
+    const isUsernameMatch = payment.userId.username?.toLowerCase().includes(titleLower)
+    const isNameMatch = payment.courseId.category.name?.toLowerCase().includes(titleLower)
+    const isPaymentMethodMatch = payment.paymentType?.toLowerCase().includes(titleLower)
+    const isLeveleMatch = payment.courseId.level?.toLowerCase().includes(titleLower)
+    return isUsernameMatch || isNameMatch || isPaymentMethodMatch || isLeveleMatch
+  }
+
+  const handleOutsideClick = (e) => {
+    if (!overLay.current.contains(e.target)) {
+      setShowElements({ showFilter: false })
+    }
+  }
+
+  useEffect(() => {
+    if (showElements.showFilter) {
+      document.addEventListener('mousedown', handleOutsideClick)
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [showElements.showFilter])
+
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
@@ -65,21 +86,17 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-          <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-            <p
-              className="item-filter"
-              onClick={() => filterCourses('Paid')}
-            >
-              Paid
-            </p>
-            <hr />
-            <p
-              className="item-filter"
-              onClick={() => filterCourses('On Progress')}
-            >
-              On Progress
-            </p>
-          </FilterPopup>
+          <div className="absolute right-0 z-30 top-12" ref={overLay}>
+            <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
+              <p className="item-filter" onClick={() => filterCourses('Paid')}>
+                Paid
+              </p>
+              <hr />
+              <p className="item-filter" onClick={() => filterCourses('On Progress')}>
+                On Progress
+              </p>
+            </FilterPopup>
+          </div>
         )}
       </div>
 
@@ -106,10 +123,7 @@ export default function Page() {
                 </>
               ) : error ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -143,5 +157,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
+  )
 }
