@@ -75,6 +75,7 @@ const ResetPass = () => {
               />
 
               <button
+                title="button-visibility"
                 className="absolute top-1/2 transform -translate-y-1/2 right-4"
                 onClick={() => setVisibilityPassword((prev) => !prev)}
               >
