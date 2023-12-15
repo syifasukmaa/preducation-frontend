@@ -22,15 +22,6 @@ const LoginPage = () => {
     setShowPassword((prev) => !prev)
   }
 
-  const inputPassMerah = () => {
-    const passInput = document.querySelector('#passInput')
-    passInput.classList.add('border-red-500')
-
-    setTimeout(() => {
-      passInput.classList.remove('border-red-500')
-    }, 5000)
-  }
-
   const handleSubmit = async () => {
     setIsLoading(true)
     try {
@@ -49,35 +40,32 @@ const LoginPage = () => {
         toast.error('Username atau password salah', {
           position: toast.POSITION.TOP_RIGHT,
         })
-        inputPassMerah()
         setIsLoading(false)
       }
     } catch (error) {
-      throw new Error('Internal server error')
+      setIsLoading(false)
+      console.log(error)
     }
   }
   return (
     <div className="flex flex-col lg:flex-row w-full min-h-screen">
-      {/* Bagian Kiri */}
       <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image src="/img/iconPreducation.png" alt="logo" width={150} height={150} className="mx-auto" priority />
       </div>
 
-      {/* Bagian Kanan */}
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
           <h1 className="font-bold text-xl text-orange-05 mb-8 lg:mb-12 text-center">Login</h1>
 
-          {/* ID ADMIN */}
-          <div className="mb-4 lg:mb-8">
-            <p className="float-left">ID Admin</p>
+          <div className="lg:mb-3">
+            <label htmlFor="idAdmin">ID Admin</label>
             <br />
             <input
               type="text"
               name="IDAdmin"
-              id="IdInput"
+              id="idAdmin"
               placeholder="ID Admin"
-              className="float-left border-2 rounded-lg w-full p-2 z-0"
+              className="border-2 rounded-lg w-full p-2 z-0"
               value={idAdmin}
               onChange={(e) => {
                 setIdAdmin(e.target.value)
@@ -87,40 +75,41 @@ const LoginPage = () => {
           </div>
 
           {/* PASSWORD */}
-          <div className="mt-2 relative block mb-4 lg:mb-8">
-            <br />
-            <p className="float-left">Password</p>
-
+          <div className="block lg:mb-3">
+            <label htmlFor="passInputAdmin">Password</label>
             <p className="float-right">
               <Link href="/forgot-password" className="text-orange-05">
                 Lupa Kata Sandi
               </Link>
             </p>
             <br />
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              id="passInput"
-              placeholder="Password"
-              className="float-left border-2 rounded-lg w-full p-2"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            <button className="absolute right-4 top-14" onClick={toggleVisibility} title="button-visibility">
-              {!showPassword ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
-            </button>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                id="passInputAdmin"
+                placeholder="Password"
+                className="border-2 rounded-lg w-full p-2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                className="right-4 absolute top-1/2 transform -translate-y-1/2"
+                onClick={toggleVisibility}
+                title="button-visibility"
+              >
+                {!showPassword ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
+              </button>
+            </div>
           </div>
           <br />
-          <br />
 
-          {/* Login button */}
           <button
-            disabled={isLoading ? true : false}
+            disabled={isLoading || idAdmin.length === 0 || password.length === 0 ? true : false}
             onClick={handleSubmit}
             className={`text-white bg-orange-05 rounded-lg w-full px-2 h-10 mb-10 flex items-center justify-center ${
-              isLoading ? 'cursor-not-allowed' : ''
+              isLoading || idAdmin.length === 0 || password.length === 0 ? 'cursor-not-allowed' : ''
             }`}
           >
             {isLoading ? <AiOutlineLoading3Quarters className="animate-spin" size={20} /> : 'Masuk'}
