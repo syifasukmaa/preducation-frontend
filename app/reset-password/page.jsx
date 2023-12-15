@@ -44,9 +44,18 @@ const ResetPass = () => {
           position: toast.POSITION.TOP_RIGHT,
         })
         setIsLoading(false)
+      } else {
+        toast.error('Terjadi Kesalahan', {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+        setIsLoading(false)
       }
     } catch (err) {
-      throw err
+      toast.error('Internal Server Error', {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+      setIsLoading(false)
+      throw new Error('Internal server error')
     }
   }
 
