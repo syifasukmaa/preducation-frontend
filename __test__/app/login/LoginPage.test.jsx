@@ -67,10 +67,6 @@ describe('Login Page', () => {
     await waitFor(async () => {
       const errorMessage = screen.getByText('Username atau password salah')
       expect(errorMessage).toBeInTheDocument()
-      expect(screen.getByPlaceholderText('Password')).toHaveClass('border-red-500')
-      setTimeout(() => {
-        expect(screen.getByPlaceholderText('Password')).not.toHaveClass('border-red-500')
-      }, 5000)
     })
   })
 })

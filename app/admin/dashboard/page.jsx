@@ -12,13 +12,14 @@ export default function Page() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken
 
-  const { payment: payments, isLoading, error } = usePayment(token, null)
-  const [title, setTitle] = useState('')
+  const [username, setUsername] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
     filter: '',
   })
+
+  const { payment: payments, isLoading, error } = usePayment(token, showElements.filter, username)
 
   const overLay = useRef(null)
 
@@ -28,25 +29,6 @@ export default function Page() {
       filter: filterOption,
       showFilter: false,
     })
-  }
-
-  const filterPayments = (payment, showFilter) => {
-    if (showFilter === 'Paid') {
-      return payment.status === 'paid'
-    } else if (showFilter === 'On Progress') {
-      return payment.status === 'On Progress'
-    }
-    return true
-  }
-
-  const searchPayments = (payment) => {
-    const titleLower = title.toLowerCase()
-
-    const isUsernameMatch = payment.userId.username?.toLowerCase().includes(titleLower)
-    const isNameMatch = payment.courseId.category.name?.toLowerCase().includes(titleLower)
-    const isPaymentMethodMatch = payment.paymentType?.toLowerCase().includes(titleLower)
-    const isLeveleMatch = payment.courseId.level?.toLowerCase().includes(titleLower)
-    return isUsernameMatch || isNameMatch || isPaymentMethodMatch || isLeveleMatch
   }
 
   const handleOutsideClick = (e) => {
@@ -79,8 +61,8 @@ export default function Page() {
           {showElements.showInput && (
             <SearchPopup
               onClick={() => setShowElements({ ...showElements, showInput: false })}
-              title={title}
-              setTitle={setTitle}
+              title={username}
+              setTitle={setUsername}
             />
           )}
         </div>
@@ -130,25 +112,22 @@ export default function Page() {
                   </td>
                 </tr>
               ) : payments ? (
-                payments
-                  .filter((payment) => filterPayments(payment, showElements.filter))
-                  .filter((payment) => searchPayments(payment))
-                  .map((payment) => (
-                    <tr key={payment._id}>
-                      <td className="px-4 py-4 font-bold text-gray-05">{payment.userId.username}</td>
-                      <td className="py-3 pl-4 pr-3 font-bold text-gray-05">{payment.courseId.category.name}</td>
-                      <td className="px-4 py-3 font-bold text-gray-04">{payment.courseId.level}</td>
-                      <td
-                        className={`py-3 px-4 font-bold ${
-                          payment.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
-                        }`}
-                      >
-                        {payment.status}
-                      </td>
-                      <td className="px-4 py-3 font-bold lg:pl-4 lg:pr-0 text-gray-04">{payment.paymentType}</td>
-                      <td className="px-4 py-3 pl-4 font-bold lg:pl-0 lg:pr-1 text-gray-05">{payment.createdAt}</td>
-                    </tr>
-                  ))
+                payments.map((payment) => (
+                  <tr key={payment._id}>
+                    <td className="px-4 py-4 font-bold text-gray-05">{payment.userId.username}</td>
+                    <td className="py-3 pl-4 pr-3 font-bold text-gray-05">{payment.courseId.category.name}</td>
+                    <td className="px-4 py-3 font-bold text-gray-04">{payment.courseId.level}</td>
+                    <td
+                      className={`py-3 px-4 font-bold ${
+                        payment.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
+                      }`}
+                    >
+                      {payment.status}
+                    </td>
+                    <td className="px-4 py-3 font-bold lg:pl-4 lg:pr-0 text-gray-04">{payment.paymentType}</td>
+                    <td className="px-4 py-3 pl-4 font-bold lg:pl-0 lg:pr-1 text-gray-05">{payment.createdAt}</td>
+                  </tr>
+                ))
               ) : (
                 [...Array(5)].map((_, index) => <PaymentLoading key={index} />)
               )}
