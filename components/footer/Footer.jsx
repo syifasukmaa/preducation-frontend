@@ -13,7 +13,7 @@ const Footer = () => {
               <div className='flex gap-2 mx-auto md:mx-0 '>
                 {/* icon */}
                 <Image
-                  src='location.svg'
+                  src='/location.svg'
                   width={10}
                   height={10}
                   alt='location'/>
@@ -23,20 +23,20 @@ const Footer = () => {
               <div className='flex gap-2 mx-auto md:mx-0'>
                 {/* icon */}
                 <Image
-                  src='phone.svg'
+                  src='/phone.svg'
                   width={10}
                   height={10}
-                  alt='location'/>
+                  alt='phone'/>
                 <p href='#' className='text-white'>(000) 123-456</p>
               </div>
 
               <div className='flex gap-2 mx-auto md:mx-0'>
                 {/* icon */}
                 <Image
-                  src='email.svg'
+                  src='/email.svg'
                   width={10}
                   height={10}
-                  alt='location'/>
+                  alt='email'/>
                 <p href='#' className='text-white'>preducation@example.com</p>
               </div>
               
@@ -101,21 +101,21 @@ const Footer = () => {
               <div className=" flex flex-row mx-auto gap-5 ">
                   <Link href="#">
                     <Image
-                      src='linkedIn.svg'
+                      src='/linkedIn.svg'
                       width={20}
                       height={20}
                       alt='linkedin'/>
                   </Link>
                   <Link href="#">
                     <Image
-                        src='instagram.svg'
+                        src='/twitter.svg'
                         width={20}
                         height={20}
                         alt='twitter'/>
                   </Link>
                   <Link href="#">
                     <Image
-                          src='instagram.svg'
+                          src='/instagram.svg'
                           width={20}
                           height={20}
                           alt='instagram'/>
