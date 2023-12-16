@@ -4,7 +4,6 @@ import Input from './Input';
 import Modal from './Modal';
 import { createNewCourse, updateCourse } from '@/utils/fetch';
 import { useCategory, useCourse } from '@/utils/swr';
-import Swal from 'sweetalert2';
 import successAlert from '@/components/alert/successAlert';
 import ToastSweet from '@/components/alert/ToastSweet';
 
@@ -13,19 +12,35 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
   const { course } = useCourse(token, courseId, null, null);
   const { categories } = useCategory(token);
 
-  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
-
-  const [selectedOption, setSelectedOption] = useState('judul');
+  const [click, setClick] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState({
+    category: '',
+    level: '',
+    tipeKelas: '',
+  });
   const [form, setForm] = useState({
     namaKelas: '',
     kodeKelas: '',
-    tipeKelas: '',
-    level: '',
     harga: '',
     Materi: '',
     targetAudience: '',
     thumbnail: null,
   });
+
+  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
+
+  const levelOptions = [
+    { label: 'Level', value: 'Level' },
+    { label: 'Beginner', value: 'Beginner' },
+    { label: 'Intermediate', value: 'Intermediate' },
+    { label: 'Advanced', value: 'Advanced' },
+  ];
+
+  const tipeKelasOptions = [
+    { label: 'Tipe Kelas', value: 'tipekelas' },
+    { label: 'FREE', value: 'FREE' },
+    { label: 'PREMIUM', value: 'PREMIUM' },
+  ];
 
   useEffect(() => {
     if (editMode && course) {
@@ -33,13 +48,15 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         namaKelas: course.title,
         Materi: course.description,
         kodeKelas: course.classCode,
-        tipeKelas: course.typeClass,
-        level: course.level,
         harga: course.price,
         targetAudience: course.targetAudience,
         thumbnail: course.thumbnail,
       });
-      setSelectedOption(course.category._id);
+      setSelectedOptions({
+        category: course.category._id,
+        level: course.level,
+        tipeKelas: course.typeClass,
+      });
     }
   }, [editMode, course]);
 
@@ -48,10 +65,10 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
     try {
       if (
         form.namaKelas.trim() === '' ||
-        selectedOption === '' ||
+        selectedOptions.category === '' ||
         form.kodeKelas.trim() === '' ||
-        form.tipeKelas.trim() === '' ||
-        form.level.trim() === '' ||
+        selectedOptions.tipeKelas === '' ||
+        selectedOptions.level === '' ||
         form.harga === 0 ||
         form.Materi.trim() === ''
       ) {
@@ -64,9 +81,9 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         formData.append('title', form.namaKelas);
         formData.append('description', form.Materi);
         formData.append('classCode', form.kodeKelas);
-        formData.append('category', selectedOption);
-        formData.append('typeClass', form.tipeKelas);
-        formData.append('level', form.level);
+        formData.append('category', selectedOptions.category);
+        formData.append('level', selectedOptions.level);
+        formData.append('typeClass', selectedOptions.tipeKelas);
         formData.append('price', form.harga);
         formData.append('targetAudience', form.targetAudience);
         formData.append('thumbnail', form.thumbnail);
@@ -83,13 +100,15 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
           title: form.namaKelas,
           description: form.Materi,
           classCode: form.kodeKelas,
-          category: selectedOption,
-          typeClass: form.tipeKelas,
-          level: form.level,
+          category: selectedOptions.category,
+          level: selectedOptions.level,
+          typeClass: selectedOptions.tipeKelas,
+          level: selectedOptions.level,
           price: form.harga,
         };
 
         const response = await createNewCourse(token, newCourseData);
+        console.log(response);
 
         if (response.ok) {
           setShowModal(false);
@@ -102,8 +121,9 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
     }
   };
 
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
+    setSelectedOptions({ ...selectedOptions, [name]: value });
   };
 
   const handleInputChange = (e) => {
@@ -120,6 +140,10 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
       ...prevData,
       thumbnail: imageFile,
     }));
+  };
+
+  const handleSelectClick = (e) => {
+    setClick(true);
   };
 
   return (
@@ -164,12 +188,6 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         onChange={handleInputChange}
         required
       />
-      <Dropdown
-        value={selectedOption}
-        onChange={handleSelectChange}
-        options={options}
-        required
-      />
       <Input
         label="Kode Kelas"
         name="kodeKelas"
@@ -178,29 +196,78 @@ export default function ModalCourse({ onClose, editMode, token, courseId, mutate
         onChange={handleInputChange}
         required
       />
-      <Input
-        type={'text'}
-        label="Tipe Kelas"
-        name="tipeKelas"
-        placeholder="Tipe Kelas"
-        value={form.tipeKelas}
-        onChange={handleInputChange}
-        required
-      />
-      <Input
-        type={'text'}
-        label="Level"
-        name="level"
-        placeholder="Level"
-        value={form.level}
-        onChange={handleInputChange}
-        required
-      />
+      <Dropdown label="Category">
+        <select
+          name="category"
+          value={selectedOptions.category}
+          onChange={handleSelectChange}
+          onClick={handleSelectClick}
+          className={`select-dropdown ${
+            selectedOptions.category == 'All' && click ? 'ring-fail' : selectedOptions.category ? 'ring-success' : ''
+          }`}
+        >
+          {options?.map((option, index) => (
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </Dropdown>
+      <Dropdown label="Tipe Kelas">
+        <select
+          name="tipeKelas"
+          value={selectedOptions.tipeKelas}
+          onChange={handleSelectChange}
+          onClick={handleSelectClick}
+          className={`select-dropdown ${
+            selectedOptions.tipeKelas == 'tipekelas' && click
+              ? 'ring-fail'
+              : selectedOptions.tipeKelas
+              ? 'ring-success'
+              : ''
+          }`}
+        >
+          {tipeKelasOptions?.map((option, index) => (
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </Dropdown>
+      <Dropdown label="Level">
+        <select
+          name="level"
+          value={selectedOptions.level}
+          onChange={handleSelectChange}
+          onClick={handleSelectClick}
+          className={`select-dropdown ${
+            selectedOptions.level == 'Level' && click ? 'ring-fail' : selectedOptions.level ? 'ring-success' : ''
+          }`}
+        >
+          {levelOptions?.map((option, index) => (
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </Dropdown>
       <Input
         type={'number'}
         label="Harga"
         name="harga"
-        placeholder="Harga 0 / ..."
+        placeholder="0 untuk Free"
         value={form.harga}
         onChange={handleInputChange}
         required

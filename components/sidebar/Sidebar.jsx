@@ -8,6 +8,7 @@ import { SiGoogleclassroom } from 'react-icons/si';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import Swal from 'sweetalert2';
+import '../style.css';
 
 export default function Sidebar() {
   const url = usePathname();
@@ -39,8 +40,13 @@ export default function Sidebar() {
       showCancelButton: true,
       confirmButtonColor: '#167F71',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Keluar',
+      confirmButtonText: 'Logout',
       cancelButtonText: 'Batal',
+      customClass: {
+        title: 'custom-title-class',
+        content: 'custom-text-class',
+        popup: 'custom-card-class',
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         signOut();
@@ -63,6 +69,7 @@ export default function Sidebar() {
 
       <Image
         src="/img/iconPreducation.png"
+        // className={`overflow-hidden transition-all w-[65%] ml-5 md:m-auto ${open ? 'w-32' : 'w-0'}`}
         className={`md:m-auto`}
         alt="Icon Belajar"
         width={110}
@@ -76,11 +83,11 @@ export default function Sidebar() {
             <li
               key={index}
               className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
-              onClick={() => handleClick(item.id)}
             >
               <button
                 href={item.id}
-                className={`flex items-center px-4`}
+                className={`flex items-center px-4 ${url.startsWith(item.id) ? 'ml-4' : ''}`}
+                onClick={() => handleClick(item.id)}
               >
                 <span>{item.icon}</span>
                 <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
@@ -88,14 +95,16 @@ export default function Sidebar() {
             </li>
           ))}
 
-          <li
-            className={`text-white py-3 bg-orange-05} active:bg-orange-05 flex items-center px-4`}
-            onClick={handleLogOut}
-          >
-            <span>
-              <LuLogOut />
-            </span>
-            <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>Keluar</span>
+          <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
+            <button
+              className={`flex items-center px-4`}
+              onClick={handleLogOut}
+            >
+              <span>
+                <LuLogOut />
+              </span>
+              <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>Keluar</span>
+            </button>
           </li>
         </ul>
       </nav>

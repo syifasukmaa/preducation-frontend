@@ -11,6 +11,11 @@ export default async function ConfirmDeleteAlert(message) {
     cancelButtonColor: '#d33',
     confirmButtonText: 'Hapus',
     cancelButtonText: 'Batal',
+    customClass: {
+      title: 'custom-title-class',
+      content: 'custom-text-class',
+      popup: 'custom-card-class',
+    },
   });
 
   return result.isConfirmed;

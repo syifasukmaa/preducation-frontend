@@ -1,0 +1,14 @@
+/* Contoh penyesuaian ukuran teks */
+.custom-title-class {
+  font-size: 24px; /* Atur ukuran teks untuk judul */
+}
+
+.custom-text-class {
+  font-size: 16px; /* Atur ukuran teks untuk teks */
+}
+
+/* Contoh untuk mengecilkan kartu */
+.custom-card-class {
+  max-width: 350px; /* Atur lebar maksimum kartu */
+  /* Atur properti lain untuk menyesuaikan tampilan kartu */
+}
