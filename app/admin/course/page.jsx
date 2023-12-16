@@ -82,10 +82,15 @@ export default function Page() {
       [label]: !selectedCategories[label],
     });
   };
+
   const handleOutsideClick = (e) => {
     if (!overLay.current.contains(e.target)) {
       setShowElements({ showFilter: false });
     }
+  };
+
+  const handleRefreshCourse = () => {
+    mutate();
   };
 
   useEffect(() => {
