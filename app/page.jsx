@@ -1,20 +1,20 @@
-import React from "react";
-import Image from "next/image";
-import NavBar from "@/components/navbar/Navbarlp";
-import Footer from "@/components/footer/Footer";
+import React from 'react';
+import Image from 'next/image';
+import NavBar from '@/components/navbar/Navbarlp';
+import Footer from '@/components/footer/Footer';
 
-import { FaStar } from "react-icons/fa6";
-import { IoTimeOutline } from "react-icons/io5";
-import Carousel from "@/components/carousel/Carousel";
+import { FaStar } from 'react-icons/fa6';
+import { IoTimeOutline } from 'react-icons/io5';
+import Carousel from '@/components/carousel/Carousel';
 
 const allCourses = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
+    const res = await fetch(`${process.env.API_URL}/courses`);
     const data = await res.json();
-    console.log("API Response:", data);
+    console.log('API Response:', data);
     return data;
   } catch (error) {
-    console.error("Error fetching courses:", error);
+    console.error('Error fetching courses:', error);
     throw error;
   }
 };
@@ -23,13 +23,13 @@ const LandingPage = async () => {
   const courses = await allCourses();
 
   return (
-    <div className="font-Montserrat overflow-x-hidden">
+    <div className="overflow-x-hidden font-Montserrat">
       <NavBar />
 
       {/* HEADER */}
-      <div className="flex flex-col mb-10 p-5 gap-5 md:flex-col lg:flex-row ">
+      <div className="flex flex-col gap-5 p-5 mb-10 md:flex-col lg:flex-row ">
         {/* KIRI */}
-        <div className="leading-none font-Montserrat mx-auto lg:ml-10 xl:ml-0 ">
+        <div className="mx-auto leading-none font-Montserrat lg:ml-10 xl:ml-0 ">
           {/* KIRI */}
           <div className="flex gap-5 ">
             <h1 className="text-orange-05 md:text-[60px] lg:text-60px] xl:text-[60px] text-[40px] max-[376px]:text-[37px] font-bold">
@@ -41,15 +41,12 @@ const LandingPage = async () => {
             <br />
           </div>
           <div>
-            <h1 className="md:text-[52px] text-[30px] font-semibold text-primary-dark-blue">
-              Dari Praktisi Terbaik!
-            </h1>
+            <h1 className="md:text-[52px] text-[30px] font-semibold text-primary-dark-blue">Dari Praktisi Terbaik!</h1>
           </div>
           <div>
             <p className="mt-1 leading-loose text-[14px] md:text-[20px]">
-              Mari bersama-sama menjelajahi dunia pembelajaran yang menyenangkan{" "}
-              <br /> dan menginspirasi. Bergabunglah hari ini dan mulailah
-              menggapai sukses!
+              Mari bersama-sama menjelajahi dunia pembelajaran yang menyenangkan <br /> dan menginspirasi. Bergabunglah
+              hari ini dan mulailah menggapai sukses!
             </p>
           </div>
           {/* BUTTON BERGABUNG */}
@@ -98,12 +95,10 @@ const LandingPage = async () => {
       {/* KURSUS POPULER */}
       <div>
         <div className="text-center">
-          <h1 className="text-orange-05 md:text-[36px] text-[24px] font-semibold">
-            Kursus Populer
-          </h1>
+          <h1 className="text-orange-05 md:text-[36px] text-[24px] font-semibold">Kursus Populer</h1>
           <p>
-            Belajar Menyediakan berbagai macam kelas yang sudah berbasis
-            industri untuk <br /> meningkatkan keterampilan digital kamu.
+            Belajar Menyediakan berbagai macam kelas yang sudah berbasis industri untuk <br /> meningkatkan keterampilan
+            digital kamu.
           </p>
         </div>
 
@@ -111,7 +106,10 @@ const LandingPage = async () => {
         <div className="flex  mx-auto flex-wrap md:flex-row sm:flex-col md:gap-5 gap-10 flex-shrink-0 px-5 mb-[100px] mt-10 ">
           {courses.data.map((course) => {
             return (
-              <div className="relative mx-auto  " key={course._id}>
+              <div
+                className="relative mx-auto "
+                key={course._id}
+              >
                 <div className=" relative container flex flex-col  bg-primary-dark-blue md:w-[290px] md:h-[326px] rounded-[15px] md:p-5 p-10 pb-8  z-10 mx-auto mb-10 ">
                   {/* GAMBAR */}
                   <Image
@@ -120,57 +118,23 @@ const LandingPage = async () => {
                     height={153}
                     alt=""
                     priority={true}
-                    className="mx-auto  h-auto"
+                    className="h-auto mx-auto"
                   />
                   {/* CONTENT */}
                   <div className="flex justify-between mt-2">
                     {/* TITLE */}
-                    <h1 className="text-white text-[11px] font-bold">
-                      {course.title}
-                    </h1>
+                    <h1 className="text-white text-[11px] font-bold">{course.title}</h1>
                     {/* BINTANG */}
-                    <div className="bintang flex">
-                      <FaStar
-                        className={
-                          course.totalRating >= 1
-                            ? "text-bintang-hidup"
-                            : "text-bintang-mati"
-                        }
-                      />
-                      <FaStar
-                        className={
-                          course.totalRating >= 2
-                            ? "text-bintang-hidup"
-                            : "text-bintang-mati"
-                        }
-                      />
-                      <FaStar
-                        className={
-                          course.totalRating >= 3
-                            ? "text-bintang-hidup"
-                            : "text-bintang-mati"
-                        }
-                      />
-                      <FaStar
-                        className={
-                          course.totalRating >= 4
-                            ? "text-bintang-hidup"
-                            : "text-bintang-mati"
-                        }
-                      />
-                      <FaStar
-                        className={
-                          course.totalRating >= 5
-                            ? "text-bintang-hidup"
-                            : "text-bintang-mati"
-                        }
-                      />
+                    <div className="flex bintang">
+                      <FaStar className={course.totalRating >= 1 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
+                      <FaStar className={course.totalRating >= 2 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
+                      <FaStar className={course.totalRating >= 3 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
+                      <FaStar className={course.totalRating >= 4 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
+                      <FaStar className={course.totalRating >= 5 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
                     </div>
                   </div>
                   {/* HARGA */}
-                  <div className="harga text-white text-xl">
-                    Rp. {course.price}
-                  </div>
+                  <div className="text-xl text-white harga">Rp. {course.price}</div>
                   <hr className="border-dotted border-[1px] mt-1 mb-2" />
                   {/* WAKTU COURSE MODUL */}
                   <div className="flex gap-2">
@@ -208,9 +172,7 @@ const LandingPage = async () => {
 
       {/* ULASAN */}
       <div className="text-center md:mb-5]">
-        <h1 className="text-orange-05 md:text-[44px] text-[24px]  font-semibold">
-          Ulasan
-        </h1>
+        <h1 className="text-orange-05 md:text-[44px] text-[24px]  font-semibold">Ulasan</h1>
         <p className="md:text-[24px]">Pengalaman Belajar Alumni</p>
       </div>
       <Carousel />
@@ -219,9 +181,7 @@ const LandingPage = async () => {
       <div className="flex p-3">
         <div className="flex mx-auto">
           <div className="flex flex-col mx-auto relative p-5 mt-[50px]">
-            <h1 className="font-bold text-orange-05 md:text-[32px] ">
-              Dapatkan Aplikasi Kami Di
-            </h1>
+            <h1 className="font-bold text-orange-05 md:text-[32px] ">Dapatkan Aplikasi Kami Di</h1>
             <div>
               <a href="#">
                 <Image
