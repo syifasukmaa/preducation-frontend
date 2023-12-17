@@ -5,11 +5,11 @@ export default function Checkbox({ label, checked, onChange }) {
     <div className="flex items-center">
       <input
         type="checkbox"
-        className="form-checkbox h-5 w-5 text-blue-500 "
+        className="w-5 h-5 text-blue-500 form-checkbox "
         checked={checked}
         onChange={onChange}
       />
-      <span className="ml-2 text-neutral-01">{label}</span>
+      <span className="ml-2 font-medium text-orange-05">{label}</span>
     </div>
   );
 }

@@ -87,19 +87,19 @@ export default function Page() {
             ref={overLay}
           >
             <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-              <p
+              <div
                 className="item-filter"
                 onClick={() => filterCourses('Paid')}
               >
                 Paid
-              </p>
-              <hr />
-              <p
+              </div>
+
+              <div
                 className="item-filter"
                 onClick={() => filterCourses('On Progress')}
               >
                 On Progress
-              </p>
+              </div>
             </FilterPopup>
           </div>
         )}
