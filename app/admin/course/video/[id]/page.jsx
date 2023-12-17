@@ -88,7 +88,6 @@ export default function page() {
           )}
         </div>
       </div>
-
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
@@ -117,6 +116,17 @@ export default function page() {
                   >
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : chapter && chapter.videos && chapter.videos.length <= 0 ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
+                    <div className="flex items-center justify-center">
+                      <span className="text-xl">Data video masih kosong</span>
                     </div>
                   </td>
                 </tr>

@@ -40,12 +40,14 @@ export default function Sidebar() {
       showCancelButton: true,
       confirmButtonColor: '#167F71',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Logout',
+      confirmButtonText: 'Keluar',
       cancelButtonText: 'Batal',
       customClass: {
         title: 'custom-title-class',
         content: 'custom-text-class',
         popup: 'custom-card-class',
+        cancelButton: 'custom-button-cancel',
+        confirmButton: 'custom-button-confirm',
       },
     }).then((result) => {
       if (result.isConfirmed) {
