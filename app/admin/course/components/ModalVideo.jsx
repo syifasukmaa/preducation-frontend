@@ -13,7 +13,6 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
   const [formData, setFormData] = useState({
     namaVideo: '',
     durasi: 0,
-    index: 0,
     videoUrl: '',
   });
 
@@ -24,7 +23,6 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
       setFormData({
         namaVideo: video.title,
         durasi: video.duration,
-        index: video.index,
         videoUrl: video.videoUrl,
       });
     }
@@ -33,14 +31,13 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      if (formData.namaVideo === '' || formData.durasi === '' || formData.index === '' || formData.videoUrl === '') {
+      if (formData.namaVideo === '' || formData.durasi === '' || formData.videoUrl === '') {
         ToastSweet();
         return;
       }
       const videoData = {
         title: formData.namaVideo,
         duration: formData.durasi,
-        index: formData.index,
         videoUrl: formData.videoUrl,
       };
 
@@ -94,15 +91,6 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
         name="durasi"
         placeholder="Durasi"
         value={formData.durasi}
-        onChange={handleInputChange}
-        required
-      />
-      <Input
-        type={'number'}
-        label="Index"
-        name="index"
-        placeholder="Index Video"
-        value={formData.index}
         onChange={handleInputChange}
         required
       />
