@@ -1,0 +1,15 @@
+.custom-title-class {
+  font-size: 24px;
+}
+.custom-text-class {
+  font-size: 16px;
+}
+.custom-card-class {
+  max-width: 350px;
+}
+.custom-button-cancel {
+  width: 80px;
+}
+.custom-button-confirm {
+  width: 80px;
+}

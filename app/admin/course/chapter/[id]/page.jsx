@@ -12,6 +12,9 @@ import ModalChapter from '../../components/ModalChapter';
 import SearchPopup from '@/components/popup/SearchPopup';
 import ChapterLoading from '@/components/loading/ChapterLoading';
 import { useCourse } from '@/utils/swr';
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
+import { deleteChapter } from '@/utils/fetch';
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
 
 export default function Page() {
   const params = useParams();
@@ -46,6 +49,18 @@ export default function Page() {
     setEditMode(false);
     setShowModal(true);
     setId(id);
+  };
+
+  const handleDeleteChapter = async (id) => {
+    const isConfirmed = await ConfirmDeleteAlert('Delete Course');
+
+    if (isConfirmed) {
+      const response = await deleteChapter(token, id);
+      if (response.ok) {
+        mutate();
+        DeleteSuccessAlert('Chapter');
+      }
+    }
   };
   const searchChapter = (chapter) => {
     const titleLower = title.toLowerCase();
@@ -123,6 +138,17 @@ export default function Page() {
                     </div>
                   </td>
                 </tr>
+              ) : course && course.chapters && course.chapters.length <= 0 ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
+                    <div className="flex items-center justify-center">
+                      <span className="text-xl">Data chapter masih kosong</span>
+                    </div>
+                  </td>
+                </tr>
               ) : course && course.chapters ? (
                 course.chapters
                   .filter((chapter) => searchChapter(chapter))
@@ -147,7 +173,7 @@ export default function Page() {
                           </div>
                         ))}
                       </td>
-                      <td className="grid px-4 py-3 font-bold xl:grid-cols-2">
+                      <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
                         <ActionButton
                           styles={'bg-secondary-dark-blue hover:border-secondary-dark-blue'}
                           onClick={() => goToChapter(chapter._id)}
@@ -159,6 +185,12 @@ export default function Page() {
                           onClick={() => handleEditChapter(chapter._id)}
                         >
                           Ubah
+                        </ActionButton>
+                        <ActionButton
+                          styles={'bg-alert-red hover:border-alert-red'}
+                          onClick={() => handleDeleteChapter(chapter._id)}
+                        >
+                          Hapus
                         </ActionButton>
                       </td>
                     </tr>

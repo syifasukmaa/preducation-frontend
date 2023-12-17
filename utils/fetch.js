@@ -103,6 +103,22 @@ export const updateChapter = async (token, chapterData, chapterId) => {
     throw error;
   }
 };
+export const deleteChapter = async (token, chapterId) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/chapters/${chapterId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error updating the course:', error);
+    throw error;
+  }
+};
 
 export const createNewVideo = async (token, videoData, Id) => {
   try {
