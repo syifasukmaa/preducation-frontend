@@ -1,5 +1,6 @@
 'use state';
 import React, { useState } from 'react';
+import '../../../globals.css';
 
 export default function Input({ type, label, name, placeholder, value, textarea, onChange, required }) {
   const [clicked, setClicked] = useState(false);
@@ -8,7 +9,7 @@ export default function Input({ type, label, name, placeholder, value, textarea,
     setClicked(true);
   };
   return (
-    <div className="mt-3 w-full">
+    <div className="w-full mt-3">
       <label
         htmlFor={name}
         className="label-modal"

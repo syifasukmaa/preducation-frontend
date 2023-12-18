@@ -32,7 +32,7 @@ export default function Page() {
     'Android Development': false,
     'UI/UX Design': false,
     'Data Science': false,
-    'Ios Developmet': false,
+    'IOS Development': false,
     'Product Management': false,
   });
 
@@ -82,10 +82,15 @@ export default function Page() {
       [label]: !selectedCategories[label],
     });
   };
+
   const handleOutsideClick = (e) => {
     if (!overLay.current.contains(e.target)) {
       setShowElements({ showFilter: false });
     }
+  };
+
+  const handleRefreshCourse = () => {
+    mutate();
   };
 
   useEffect(() => {
@@ -152,8 +157,8 @@ export default function Page() {
               />
               <Checkbox
                 label="IOS Development"
-                checked={selectedCategories['Ios Developmet']}
-                onChange={() => handleCheckboxChange('Ios Developmet')}
+                checked={selectedCategories['IOS Development']}
+                onChange={() => handleCheckboxChange('IOS Development')}
               />
               <Checkbox
                 label="UI/UX Design"
