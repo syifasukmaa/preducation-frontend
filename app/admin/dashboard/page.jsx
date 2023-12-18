@@ -155,7 +155,11 @@ export default function Page() {
                 </tbody>
               ))
             ) : (
-              [...Array(5)].map((_, index) => <PaymentLoading key={index} />)
+              <tbody>
+                {[...Array(5)].map((_, index) => (
+                  <PaymentLoading key={index} />
+                ))}
+              </tbody>
             )}
           </table>
         </div>

@@ -9,20 +9,20 @@ exports[`Course Loading renders loading skeleton 1`] = `
         class="my-10"
       >
         <td
-          class="px-4 w-12"
+          class="w-12 px-4"
         >
           <p
-            class="py-1 my-4 animate-pulse bg-neutral-03 rounded-sm"
+            class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
           />
         </td>
         <td
-          class="px-4 w-24"
+          class="w-24 px-4"
         >
           <div
-            class="flex flex-col h-full justify-between"
+            class="flex flex-col justify-between h-full"
           >
             <p
-              class="py-1 w-1/2 animate-pulse bg-neutral-03 rounded-sm"
+              class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
             />
             <p
               class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
@@ -33,44 +33,44 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="px-4 w-72"
         >
           <p
-            class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03"
           />
         </td>
         <td
-          class="px-4 w-12"
+          class="w-12 px-4"
         >
           <p
-            class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
           />
         </td>
         <td
-          class="px-4 w-16"
+          class="w-16 px-4"
         >
           <p
-            class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
           />
         </td>
         <td
-          class="px-4 w-16"
+          class="w-16 px-4"
         >
           <p
-            class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03"
           />
         </td>
         <td
-          class="px-4 w-48"
+          class="w-48 px-4"
         >
           <div
-            class="flex flex-col lg:flex-row justify-between h-full"
+            class="flex flex-col justify-between h-full lg:flex-row"
           >
             <p
-              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
             />
             <p
-              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
             />
             <p
-              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
             />
           </div>
         </td>
@@ -82,20 +82,20 @@ exports[`Course Loading renders loading skeleton 1`] = `
       class="my-10"
     >
       <td
-        class="px-4 w-12"
+        class="w-12 px-4"
       >
         <p
-          class="py-1 my-4 animate-pulse bg-neutral-03 rounded-sm"
+          class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
         />
       </td>
       <td
-        class="px-4 w-24"
+        class="w-24 px-4"
       >
         <div
-          class="flex flex-col h-full justify-between"
+          class="flex flex-col justify-between h-full"
         >
           <p
-            class="py-1 w-1/2 animate-pulse bg-neutral-03 rounded-sm"
+            class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
           />
           <p
             class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
@@ -106,44 +106,44 @@ exports[`Course Loading renders loading skeleton 1`] = `
         class="px-4 w-72"
       >
         <p
-          class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+          class="py-1 rounded-sm animate-pulse bg-neutral-03"
         />
       </td>
       <td
-        class="px-4 w-12"
+        class="w-12 px-4"
       >
         <p
-          class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
         />
       </td>
       <td
-        class="px-4 w-16"
+        class="w-16 px-4"
       >
         <p
-          class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
         />
       </td>
       <td
-        class="px-4 w-16"
+        class="w-16 px-4"
       >
         <p
-          class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+          class="py-1 rounded-sm animate-pulse bg-neutral-03"
         />
       </td>
       <td
-        class="px-4 w-48"
+        class="w-48 px-4"
       >
         <div
-          class="flex flex-col lg:flex-row justify-between h-full"
+          class="flex flex-col justify-between h-full lg:flex-row"
         >
           <p
-            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
           />
           <p
-            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
           />
           <p
-            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
           />
         </div>
       </td>

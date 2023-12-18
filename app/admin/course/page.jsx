@@ -208,48 +208,53 @@ export default function Page() {
                   </td>
                 </tr>
               </tbody>
+            ) : courses ? (
+              courses.map((course) => (
+                <tbody
+                  key={course._id}
+                  className="text-gray-700 text-[10px]"
+                >
+                  <tr>
+                    <td className="px-4 py-4 font-bold text-gray-05">{course.classCode}</td>
+                    <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
+                    <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">{course.title}</td>
+                    <td
+                      className={`py-3 px-4 font-bold ${
+                        course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
+                      }`}
+                    >
+                      {course.typeClass}
+                    </td>
+                    <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
+                    <td className="px-4 py-3 font-bold text-black">{formatToCurrency(course.price)}</td>
+                    <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
+                      <ActionButton
+                        styles={'bg-light-green hover:border-light-green'}
+                        onClick={() => goToChapter(course._id)}
+                      >
+                        Chapter
+                      </ActionButton>
+                      <ActionButton
+                        styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
+                        onClick={() => handleEditCourse(course._id)}
+                      >
+                        Ubah
+                      </ActionButton>
+                      <ActionButton
+                        styles={'bg-alert-red hover:border-alert-red'}
+                        onClick={() => handleDeleteCourse(course._id)}
+                      >
+                        Hapus
+                      </ActionButton>
+                    </td>
+                  </tr>
+                </tbody>
+              ))
             ) : (
-              <tbody className="text-gray-700 text-[10px]">
-                {courses
-                  ? courses.map((course) => (
-                      <tr key={course._id}>
-                        <td className="px-4 py-4 font-bold text-gray-05">{course.classCode}</td>
-                        <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
-                        <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
-                          {course.title}
-                        </td>
-                        <td
-                          className={`py-3 px-4 font-bold ${
-                            course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
-                          }`}
-                        >
-                          {course.typeClass}
-                        </td>
-                        <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
-                        <td className="px-4 py-3 font-bold text-black">{formatToCurrency(course.price)}</td>
-                        <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
-                          <ActionButton
-                            styles={'bg-light-green hover:border-light-green'}
-                            onClick={() => goToChapter(course._id)}
-                          >
-                            Chapter
-                          </ActionButton>
-                          <ActionButton
-                            styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
-                            onClick={() => handleEditCourse(course._id)}
-                          >
-                            Ubah
-                          </ActionButton>
-                          <ActionButton
-                            styles={'bg-alert-red hover:border-alert-red'}
-                            onClick={() => handleDeleteCourse(course._id)}
-                          >
-                            Hapus
-                          </ActionButton>
-                        </td>
-                      </tr>
-                    ))
-                  : [...Array(8)].map((_, index) => <CourseLoading key={index} />)}
+              <tbody>
+                {[...Array(8)].map((_, index) => (
+                  <CourseLoading key={index} />
+                ))}
               </tbody>
             )}
           </table>
