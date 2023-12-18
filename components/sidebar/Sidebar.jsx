@@ -1,24 +1,24 @@
-'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoMdClose } from 'react-icons/io';
-import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
-import { SiGoogleclassroom } from 'react-icons/si';
-import { usePathname, useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
-import Swal from 'sweetalert2';
-import '../style.css';
+'use client'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { IoMdClose } from 'react-icons/io'
+import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu'
+import { SiGoogleclassroom } from 'react-icons/si'
+import { usePathname, useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
+import Swal from 'sweetalert2'
+
 
 export default function Sidebar() {
-  const url = usePathname();
-  const router = useRouter();
+  const url = usePathname()
+  const router = useRouter()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const toggleSidebar = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   const sidebarItems = [
     { id: '/admin/dashboard', icon: <LuLayoutDashboard />, label: 'Dashboard' },
@@ -27,11 +27,11 @@ export default function Sidebar() {
       icon: <SiGoogleclassroom />,
       label: 'Kelola Kelas',
     },
-  ];
+  ]
 
   const handleClick = (itemId) => {
-    router.push(itemId);
-  };
+    router.push(itemId)
+  }
 
   const handleLogOut = () => {
     Swal.fire({
@@ -51,10 +51,10 @@ export default function Sidebar() {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        signOut();
+        signOut()
       }
-    });
-  };
+    })
+  }
 
   return (
     <aside
@@ -64,6 +64,7 @@ export default function Sidebar() {
     >
       <button
         onClick={toggleSidebar}
+        title="hamburger-button"
         className="fixed z-50 px-3 py-2 text-white rounded md:hidden right-4 top-14 bg-orange-05"
       >
         {open ? <IoMdClose /> : <RxHamburgerMenu />}
@@ -85,11 +86,14 @@ export default function Sidebar() {
             <li
               key={index}
               className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
+
             >
               <button
                 href={item.id}
                 className={`flex items-center px-4 ${url.startsWith(item.id) ? 'ml-4' : ''}`}
                 onClick={() => handleClick(item.id)}
+              data-testid={item.label}
+                
               >
                 <span>{item.icon}</span>
                 <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
@@ -101,6 +105,7 @@ export default function Sidebar() {
             <button
               className={`flex items-center px-4`}
               onClick={handleLogOut}
+              data-testid="handle-logout"
             >
               <span>
                 <LuLogOut />
@@ -111,5 +116,5 @@ export default function Sidebar() {
         </ul>
       </nav>
     </aside>
-  );
+  )
 }

@@ -44,7 +44,9 @@ const LoginPage = () => {
       }
     } catch (error) {
       setIsLoading(false)
-      console.log(error)
+      toast.error('Internal Server Error', {
+        position: toast.POSITION.TOP_RIGHT,
+      })
     }
   }
   return (

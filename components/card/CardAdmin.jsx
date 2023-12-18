@@ -8,9 +8,14 @@ import { useCategory } from '@/utils/swr';
 import { useSession } from 'next-auth/react';
 
 export default function CardAdmin() {
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
-  const { categories } = useCategory(token, true);
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
+  const { categories, isLoading, error } = useCategory(token, true)
+
+  if (isLoading) return <p>loading</p>
+  if (error) return <p>error</p>
+
+
   return (
     <div className="grid gap-4 px-4 mt-8 mb-8 md:mb-10 md:mt-8 md:px-12 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
       <CardAdminItem
