@@ -1,5 +1,7 @@
+import Layout, { metadata } from '@/app/login/layout'
 import LoginPage from '@/app/login/page'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { signIn } from 'next-auth/react'
 
 jest.mock('next/navigation', () => ({
@@ -15,8 +17,19 @@ describe('Login Page', () => {
     jest.clearAllMocks()
   })
   it('Should render', () => {
-    const page = render(<LoginPage />)
+    const page = render(
+      <Layout>
+        <LoginPage />
+      </Layout>
+    )
     expect(page).toMatchSnapshot()
+  })
+
+  it('should metadata is correct', () => {
+    expect(metadata).toEqual({
+      title: 'Preducation | Selamat Datang',
+      description: 'Preducation online course',
+    })
   })
 
   it('Should contain Text Login', () => {
@@ -67,6 +80,23 @@ describe('Login Page', () => {
     await waitFor(async () => {
       const errorMessage = screen.getByText('Username atau password salah')
       expect(errorMessage).toBeInTheDocument()
+    })
+  })
+
+  it('handles internal server error', async () => {
+    signIn.mockImplementationOnce(() => {
+      throw new Error('Internal Server Error')
+    })
+
+    const { getByText, getByLabelText } = render(<LoginPage />)
+
+    fireEvent.change(getByLabelText(/ID Admin/i), { target: { value: 'validUsername' } })
+    fireEvent.change(getByLabelText(/Password/i), { target: { value: 'validPassword' } })
+
+    await userEvent.click(getByText('Masuk'))
+
+    await waitFor(() => {
+      expect(getByText('Internal Server Error')).toBeInTheDocument()
     })
   })
 })

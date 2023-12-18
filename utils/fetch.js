@@ -9,12 +9,12 @@ export const loginAdmin = async (username, password) => {
         username,
         password,
       }),
-    });
-    return response;
+    })
+    return response
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const createNewCourse = async (token, courseData) => {
   try {
@@ -25,14 +25,14 @@ export const createNewCourse = async (token, courseData) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(courseData),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.error('Error creating a new course:', error)
+    throw error
   }
-};
+}
 
 export const updateCourse = async (token, courseId, updatedCourseData) => {
   try {
@@ -42,14 +42,14 @@ export const updateCourse = async (token, courseId, updatedCourseData) => {
         Authorization: `Bearer ${token}`,
       },
       body: updatedCourseData,
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error updating the course:', error);
-    throw error;
+    console.error('Error updating the course:', error)
+    throw error
   }
-};
+}
 
 export const deleteCourse = async (token, courseId) => {
   try {
@@ -59,14 +59,14 @@ export const deleteCourse = async (token, courseId) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error updating the course:', error);
-    throw error;
+    console.error('Error updating the course:', error)
+    throw error
   }
-};
+}
 
 export const createNewChapter = async (token, chapterData, courseId) => {
   try {
@@ -77,14 +77,14 @@ export const createNewChapter = async (token, chapterData, courseId) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(chapterData),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.error('Error creating a new course:', error)
+    throw error
   }
-};
+}
 
 export const updateChapter = async (token, chapterData, chapterId) => {
   try {
@@ -95,14 +95,14 @@ export const updateChapter = async (token, chapterData, chapterId) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(chapterData),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.error('Error creating a new course:', error)
+    throw error
   }
-};
+}
 
 export const createNewVideo = async (token, videoData, Id) => {
   try {
@@ -113,14 +113,14 @@ export const createNewVideo = async (token, videoData, Id) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(videoData),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.error('Error creating a new course:', error)
+    throw error
   }
-};
+}
 
 export const updateVideo = async (token, videoData, Id) => {
   try {
@@ -131,14 +131,14 @@ export const updateVideo = async (token, videoData, Id) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(videoData),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.error('Error creating a new course:', error)
+    throw error
   }
-};
+}
 
 export const deleteVideo = async (token, videoId) => {
   try {
@@ -148,14 +148,14 @@ export const deleteVideo = async (token, videoId) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error updating the course:', error);
-    throw error;
+    console.error('Error updating the course:', error)
+    throw error
   }
-};
+}
 
 export const resetPassword = async (passwordResetToken, password, confirmPassword) => {
   try {
@@ -168,11 +168,11 @@ export const resetPassword = async (passwordResetToken, password, confirmPasswor
         password,
         confirmPassword,
       }),
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error creating a new course:', error);
-    throw error;
+    console.log('Error creating a new course:', error)
+    throw error
   }
-};
+}

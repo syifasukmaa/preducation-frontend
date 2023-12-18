@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course Loading renders loading skeleton 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <tr
+        class="my-10"
+      >
+        <td
+          class="px-4 w-12"
+        >
+          <p
+            class="py-1 my-4 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </td>
+        <td
+          class="px-4 w-24"
+        >
+          <div
+            class="flex flex-col h-full justify-between"
+          >
+            <p
+              class="py-1 w-1/2 animate-pulse bg-neutral-03 rounded-sm"
+            />
+            <p
+              class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
+            />
+          </div>
+        </td>
+        <td
+          class="px-4 w-72"
+        >
+          <p
+            class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </td>
+        <td
+          class="px-4 w-12"
+        >
+          <p
+            class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </td>
+        <td
+          class="px-4 w-16"
+        >
+          <p
+            class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </td>
+        <td
+          class="px-4 w-16"
+        >
+          <p
+            class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </td>
+        <td
+          class="px-4 w-48"
+        >
+          <div
+            class="flex flex-col lg:flex-row justify-between h-full"
+          >
+            <p
+              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            />
+            <p
+              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            />
+            <p
+              class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+            />
+          </div>
+        </td>
+      </tr>
+    </div>
+  </body>,
+  "container": <div>
+    <tr
+      class="my-10"
+    >
+      <td
+        class="px-4 w-12"
+      >
+        <p
+          class="py-1 my-4 animate-pulse bg-neutral-03 rounded-sm"
+        />
+      </td>
+      <td
+        class="px-4 w-24"
+      >
+        <div
+          class="flex flex-col h-full justify-between"
+        >
+          <p
+            class="py-1 w-1/2 animate-pulse bg-neutral-03 rounded-sm"
+          />
+          <p
+            class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
+          />
+        </div>
+      </td>
+      <td
+        class="px-4 w-72"
+      >
+        <p
+          class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+        />
+      </td>
+      <td
+        class="px-4 w-12"
+      >
+        <p
+          class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+        />
+      </td>
+      <td
+        class="px-4 w-16"
+      >
+        <p
+          class="py-1 px-4 animate-pulse bg-neutral-03 rounded-sm"
+        />
+      </td>
+      <td
+        class="px-4 w-16"
+      >
+        <p
+          class="py-1 animate-pulse bg-neutral-03 rounded-sm"
+        />
+      </td>
+      <td
+        class="px-4 w-48"
+      >
+        <div
+          class="flex flex-col lg:flex-row justify-between h-full"
+        >
+          <p
+            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+          />
+          <p
+            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+          />
+          <p
+            class="py-2 w-16 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-md"
+          />
+        </div>
+      </td>
+    </tr>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

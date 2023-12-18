@@ -10,7 +10,11 @@ import { useSession } from 'next-auth/react'
 export default function CardAdmin() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken
-  const { categories } = useCategory(token, true)
+  const { categories, isLoading, error } = useCategory(token, true)
+
+  if (isLoading) return <p>loading</p>
+  if (error) return <p>error</p>
+
   return (
     <div className="mt-12 mb-8 md:mb-10 md:mt-16 md:px-12 px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
       <CardAdminItem bg={'bg-alert-green'} icon={<UsersIcon />} total={categories?.activeUsers} text={'Active Users'} />
