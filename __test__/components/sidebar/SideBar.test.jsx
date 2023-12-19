@@ -72,6 +72,13 @@ describe('Navbar Component', () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Keluar',
       cancelButtonText: 'Batal',
+      customClass: {
+        title: 'custom-title-class',
+        content: 'custom-text-class',
+        popup: 'custom-card-class',
+        cancelButton: 'custom-button-cancel',
+        confirmButton: 'custom-button-confirm',
+      },
     })
 
     await Swal.fire.mockResolvedValueOnce({ isConfirmed: true })
