@@ -1,20 +1,21 @@
-'use client';
-import { useState } from 'react';
-import Image from 'next/image';
+'use client'
+import { useState } from 'react'
+import Image from 'next/image'
 
-import { PiArrowCircleLeft } from 'react-icons/pi';
-import { PiArrowCircleRight } from 'react-icons/pi';
+import { PiArrowCircleLeft } from 'react-icons/pi'
+import { PiArrowCircleRight } from 'react-icons/pi'
+
 
 const Carousel = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1)
 
   const handlePrevPage = () => {
-    setPage((prev) => (prev - 1 <= 0 ? 1 : prev - 1));
-  };
+    setPage((prev) => (prev - 1 <= 0 ? 1 : prev - 1))
+  }
 
   const handleNextPage = () => {
-    setPage((prev) => (prev + 1 >= 2 ? 2 : prev + 1));
-  };
+    setPage((prev) => (prev + 1 >= 2 ? 2 : prev + 1))
+  }
 
   const review = {
     gambar: ['null', 'PPL 1.svg', 'PPl 1.svg'],
@@ -25,11 +26,13 @@ const Carousel = () => {
       '“Mulai dari dasar-dasar HTML, CSS, dan JavaScript, hingga pemrograman server dan pengelolaan database, kursus disini memberikan pemahaman menyeluruh tentang teknologi yang diperlukan untuk menjadi pengembang web lengkap.”',
     ],
     nama: ['null', 'Margot Robbie', 'Scarlett Johansson'],
-  };
+  }
+
 
   return (
     <div className="flex md:mt-[100px] mt-[150px] px-5 gap-5 md:flex-row flex-col flex-grow-0 flex-shrink-0">
       {/* GAMBAR */}
+
       <div className="items-start relative mx-auto bg-primary-dark-blue md:w-[500px] w-[300px] rounded-[15px] flex-shrink-0 flex-grow-0">
         <Image
           src="/frame.svg"
@@ -43,7 +46,7 @@ const Carousel = () => {
             src={review.gambar[page]}
             width={400}
             height={10}
-            alt="image"
+            alt={review.nama[page]}
           />
         </div>
       </div>
@@ -55,18 +58,18 @@ const Carousel = () => {
         {/* ARROW */}
         <div className="flex gap-5">
           {/* PANAH KIRI */}
-          <button onClick={handlePrevPage}>
+          <button data-testid="prev-page-button" onClick={handlePrevPage}>
             <PiArrowCircleLeft size={50} />
           </button>
 
           {/* PANAH KANAN */}
-          <button onClick={handleNextPage}>
+          <button data-testid="next-page-button" onClick={handleNextPage}>
             <PiArrowCircleRight size={50} />
           </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel

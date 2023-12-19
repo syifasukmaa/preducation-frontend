@@ -26,6 +26,7 @@ const customJestConfig = {
     '!<rootDir>/pages/**',
     '!<rootDir>/data/**',
     '!<rootDir>/mocks/**',
+    '!<rootDir>/app/Provider.jsx',
   ],
 }
 

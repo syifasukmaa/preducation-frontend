@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { IoMenu, IoClose } from 'react-icons/io5';
 
 const NavBar = () => {
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -37,11 +38,12 @@ const NavBar = () => {
             src="/preducationLogo.svg"
             width={70}
             height={70}
-            alt="logo"
+            alt="preducationLogo"
             className="w-[70px] h-[70px]"
           />
         </div>
         <div
+        data-testid="subnav-container"
           className={`${
             !isMenuOpen
               ? 'md:static absolute bg-primary-dark-blue  min-h-[30vh] md:min-h-fit w-[95%] left-3 top-[-100%] flex items-center px-5'
@@ -95,6 +97,7 @@ const NavBar = () => {
             size={40}
             className="cursor-pointer menuBtn md:hidden"
             onClick={toggleMenu}
+             data-testid="menu-button"
           />
         </div>
       </nav>
