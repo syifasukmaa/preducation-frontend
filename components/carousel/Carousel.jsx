@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { PiArrowCircleLeft } from 'react-icons/pi'
 import { PiArrowCircleRight } from 'react-icons/pi'
 
+
 const Carousel = () => {
   const [page, setPage] = useState(1)
 
@@ -27,17 +28,30 @@ const Carousel = () => {
     nama: ['null', 'Margot Robbie', 'Scarlett Johansson'],
   }
 
+
   return (
     <div className="flex md:mt-[100px] mt-[150px] px-5 gap-5 md:flex-row flex-col flex-grow-0 flex-shrink-0">
       {/* GAMBAR */}
-      <div className=" items-start relative mx-auto bg-NAVY md:w-[500px] w-[300px] rounded-[15px] flex-shrink-0 flex-grow-0">
-        <Image src="/frame.svg" width={500} height={10} alt="" className=" h-auto" />
+
+      <div className="items-start relative mx-auto bg-primary-dark-blue md:w-[500px] w-[300px] rounded-[15px] flex-shrink-0 flex-grow-0">
+        <Image
+          src="/frame.svg"
+          width={500}
+          height={10}
+          alt="image"
+          className="w-[500px] h-[10px]"
+        />
         <div className="absolute bottom-0">
-          <Image src={review.gambar[page]} width={400} height={10} alt={review.nama[page]} className=" h-auto" />
+          <Image
+            src={review.gambar[page]}
+            width={400}
+            height={10}
+            alt={review.nama[page]}
+          />
         </div>
       </div>
       {/* TESTIMONI */}
-      <div className="flex flex-col p-10 gap-5 flex-wrap ">
+      <div className="flex flex-col flex-wrap gap-5 p-10 ">
         <p className="text-justify md:w-[500px] md:text-[29px]">{review.text[page]}</p>
 
         <h2 className="text-ORANGE font-bold text-[20px]">{review.nama[page]}</h2>
