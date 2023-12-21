@@ -25,10 +25,9 @@ export default function CourseLoading() {
         <p className="py-1 rounded-sm animate-pulse bg-neutral-03"></p>
       </td>
       <td className="w-48 px-4">
-        <div className="flex flex-col justify-between h-full lg:flex-row">
+        <div className="flex flex-col h-full lg:flex-row">
           <p className="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
-          <p className="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
-          <p className="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
+          <p className="w-16 py-2 mt-2 ml-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
         </div>
       </td>
     </tr>
