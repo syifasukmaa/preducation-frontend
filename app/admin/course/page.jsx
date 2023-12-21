@@ -49,19 +49,13 @@ export default function Page() {
 
   const { course: courses, isLoading, mutate, error } = useCourse(token, null, selectedCategoryKeys, title);
 
-  const goToChapter = (chapterId) => {
-    router.push(`/admin/course/chapter/${chapterId}`);
+  const goToCourseDetail = (chapterId) => {
+    router.push(`/admin/course/${chapterId}`);
   };
 
   const handleAddCourse = () => {
     setEditMode(false);
     setShowModal(true);
-  };
-
-  const handleEditCourse = (courseId) => {
-    setEditMode(true);
-    setShowModal(true);
-    setCourseId(courseId);
   };
 
   const handleDeleteCourse = async (courseId) => {
@@ -87,10 +81,6 @@ export default function Page() {
     if (!overLay.current.contains(e.target)) {
       setShowElements({ showFilter: false });
     }
-  };
-
-  const handleRefreshCourse = () => {
-    mutate();
   };
 
   useEffect(() => {
@@ -178,9 +168,9 @@ export default function Page() {
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
+            <thead className="text-sm font-semibold bg-orange-04 text-neutral-05">
               <tr>
-                <th className="px-4 py-3 text-left">Kode Kelas</th>
+                <th className="px-4 py-3 text-left w-[11%]">Kode Kelas</th>
                 <th className="px-4 py-3 text-left">Kategori</th>
                 <th className="px-4 py-3 text-left">Nama Kelas</th>
                 <th className="px-4 py-3 text-left">Tipe Kelas</th>
@@ -208,48 +198,49 @@ export default function Page() {
                   </td>
                 </tr>
               </tbody>
+            ) : courses ? (
+              courses.map((course) => (
+                <tbody
+                  key={course._id}
+                  className="text-gray-700 text-[10px]"
+                >
+                  <tr>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05">{course.classCode}</td>
+                    <td className="py-3 px-4 text-xs font-bold text-gray-05 w-[10%]">{course.category.name}</td>
+                    <td className="py-3 px-4 text-xs font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
+                      {course.title}
+                    </td>
+                    <td
+                      className={`py-3 px-4 text-xs font-bold ${
+                        course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
+                      }`}
+                    >
+                      {course.typeClass}
+                    </td>
+                    <td className="py-3 px-4 text-xs font-bold text-black w-[12%]">{course.level}</td>
+                    <td className="px-4 py-3 text-xs font-bold text-black">{formatToCurrency(course.price)}</td>
+                    <td className="grid px-4 py-3 text-xs font-bold xl:grid-cols-2">
+                      <ActionButton
+                        styles={'bg-light-green hover:border-light-green py-2'}
+                        onClick={() => goToCourseDetail(course._id)}
+                      >
+                        Detail
+                      </ActionButton>
+                      <ActionButton
+                        styles={'bg-alert-red hover:border-alert-red'}
+                        onClick={() => handleDeleteCourse(course._id)}
+                      >
+                        Hapus
+                      </ActionButton>
+                    </td>
+                  </tr>
+                </tbody>
+              ))
             ) : (
-              <tbody className="text-gray-700 text-[10px]">
-                {courses
-                  ? courses.map((course) => (
-                      <tr key={course._id}>
-                        <td className="px-4 py-4 font-bold text-gray-05">{course.classCode}</td>
-                        <td className="py-3 px-4 font-bold text-gray-05 w-[10%]">{course.category.name}</td>
-                        <td className="py-3 px-4 font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap">
-                          {course.title}
-                        </td>
-                        <td
-                          className={`py-3 px-4 font-bold ${
-                            course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
-                          }`}
-                        >
-                          {course.typeClass}
-                        </td>
-                        <td className="py-3 px-4 font-bold text-black w-[12%]">{course.level}</td>
-                        <td className="px-4 py-3 font-bold text-black">{formatToCurrency(course.price)}</td>
-                        <td className="grid px-4 py-3 font-bold xl:grid-cols-3">
-                          <ActionButton
-                            styles={'bg-light-green hover:border-light-green'}
-                            onClick={() => goToChapter(course._id)}
-                          >
-                            Chapter
-                          </ActionButton>
-                          <ActionButton
-                            styles={'bg-dark-blue-05 hover:border-dark-blue-05'}
-                            onClick={() => handleEditCourse(course._id)}
-                          >
-                            Ubah
-                          </ActionButton>
-                          <ActionButton
-                            styles={'bg-alert-red hover:border-alert-red'}
-                            onClick={() => handleDeleteCourse(course._id)}
-                          >
-                            Hapus
-                          </ActionButton>
-                        </td>
-                      </tr>
-                    ))
-                  : [...Array(8)].map((_, index) => <CourseLoading key={index} />)}
+              <tbody>
+                {[...Array(8)].map((_, index) => (
+                  <CourseLoading key={index} />
+                ))}
               </tbody>
             )}
           </table>

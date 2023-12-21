@@ -34,7 +34,7 @@ const ResetPass = () => {
         setPassword('')
         setConfirmPassword('')
         setIsLoading(false)
-      } else if (data.message === 'Password reset token already expired') {
+      } else if (data.message === 'User not found for the given token') {
         toast.error('Tautan invalid atau kedaluwarsa', {
           position: toast.POSITION.TOP_RIGHT,
         })
@@ -55,7 +55,6 @@ const ResetPass = () => {
         position: toast.POSITION.TOP_RIGHT,
       })
       setIsLoading(false)
-      throw new Error('Internal server error')
     }
   }
 
@@ -84,7 +83,7 @@ const ResetPass = () => {
               />
 
               <button
-                title="button-visibility"
+                title="button-visibility-password"
                 className="absolute top-1/2 transform -translate-y-1/2 right-4"
                 onClick={() => setVisibilityPassword((prev) => !prev)}
               >
@@ -112,6 +111,7 @@ const ResetPass = () => {
               <button
                 className="absolute top-1/2 transform -translate-y-1/2 right-4"
                 onClick={() => setVisibilityConfPassword((prev) => !prev)}
+                title="button-visibility-confpassword"
               >
                 {!visibilityConfPassword ? <PiEye color="grey" size={30} /> : <PiEyeSlash color="grey" size={30} />}
               </button>

@@ -91,14 +91,14 @@ export default function Page() {
                 className="item-filter"
                 onClick={() => filterCourses('Paid')}
               >
-                Paid
+                SUDAH BAYAR
               </div>
 
               <div
                 className="item-filter"
                 onClick={() => filterCourses('On Progress')}
               >
-                On Progress
+                BELUM BAYAR
               </div>
             </FilterPopup>
           </div>
@@ -108,7 +108,7 @@ export default function Page() {
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
+            <thead className="text-sm font-semibold bg-orange-04 text-neutral-05">
               <tr>
                 <td className="w-24 px-4 py-3">ID</td>
                 <td className="w-32 px-4 py-3">Kategori</td>
@@ -119,14 +119,8 @@ export default function Page() {
               </tr>
             </thead>
 
-            <tbody className="text-gray-700 whitespace-nowrap text-[10px]">
-              {isLoading ? (
-                <>
-                  {[...Array(3)].map((_, index) => (
-                    <PaymentLoading key={index} />
-                  ))}
-                </>
-              ) : error ? (
+            {error ? (
+              <tbody>
                 <tr>
                   <td
                     colSpan="7"
@@ -137,27 +131,44 @@ export default function Page() {
                     </div>
                   </td>
                 </tr>
-              ) : payments ? (
-                payments.map((payment) => (
-                  <tr key={payment._id}>
-                    <td className="px-4 py-4 font-bold text-gray-05">{payment.userId.username}</td>
-                    <td className="py-3 pl-4 pr-3 font-bold text-gray-05">{payment.courseId.category.name}</td>
-                    <td className="px-4 py-3 font-bold text-gray-04">{payment.courseId.level}</td>
+              </tbody>
+            ) : payments ? (
+              payments.map((payment) => (
+                <tbody
+                  key={payment._id}
+                  className="text-gray-700 whitespace-nowrap text-[10px]"
+                >
+                  <tr>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">
+                      {payment.userId && payment.userId.username ? payment.userId.username : ''}
+                    </td>
+                    <td className="py-3 pl-4 pr-3 text-xs font-bold text-gray-05 w-[17%]">
+                      {payment.courseId.category.name}
+                    </td>
+                    <td className="px-4 py-3 text-xs font-bold text-gray-04 w-[15%]">{payment.courseId.level}</td>
                     <td
-                      className={`py-3 px-4 font-bold ${
+                      className={`py-3 px-4 text-xs font-bold w-[15%] ${
                         payment.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
                       }`}
                     >
-                      {payment.status}
+                      {payment.status === 'On Progress' ? 'BELUM BAYAR' : 'SUDAH BAYAR'}
                     </td>
-                    <td className="px-4 py-3 font-bold lg:pl-4 lg:pr-0 text-gray-04">{payment.paymentType}</td>
-                    <td className="px-4 py-3 pl-4 font-bold lg:pl-0 lg:pr-1 text-gray-05">{payment.createdAt}</td>
+                    <td className="px-4 py-3 text-xs font-bold lg:pl-4 lg:pr-0 text-gray-04 w-[20%]">
+                      {payment.paymentType}
+                    </td>
+                    <td className="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05">
+                      {payment.createdAt}
+                    </td>
                   </tr>
-                ))
-              ) : (
-                [...Array(5)].map((_, index) => <PaymentLoading key={index} />)
-              )}
-            </tbody>
+                </tbody>
+              ))
+            ) : (
+              <tbody>
+                {[...Array(5)].map((_, index) => (
+                  <PaymentLoading key={index} />
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
       </div>

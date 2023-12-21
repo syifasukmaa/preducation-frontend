@@ -9,6 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom',
+  verbose: true,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
@@ -21,6 +22,11 @@ const customJestConfig = {
     '!<rootDir>/.next/**',
     '!<rootDir>/*.config.js',
     '!middleware.js',
+    '!<rootDir>/utils/**',
+    '!<rootDir>/pages/**',
+    '!<rootDir>/data/**',
+    '!<rootDir>/mocks/**',
+    '!<rootDir>/app/Provider.jsx',
   ],
 }
 

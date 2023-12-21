@@ -91,7 +91,7 @@ export default function page() {
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg">
-            <thead className="text-xs font-semibold bg-orange-04 text-neutral-05">
+            <thead className="text-sm font-semibold bg-orange-04 text-neutral-05">
               <tr className="">
                 <th className="p-4 text-left">No</th>
                 <th className="p-4 text-left w-72">Nama Video</th>
@@ -143,29 +143,29 @@ export default function page() {
                         key={video._id}
                         className=" border-y border-orange-04"
                       >
-                        <td className="p-4 font-bold text-gray-05">{index + 1}</td>
-                        <td className="p-4 font-bold text-gray-04">{video.title}</td>
-                        <td className="p-4 font-bold text-gray-04">{video.duration} min</td>
-                        <td className="p-4 font-bold text-gray-04">{video.index}</td>
-                        <td className="px-4 py-3 font-bold text-gray-04">
+                        <td className="p-4 text-xs font-bold text-gray-05">{index + 1}</td>
+                        <td className="p-4 text-xs font-bold text-gray-04">{video.title}</td>
+                        <td className="p-4 text-xs font-bold text-gray-04">{video.duration} min</td>
+                        <td className="p-4 text-xs font-bold text-gray-04">{video.index}</td>
+                        <td className="px-4 py-3 text-xs font-bold text-gray-04">
                           <iframe
                             className="w-full h-full"
                             src={`https://www.youtube.com/embed/${url}`}
                             title="YouTube video player"
                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                           ></iframe>
-                          <span className="mt-2 lg:flex">
+                          <span className="mt-3 lg:flex">
                             <p>Link Youtube:</p>
                             <a
                               href={url}
                               target="_blank"
-                              className="underline text-dark-blue-03 hover:text-dark-blue-05"
+                              className="no-underline text-orange-05 hover:text-dark-blue-05"
                             >
                               {video.videoUrl}
                             </a>
                           </span>
                         </td>
-                        <td className="px-4 py-3 font-bold">
+                        <td className="px-4 py-3 text-xs font-bold">
                           <button
                             className="px-1 py-1 mb-2 mr-2 text-white rounded bg-light-green"
                             onClick={() => handleEditVideo(video._id)}
