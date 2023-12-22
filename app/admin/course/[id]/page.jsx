@@ -4,7 +4,7 @@ import { useCourse } from '@/utils/swr';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import formatToCurrency from '@/utils/convert';
+import convert from '@/utils/convert';
 import { IoDiamondOutline, IoTimer, IoSpeedometerOutline } from 'react-icons/io5';
 import { FaUsers, FaRegUser } from 'react-icons/fa';
 import { MdOutlineUploadFile } from 'react-icons/md';
@@ -68,7 +68,7 @@ export default function page() {
                 <p className="mb-2 text-xl font-semibold lg:text-2xl text-orange-05">{course?.classCode}</p>
                 <p className="mb-2 text-lg font-medium lg:text-xl">{course?.category.name}</p>
                 <p className="mb-2 text-base lg:text-lg text-orange-05">{course?.title}</p>
-                <p className="text-sm text-neutral-03">{formatToCurrency(course?.price)}</p>
+                <p className="text-sm text-neutral-03">{convert.formatToCurrency(course?.price)}</p>
                 <p className="flex mt-2 text-lg text-neutral-03">
                   <FaStar className={course?.totalRating >= 1 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
                   <FaStar className={course?.totalRating >= 2 ? 'text-bintang-hidup' : 'text-bintang-mati'} />

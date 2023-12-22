@@ -7,4 +7,22 @@ const formatToCurrency = (number) => {
   return formattedNumber;
 };
 
-export default formatToCurrency;
+const formatToDate = (date) => {
+  const dates = new Date(date);
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZone: 'Asia/Jakarta',
+  };
+
+  const formattedDate = dates.toLocaleString('id-ID', options);
+
+  return formattedDate;
+};
+
+export default { formatToCurrency, formatToDate };

@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import AddButton from '@/components/button/AddButton';
 import SearchButton from '@/components/button/SearchButton';
 import SearchPopup from '@/components/popup/SearchPopup';
@@ -8,7 +10,6 @@ import ModalVideo from '../../components/ModalVideo';
 import VideoLoading from '@/components/loading/VideoLoading';
 import { MdDeleteOutline } from 'react-icons/md';
 import { MdUpgrade } from 'react-icons/md';
-import { useSession } from 'next-auth/react';
 import { useChapter } from '@/utils/swr';
 import { deleteVideo } from '@/utils/fetch';
 import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
@@ -125,8 +126,27 @@ export default function page() {
                     colSpan="7"
                     className="py-8 text-center"
                   >
-                    <div className="flex items-center justify-center">
-                      <span className="text-xl">Data video masih kosong</span>
+                    <div className="flex flex-col items-center justify-center md:items-start md:flex-row">
+                      <Image
+                        src="/img/empty_3d.jpg"
+                        width={80}
+                        height={80}
+                        alt="empty image"
+                        className="w-[80px] h-[80px] mt-2"
+                        priority="true"
+                      />
+                      <div className="ml-4 md:text-start">
+                        <p className="mt-4 text-xl font-bold text-orange-05">Video masih kosong</p>
+                        <p className="mt-1 text-base">
+                          Cobalah untuk{' '}
+                          <span
+                            className="text-blue-600 cursor-pointer hover:underline"
+                            onClick={() => handleAddVideo(idChapter)}
+                          >
+                            menambahkan video
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </td>
                 </tr>

@@ -26,8 +26,8 @@ export default function CourseLoading() {
       </td>
       <td className="w-48 px-4">
         <div className="flex flex-col h-full lg:flex-row">
-          <p className="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
-          <p className="w-16 py-2 mt-2 ml-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"></p>
+          <p className="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"></p>
+          <p className="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"></p>
         </div>
       </td>
     </tr>
