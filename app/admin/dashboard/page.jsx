@@ -9,6 +9,7 @@ import { usePayment } from '@/utils/swr';
 import PaymentLoading from '@/components/loading/PaymentLoading';
 import { LuRefreshCcw } from 'react-icons/lu';
 import '../../globals.css';
+import convert from '../../../utils/convert';
 
 export default function Page() {
   const { data: session } = useSession();
@@ -157,7 +158,7 @@ export default function Page() {
                       {payment.paymentType}
                     </td>
                     <td className="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05">
-                      {payment.createdAt}
+                      {convert.formatToDate(payment.createdAt)}
                     </td>
                   </tr>
                 </tbody>

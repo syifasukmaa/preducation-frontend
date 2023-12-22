@@ -11,7 +11,7 @@ import ActionButton from '@/components/button/ActionButton';
 import Checkbox from './components/Checkbox';
 import ModalCourse from './components/ModalCourse';
 import CourseLoading from '@/components/loading/CourseLoading';
-import formatToCurrency from '@/utils/convert';
+import convert from '@/utils/convert';
 import { useCourse } from '@/utils/swr';
 import { deleteCourse } from '@/utils/fetch';
 import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
@@ -218,7 +218,7 @@ export default function Page() {
                       {course.typeClass}
                     </td>
                     <td className="py-3 px-4 text-xs font-bold text-black w-[12%]">{course.level}</td>
-                    <td className="px-4 py-3 text-xs font-bold text-black">{formatToCurrency(course.price)}</td>
+                    <td className="px-4 py-3 text-xs font-bold text-black">{convert.formatToCurrency(course.price)}</td>
                     <td className="grid px-4 py-3 text-xs font-bold xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
@@ -227,7 +227,7 @@ export default function Page() {
                         Detail
                       </ActionButton>
                       <ActionButton
-                        styles={'bg-alert-red hover:border-alert-red'}
+                        styles={'bg-alert-red hover:border-alert-red py-2'}
                         onClick={() => handleDeleteCourse(course._id)}
                       >
                         Hapus

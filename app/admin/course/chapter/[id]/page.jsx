@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import AddButton from '@/components/button/AddButton';
 import SearchButton from '@/components/button/SearchButton';
 import FilterPopup from '@/components/popup/FilterPopup';
@@ -144,8 +145,27 @@ export default function Page() {
                     colSpan="7"
                     className="py-8 text-center"
                   >
-                    <div className="flex items-center justify-center">
-                      <span className="text-xl">Data chapter masih kosong</span>
+                    <div className="flex flex-col items-center justify-center md:items-start md:flex-row">
+                      <Image
+                        src="/img/empty_3d.jpg"
+                        width={80}
+                        height={80}
+                        alt="empty image"
+                        className="w-[80px] h-[80px] mt-2"
+                        priority="true"
+                      />
+                      <div className="ml-4 md:text-start">
+                        <p className="mt-4 text-xl font-bold text-orange-05">Chapter masih kosong</p>
+                        <p className="mt-1 text-base">
+                          Cobalah untuk{' '}
+                          <span
+                            className="text-blue-600 cursor-pointer hover:underline"
+                            onClick={() => handleAddChapter(idCourse)}
+                          >
+                            menambahkan chapter
+                          </span>
+                        </p>
+                      </div>
                     </div>
                   </td>
                 </tr>
