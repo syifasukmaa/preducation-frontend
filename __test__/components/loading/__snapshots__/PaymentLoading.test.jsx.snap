@@ -7,6 +7,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
     <div>
       <tr
         class="my-10"
+        data-testid="payment-loadingundefined"
       >
         <td
           class="px-4 w-[15%]"
@@ -68,6 +69,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
   "container": <div>
     <tr
       class="my-10"
+      data-testid="payment-loadingundefined"
     >
       <td
         class="px-4 w-[15%]"

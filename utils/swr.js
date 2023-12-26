@@ -1,10 +1,12 @@
 import useSWR from 'swr'
 
 export const fetcher = async (url, token) => {
+  const headers = {}
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
   const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
   })
   const data = await res.json()
   return data
@@ -18,11 +20,9 @@ export const useCourse = (token, id, category, title) => {
   }
 
   const { data, isLoading, mutate, error } = useSWR(
-    token
-      ? id
-        ? [`${process.env.API_URL}/courses/${id}`, token]
-        : [`${process.env.API_URL}/courses/?category=${category}&title=${titleQuery}`, token]
-      : null,
+    token && id
+      ? [`${process.env.API_URL}/courses/${id}`, token]
+      : [`${process.env.API_URL}/courses/?category=${category}&title=${titleQuery}`, token],
     ([url, token]) => fetcher(url, token)
   )
   return {

@@ -1,0 +1,506 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard Page Component renders the Dashboard page 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="md:px-12 px-4"
+      >
+        <div
+          class="relative flex items-center justify-between md:pt-2"
+        >
+          <p
+            class="text-xl font-bold text-primary-dark-blue"
+          >
+            Status Pembayaran
+          </p>
+          <div
+            class="relative flex items-center"
+          >
+            <svg
+              class="mr-3 cursor-pointer text-orange-05 cursorPointer"
+              data-testid="refresh-button"
+              fill="none"
+              height="25"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="25"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+              />
+              <path
+                d="M3 3v5h5"
+              />
+              <path
+                d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"
+              />
+              <path
+                d="M16 16h5v5"
+              />
+            </svg>
+            <button
+              class="flex items-center border-[1px] border-orange-05 py-[2px] px-[6px] rounded-2xl mr-3 text-base hover:scale-105 transition-all"
+              data-testid="filter-button"
+            >
+              <svg
+                fill="none"
+                height="18"
+                viewBox="0 0 18 18"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  clip-path="url(#clip0_3248_770)"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M0.666748 1.49984C0.666748 1.0396 1.03984 0.666504 1.50008 0.666504H16.5001C16.9603 0.666504 17.3334 1.0396 17.3334 1.49984V3.65466C17.3334 4.09669 17.1578 4.52061 16.8453 4.83317L11.5001 10.1783V14.8332C11.5001 15.1488 11.3217 15.4374 11.0394 15.5785L7.70609 17.2452C7.44777 17.3744 7.14099 17.3606 6.89531 17.2087C6.64963 17.0569 6.50008 16.7887 6.50008 16.4998V10.1783L1.1549 4.83317C0.842342 4.52061 0.666748 4.09669 0.666748 3.65466V1.49984ZM2.33341 2.33317V3.65466L7.92267 9.24392C8.07895 9.4002 8.16675 9.61216 8.16675 9.83317V15.1515L9.83342 14.3181V9.83317C9.83342 9.61216 9.92121 9.4002 10.0775 9.24392L15.6667 3.65466V2.33317H2.33341Z"
+                    fill="#EB5437"
+                    fill-rule="evenodd"
+                  />
+                </g>
+                <defs>
+                  <clippath
+                    id="clip0_3248_770"
+                  >
+                    <rect
+                      fill="white"
+                      height="16.6667"
+                      transform="translate(0.666748 0.666504)"
+                      width="16.6667"
+                    />
+                  </clippath>
+                </defs>
+              </svg>
+              <p
+                class="ml-1 text-orange-05 font-bold text-base"
+              >
+                Filter
+              </p>
+            </button>
+            <button
+              aria-label="search"
+              class="hover:scale-110 transition-all"
+              data-testid="search-button"
+            >
+              <svg
+                fill="none"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22.1333 24L13.7333 15.6C13.0667 16.1333 12.3 16.5556 11.4333 16.8667C10.5667 17.1778 9.64444 17.3333 8.66667 17.3333C6.24444 17.3333 4.19467 16.4942 2.51733 14.816C0.84 13.1378 0.000888889 11.088 0 8.66667C0 6.24444 0.839111 4.19467 2.51733 2.51733C4.19556 0.84 6.24533 0.000888889 8.66667 0C11.0889 0 13.1387 0.839111 14.816 2.51733C16.4933 4.19556 17.3324 6.24533 17.3333 8.66667C17.3333 9.64444 17.1778 10.5667 16.8667 11.4333C16.5556 12.3 16.1333 13.0667 15.6 13.7333L24 22.1333L22.1333 24ZM8.66667 14.6667C10.3333 14.6667 11.7502 14.0831 12.9173 12.916C14.0844 11.7489 14.6676 10.3324 14.6667 8.66667C14.6667 7 14.0831 5.58311 12.916 4.416C11.7489 3.24889 10.3324 2.66578 8.66667 2.66667C7 2.66667 5.58311 3.25022 4.416 4.41733C3.24889 5.58444 2.66578 7.00089 2.66667 8.66667C2.66667 10.3333 3.25022 11.7502 4.41733 12.9173C5.58444 14.0844 7.00089 14.6676 8.66667 14.6667Z"
+                  fill="#EB5437"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6"
+        >
+          <div
+            class="overflow-y-auto"
+          >
+            <table
+              class="min-w-full bg-white rounded-lg"
+            >
+              <thead
+                class="text-sm font-semibold bg-orange-04 text-neutral-05"
+              >
+                <tr>
+                  <td
+                    class="w-24 px-4 py-3"
+                  >
+                    ID
+                  </td>
+                  <td
+                    class="w-32 px-4 py-3"
+                  >
+                    Kategori
+                  </td>
+                  <td
+                    class="px-4 py-3"
+                  >
+                    Kelas Premium
+                  </td>
+                  <td
+                    class="px-4 py-3"
+                  >
+                    Status
+                  </td>
+                  <td
+                    class="px-4 py-3 lg:pl-4 lg:pr-0"
+                  >
+                    Metode Pembayaran
+                  </td>
+                  <td
+                    class="px-4 py-3 pl-4 lg:pl-0 lg:pr-1"
+                  >
+                    Tanggal Bayar
+                  </td>
+                </tr>
+              </thead>
+              <tbody
+                class="text-gray-700 whitespace-nowrap text-[10px]"
+              >
+                <tr>
+                  <td
+                    class="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]"
+                  >
+                    testUser
+                  </td>
+                  <td
+                    class="py-3 pl-4 pr-3 text-xs font-bold text-gray-05 w-[17%]"
+                  >
+                    TestCategory
+                  </td>
+                  <td
+                    class="px-4 py-3 text-xs font-bold text-gray-04 w-[15%]"
+                  >
+                    TestLevel
+                  </td>
+                  <td
+                    class="py-3 px-4 text-xs font-bold w-[15%] text-alert-green"
+                  >
+                    SUDAH BAYAR
+                  </td>
+                  <td
+                    class="px-4 py-3 text-xs font-bold lg:pl-4 lg:pr-0 text-gray-04 w-[20%]"
+                  >
+                    Credit Card
+                  </td>
+                  <td
+                    class="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05"
+                  >
+                    1 Januari 2023 pukul 19.00.00
+                  </td>
+                </tr>
+              </tbody>
+              <tbody
+                class="text-gray-700 whitespace-nowrap text-[10px]"
+              >
+                <tr>
+                  <td
+                    class="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]"
+                  >
+                    testUser2
+                  </td>
+                  <td
+                    class="py-3 pl-4 pr-3 text-xs font-bold text-gray-05 w-[17%]"
+                  >
+                    TestCategory
+                  </td>
+                  <td
+                    class="px-4 py-3 text-xs font-bold text-gray-04 w-[15%]"
+                  >
+                    TestLevel
+                  </td>
+                  <td
+                    class="py-3 px-4 text-xs font-bold w-[15%] text-alert-red"
+                  >
+                    BELUM BAYAR
+                  </td>
+                  <td
+                    class="px-4 py-3 text-xs font-bold lg:pl-4 lg:pr-0 text-gray-04 w-[20%]"
+                  >
+                    Credit Card
+                  </td>
+                  <td
+                    class="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05"
+                  >
+                    1 Januari 2023 pukul 19.00.00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="md:px-12 px-4"
+    >
+      <div
+        class="relative flex items-center justify-between md:pt-2"
+      >
+        <p
+          class="text-xl font-bold text-primary-dark-blue"
+        >
+          Status Pembayaran
+        </p>
+        <div
+          class="relative flex items-center"
+        >
+          <svg
+            class="mr-3 cursor-pointer text-orange-05 cursorPointer"
+            data-testid="refresh-button"
+            fill="none"
+            height="25"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+            />
+            <path
+              d="M3 3v5h5"
+            />
+            <path
+              d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"
+            />
+            <path
+              d="M16 16h5v5"
+            />
+          </svg>
+          <button
+            class="flex items-center border-[1px] border-orange-05 py-[2px] px-[6px] rounded-2xl mr-3 text-base hover:scale-105 transition-all"
+            data-testid="filter-button"
+          >
+            <svg
+              fill="none"
+              height="18"
+              viewBox="0 0 18 18"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                clip-path="url(#clip0_3248_770)"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M0.666748 1.49984C0.666748 1.0396 1.03984 0.666504 1.50008 0.666504H16.5001C16.9603 0.666504 17.3334 1.0396 17.3334 1.49984V3.65466C17.3334 4.09669 17.1578 4.52061 16.8453 4.83317L11.5001 10.1783V14.8332C11.5001 15.1488 11.3217 15.4374 11.0394 15.5785L7.70609 17.2452C7.44777 17.3744 7.14099 17.3606 6.89531 17.2087C6.64963 17.0569 6.50008 16.7887 6.50008 16.4998V10.1783L1.1549 4.83317C0.842342 4.52061 0.666748 4.09669 0.666748 3.65466V1.49984ZM2.33341 2.33317V3.65466L7.92267 9.24392C8.07895 9.4002 8.16675 9.61216 8.16675 9.83317V15.1515L9.83342 14.3181V9.83317C9.83342 9.61216 9.92121 9.4002 10.0775 9.24392L15.6667 3.65466V2.33317H2.33341Z"
+                  fill="#EB5437"
+                  fill-rule="evenodd"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="clip0_3248_770"
+                >
+                  <rect
+                    fill="white"
+                    height="16.6667"
+                    transform="translate(0.666748 0.666504)"
+                    width="16.6667"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+            <p
+              class="ml-1 text-orange-05 font-bold text-base"
+            >
+              Filter
+            </p>
+          </button>
+          <button
+            aria-label="search"
+            class="hover:scale-110 transition-all"
+            data-testid="search-button"
+          >
+            <svg
+              fill="none"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22.1333 24L13.7333 15.6C13.0667 16.1333 12.3 16.5556 11.4333 16.8667C10.5667 17.1778 9.64444 17.3333 8.66667 17.3333C6.24444 17.3333 4.19467 16.4942 2.51733 14.816C0.84 13.1378 0.000888889 11.088 0 8.66667C0 6.24444 0.839111 4.19467 2.51733 2.51733C4.19556 0.84 6.24533 0.000888889 8.66667 0C11.0889 0 13.1387 0.839111 14.816 2.51733C16.4933 4.19556 17.3324 6.24533 17.3333 8.66667C17.3333 9.64444 17.1778 10.5667 16.8667 11.4333C16.5556 12.3 16.1333 13.0667 15.6 13.7333L24 22.1333L22.1333 24ZM8.66667 14.6667C10.3333 14.6667 11.7502 14.0831 12.9173 12.916C14.0844 11.7489 14.6676 10.3324 14.6667 8.66667C14.6667 7 14.0831 5.58311 12.916 4.416C11.7489 3.24889 10.3324 2.66578 8.66667 2.66667C7 2.66667 5.58311 3.25022 4.416 4.41733C3.24889 5.58444 2.66578 7.00089 2.66667 8.66667C2.66667 10.3333 3.25022 11.7502 4.41733 12.9173C5.58444 14.0844 7.00089 14.6676 8.66667 14.6667Z"
+                fill="#EB5437"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6"
+      >
+        <div
+          class="overflow-y-auto"
+        >
+          <table
+            class="min-w-full bg-white rounded-lg"
+          >
+            <thead
+              class="text-sm font-semibold bg-orange-04 text-neutral-05"
+            >
+              <tr>
+                <td
+                  class="w-24 px-4 py-3"
+                >
+                  ID
+                </td>
+                <td
+                  class="w-32 px-4 py-3"
+                >
+                  Kategori
+                </td>
+                <td
+                  class="px-4 py-3"
+                >
+                  Kelas Premium
+                </td>
+                <td
+                  class="px-4 py-3"
+                >
+                  Status
+                </td>
+                <td
+                  class="px-4 py-3 lg:pl-4 lg:pr-0"
+                >
+                  Metode Pembayaran
+                </td>
+                <td
+                  class="px-4 py-3 pl-4 lg:pl-0 lg:pr-1"
+                >
+                  Tanggal Bayar
+                </td>
+              </tr>
+            </thead>
+            <tbody
+              class="text-gray-700 whitespace-nowrap text-[10px]"
+            >
+              <tr>
+                <td
+                  class="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]"
+                >
+                  testUser
+                </td>
+                <td
+                  class="py-3 pl-4 pr-3 text-xs font-bold text-gray-05 w-[17%]"
+                >
+                  TestCategory
+                </td>
+                <td
+                  class="px-4 py-3 text-xs font-bold text-gray-04 w-[15%]"
+                >
+                  TestLevel
+                </td>
+                <td
+                  class="py-3 px-4 text-xs font-bold w-[15%] text-alert-green"
+                >
+                  SUDAH BAYAR
+                </td>
+                <td
+                  class="px-4 py-3 text-xs font-bold lg:pl-4 lg:pr-0 text-gray-04 w-[20%]"
+                >
+                  Credit Card
+                </td>
+                <td
+                  class="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05"
+                >
+                  1 Januari 2023 pukul 19.00.00
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              class="text-gray-700 whitespace-nowrap text-[10px]"
+            >
+              <tr>
+                <td
+                  class="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]"
+                >
+                  testUser2
+                </td>
+                <td
+                  class="py-3 pl-4 pr-3 text-xs font-bold text-gray-05 w-[17%]"
+                >
+                  TestCategory
+                </td>
+                <td
+                  class="px-4 py-3 text-xs font-bold text-gray-04 w-[15%]"
+                >
+                  TestLevel
+                </td>
+                <td
+                  class="py-3 px-4 text-xs font-bold w-[15%] text-alert-red"
+                >
+                  BELUM BAYAR
+                </td>
+                <td
+                  class="px-4 py-3 text-xs font-bold lg:pl-4 lg:pr-0 text-gray-04 w-[20%]"
+                >
+                  Credit Card
+                </td>
+                <td
+                  class="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05"
+                >
+                  1 Januari 2023 pukul 19.00.00
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

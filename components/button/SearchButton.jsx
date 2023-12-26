@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import SearchIcon from '@/components/icons/SearchIcon';
+import SearchIcon from '@/components/icons/SearchIcon'
 
 export default function SearchButton({ onClick }) {
   return (
@@ -8,8 +8,9 @@ export default function SearchButton({ onClick }) {
       onClick={onClick}
       className="hover:scale-110 transition-all"
       aria-label="search"
+      data-testid="search-button"
     >
       <SearchIcon />
     </button>
-  );
+  )
 }
