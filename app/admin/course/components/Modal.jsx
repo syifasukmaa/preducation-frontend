@@ -1,19 +1,19 @@
-'use client';
-import React, { useEffect } from 'react';
-import ClosesButton from '@/components/button/ClosesButton';
+'use client'
+import React, { useEffect } from 'react'
+import ClosesButton from '@/components/button/ClosesButton'
 
 export default function Modal({ title, nameButton, onClose, handleSave, children, modalRef }) {
   let handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
+      onClose()
     }
-  };
+  }
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [handleClickOutside])
   return (
     <div className="fixed top-0 z-50 flex items-center justify-center w-full h-full -left-0 bg-neutral-05/75 ">
       <div
@@ -22,24 +22,19 @@ export default function Modal({ title, nameButton, onClose, handleSave, children
       >
         <h2 className="text-[20px] font-bold text-center mb-4 text-primary">{title}</h2>
 
-        <form
-          onSubmit={handleSave}
-          className="flex flex-col items-center"
-        >
+        <form onSubmit={handleSave} className="flex flex-col items-center">
           {children}
 
           <button
             type="submit"
+            data-testid={nameButton}
             className="mt-10 lg:px-32 py-3 bg-orange-05 w-full text-white rounded-[25px] font-bold shadow-xl border-2 hover:border-orange-05 hover:text-black hover:bg-white active:scale-75"
           >
             {nameButton}
           </button>
         </form>
-        <ClosesButton
-          style={'absolute top-5 right-3 text-orange-05 hover:text-black'}
-          onClick={onClose}
-        />
+        <ClosesButton style={'absolute top-5 right-3 text-orange-05 hover:text-black'} onClick={onClose} />
       </div>
     </div>
-  );
+  )
 }

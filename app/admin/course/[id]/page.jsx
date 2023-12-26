@@ -1,36 +1,34 @@
-'use client';
-import React, { useState } from 'react';
-import { useCourse } from '@/utils/swr';
-import { useParams, useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import convert from '@/utils/convert';
-import { IoDiamondOutline, IoTimer, IoSpeedometerOutline } from 'react-icons/io5';
-import { FaUsers, FaRegUser } from 'react-icons/fa';
-import { MdOutlineUploadFile } from 'react-icons/md';
-import { FaStar } from 'react-icons/fa6';
-import ModalCourse from '../components/ModalCourse';
-import DetailCourseLoading from '@/components/loading/DetailCourseLoading';
+'use client'
+import React, { useState } from 'react'
+import { useCourse } from '@/utils/swr'
+import { useParams, useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import convert from '@/utils/convert'
+import { IoDiamondOutline, IoTimer, IoSpeedometerOutline } from 'react-icons/io5'
+import { FaUsers, FaRegUser } from 'react-icons/fa'
+import { MdOutlineUploadFile } from 'react-icons/md'
+import { FaStar } from 'react-icons/fa6'
+import DetailCourseLoading from '@/components/loading/DetailCourseLoading'
+import ModalUpdateCourse from '../components/ModalUpdateCourse'
 
 export default function page() {
-  const router = useRouter();
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
-  const { id } = useParams();
-  const { course, error, isLoading, mutate } = useCourse(token, id);
+  const router = useRouter()
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
+  const { id } = useParams()
+  const { course, error, isLoading, mutate } = useCourse(token, id)
 
-  const [editMode, setEditMode] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [courseId, setCourseId] = useState(null);
+  const [showModal, setShowModal] = useState(false)
+  const [courseId, setCourseId] = useState(null)
 
   const goToChapter = () => {
-    router.push(`/admin/course/chapter/${id}`);
-  };
+    router.push(`/admin/course/chapter/${id}`)
+  }
   const handleEditCourse = (courseId) => {
-    setEditMode(true);
-    setShowModal(true);
-    setCourseId(courseId);
-  };
+    setShowModal(true)
+    setCourseId(courseId)
+  }
 
   return (
     <div className={`md:px-12 px-4 mt-6`}>
@@ -90,10 +88,7 @@ export default function page() {
                 {course?.targetAudience ? (
                   <div className="mt-2 text-justify">
                     {course.targetAudience.map((item, index) => (
-                      <p
-                        key={index}
-                        className="mt-1.5"
-                      >
+                      <p key={index} className="mt-1.5">
                         <span>
                           {item.substring(0, 2)} {''}
                         </span>
@@ -136,9 +131,8 @@ export default function page() {
 
       {showModal && (
         <div>
-          <ModalCourse
+          <ModalUpdateCourse
             onClose={() => setShowModal(false)}
-            editMode={editMode}
             token={token}
             mutate={mutate}
             courseId={courseId}
@@ -147,5 +141,5 @@ export default function page() {
         </div>
       )}
     </div>
-  );
+  )
 }

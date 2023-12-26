@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function PaymentLoading() {
+export default function PaymentLoading({ testId }) {
   return (
-    <tr className="my-10">
+    <tr data-testid={`payment-loading${testId}`} className="my-10">
       <td className="px-4 w-[15%]">
         <p className="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03"></p>
       </td>

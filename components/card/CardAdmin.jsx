@@ -1,22 +1,22 @@
-'use client';
-import React from 'react';
-import CardAdminItem from './CardAdminItem';
-import ClassIcon from '../icons/ClassIcon';
-import UsersIcon from '../icons/UsersIcon';
-import PremiumIcon from '../icons/PremiumIcon';
-import { useCategory } from '@/utils/swr';
-import { useSession } from 'next-auth/react';
-import { usePathname, useParams } from 'next/navigation';
-import CardAdminLoading from '../loading/CardAdminLoading';
+'use client'
+import React from 'react'
+import CardAdminItem from './CardAdminItem'
+import ClassIcon from '../icons/ClassIcon'
+import UsersIcon from '../icons/UsersIcon'
+import PremiumIcon from '../icons/PremiumIcon'
+import { useCategory } from '@/utils/swr'
+import { useSession } from 'next-auth/react'
+import { usePathname, useParams } from 'next/navigation'
+import CardAdminLoading from '../loading/CardAdminLoading'
 
 export default function CardAdmin() {
-  const { id } = useParams();
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
-  const pathName = usePathname();
+  const { id } = useParams()
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
+  const pathName = usePathname()
 
-  const urlShould = pathName === `/admin/course/${id}`;
-  const { categories, isLoading, error } = useCategory(token, true);
+  const urlShould = pathName === `/admin/course/${id}`
+  const { categories, isLoading, error } = useCategory(token, true)
 
   return (
     <div
@@ -25,7 +25,7 @@ export default function CardAdmin() {
       }`}
     >
       {error ? (
-        <p>error: ${error}</p>
+        <p>error: {error}</p>
       ) : categories ? (
         <>
           <CardAdminItem
@@ -51,5 +51,5 @@ export default function CardAdmin() {
         <CardAdminLoading />
       )}
     </div>
-  );
+  )
 }

@@ -1,63 +1,63 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import SearchButton from '@/components/button/SearchButton';
-import FilterButton from '@/components/button/FilterButton';
-import FilterPopup from '@/components/popup/FilterPopup';
-import SearchPopup from '@/components/popup/SearchPopup';
-import { usePayment } from '@/utils/swr';
-import PaymentLoading from '@/components/loading/PaymentLoading';
-import { LuRefreshCcw } from 'react-icons/lu';
-import '../../globals.css';
-import convert from '../../../utils/convert';
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import SearchButton from '@/components/button/SearchButton'
+import FilterButton from '@/components/button/FilterButton'
+import FilterPopup from '@/components/popup/FilterPopup'
+import SearchPopup from '@/components/popup/SearchPopup'
+import { usePayment } from '@/utils/swr'
+import PaymentLoading from '@/components/loading/PaymentLoading'
+import { LuRefreshCcw } from 'react-icons/lu'
+import '../../globals.css'
+import convert from '../../../utils/convert'
 
 export default function Page() {
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
     filter: '',
-  });
+  })
 
-  const { payment: payments, isLoading, error, mutate } = usePayment(token, showElements.filter, username);
+  const { payment: payments, isLoading, error, mutate } = usePayment(token, showElements.filter, username)
 
-  const overLay = useRef(null);
+  const overLay = useRef(null)
 
   const filterCourses = (filterOption) => {
     setShowElements({
       ...showElements,
       filter: filterOption,
       showFilter: false,
-    });
-  };
+    })
+  }
 
   const handleOutsideClick = (e) => {
     if (!overLay.current.contains(e.target)) {
-      setShowElements({ showFilter: false });
+      setShowElements({ showFilter: false })
     }
-  };
+  }
 
   const handleRefreshCourse = () => {
     setShowElements({
       ...showElements,
       filter: '',
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (showElements.showFilter) {
-      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [showElements.showFilter]);
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [showElements.showFilter])
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -68,6 +68,7 @@ export default function Page() {
             size={25}
             className={`mr-3 cursor-pointer text-orange-05 cursorPointer`}
             onClick={handleRefreshCourse}
+            data-testid="refresh-button"
           />
           <FilterButton onClick={() => setShowElements({ ...showElements, showFilter: true })} />
 
@@ -83,22 +84,13 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-          <div
-            className="absolute right-0 z-30 top-12"
-            ref={overLay}
-          >
+          <div className="absolute right-0 z-30 top-12" ref={overLay}>
             <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-              <div
-                className="item-filter"
-                onClick={() => filterCourses('Paid')}
-              >
+              <div data-testid="paid-button" className="item-filter" onClick={() => filterCourses('Paid')}>
                 SUDAH BAYAR
               </div>
 
-              <div
-                className="item-filter"
-                onClick={() => filterCourses('On Progress')}
-              >
+              <div data-testid="onprogress-button" className="item-filter" onClick={() => filterCourses('On Progress')}>
                 BELUM BAYAR
               </div>
             </FilterPopup>
@@ -123,10 +115,7 @@ export default function Page() {
             {error ? (
               <tbody>
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -135,10 +124,7 @@ export default function Page() {
               </tbody>
             ) : payments ? (
               payments.map((payment) => (
-                <tbody
-                  key={payment._id}
-                  className="text-gray-700 whitespace-nowrap text-[10px]"
-                >
+                <tbody key={payment._id} className="text-gray-700 whitespace-nowrap text-[10px]">
                   <tr>
                     <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">
                       {payment.userId && payment.userId.username ? payment.userId.username : ''}
@@ -166,7 +152,7 @@ export default function Page() {
             ) : (
               <tbody>
                 {[...Array(5)].map((_, index) => (
-                  <PaymentLoading key={index} />
+                  <PaymentLoading key={index} testId={index} />
                 ))}
               </tbody>
             )}
@@ -174,5 +160,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
+  )
 }

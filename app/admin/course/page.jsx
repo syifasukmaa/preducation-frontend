@@ -1,31 +1,30 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import SearchButton from '@/components/button/SearchButton';
-import FilterButton from '@/components/button/FilterButton';
-import FilterPopup from '@/components/popup/FilterPopup';
-import SearchPopup from '@/components/popup/SearchPopup';
-import AddButton from '@/components/button/AddButton';
-import ActionButton from '@/components/button/ActionButton';
-import Checkbox from './components/Checkbox';
-import ModalCourse from './components/ModalCourse';
-import CourseLoading from '@/components/loading/CourseLoading';
-import convert from '@/utils/convert';
-import { useCourse } from '@/utils/swr';
-import { deleteCourse } from '@/utils/fetch';
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import SearchButton from '@/components/button/SearchButton'
+import FilterButton from '@/components/button/FilterButton'
+import FilterPopup from '@/components/popup/FilterPopup'
+import SearchPopup from '@/components/popup/SearchPopup'
+import AddButton from '@/components/button/AddButton'
+import ActionButton from '@/components/button/ActionButton'
+import Checkbox from './components/Checkbox'
+import CourseLoading from '@/components/loading/CourseLoading'
+import convert from '@/utils/convert'
+import { useCourse } from '@/utils/swr'
+import { deleteCourse } from '@/utils/fetch'
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
+import { useSession } from 'next-auth/react'
+import ModalCreateCourse from './components/ModalCreateCourse'
 
 export default function Page() {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
-  });
-  const [editMode, setEditMode] = useState(false);
-  const [courseId, setCourseId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  })
+  const [editMode, setEditMode] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState({
     'Data Science': false,
     'Web Development': false,
@@ -34,75 +33,74 @@ export default function Page() {
     'Data Science': false,
     'IOS Development': false,
     'Product Management': false,
-  });
+  })
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const overLay = useRef(null);
+  const overLay = useRef(null)
 
   const selectedCategoryKeys = Object.entries(selectedCategories)
     .filter(([key, value]) => value === true)
-    .map(([key]) => key);
+    .map(([key]) => key)
 
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const router = useRouter()
 
-  const router = useRouter();
-
-  const { course: courses, isLoading, mutate, error } = useCourse(token, null, selectedCategoryKeys, title);
+  const { course: courses, isLoading, mutate, error } = useCourse(null, null, selectedCategoryKeys, title)
 
   const goToCourseDetail = (chapterId) => {
-    router.push(`/admin/course/${chapterId}`);
-  };
+    router.push(`/admin/course/${chapterId}`)
+  }
 
   const handleAddCourse = () => {
-    setEditMode(false);
-    setShowModal(true);
-  };
+    setEditMode(false)
+    setShowModal(true)
+  }
 
   const handleDeleteCourse = async (courseId) => {
-    const isConfirmed = await ConfirmDeleteAlert('Delete Course');
+    const isConfirmed = await ConfirmDeleteAlert('Delete Course')
 
     if (isConfirmed) {
-      const response = await deleteCourse(token, courseId);
+      const response = await deleteCourse(token, courseId)
       if (response.ok) {
-        mutate();
-        DeleteSuccessAlert('Course');
+        mutate()
+        DeleteSuccessAlert('Course')
       }
     }
-  };
+  }
 
   const handleCheckboxChange = (label) => {
     setSelectedCategories({
       ...selectedCategories,
       [label]: !selectedCategories[label],
-    });
-  };
+    })
+  }
 
   const handleOutsideClick = (e) => {
     if (!overLay.current.contains(e.target)) {
-      setShowElements({ showFilter: false });
+      setShowElements({ showFilter: false })
     }
-  };
+  }
 
   useEffect(() => {
     if (showElements.showFilter) {
-      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [showElements.showFilter]);
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [showElements.showFilter])
 
   useEffect(() => {
     if (showModal) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add('overflow-hidden')
     }
     return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [showModal]);
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [showModal])
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -125,10 +123,7 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-          <div
-            className="absolute right-0 z-30 top-12"
-            ref={overLay}
-          >
+          <div className="absolute right-0 z-30 top-12" ref={overLay}>
             <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
               <Checkbox
                 label="Data Science"
@@ -188,10 +183,7 @@ export default function Page() {
             ) : error ? (
               <tbody className="text-[10px]">
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -199,11 +191,8 @@ export default function Page() {
                 </tr>
               </tbody>
             ) : courses ? (
-              courses.map((course) => (
-                <tbody
-                  key={course._id}
-                  className="text-gray-700 text-[10px]"
-                >
+              courses.map((course, index) => (
+                <tbody key={course._id} className="text-gray-700 text-[10px]">
                   <tr>
                     <td className="px-4 py-4 text-xs font-bold text-gray-05">{course.classCode}</td>
                     <td className="py-3 px-4 text-xs font-bold text-gray-05 w-[10%]">{course.category.name}</td>
@@ -223,6 +212,7 @@ export default function Page() {
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
                         onClick={() => goToCourseDetail(course._id)}
+                        testId={index}
                       >
                         Detail
                       </ActionButton>
@@ -249,16 +239,15 @@ export default function Page() {
 
       {showModal && (
         <div>
-          <ModalCourse
+          <ModalCreateCourse
             onClose={() => setShowModal(false)}
             editMode={editMode}
             token={token}
             mutate={mutate}
-            courseId={courseId}
             setShowModal={setShowModal}
           />
         </div>
       )}
     </div>
-  );
+  )
 }

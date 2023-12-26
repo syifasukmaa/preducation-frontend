@@ -1,26 +1,16 @@
-import React from 'react';
-import Image from 'next/image';
-import NavBar from '@/components/navbar/Navbarlp';
-import Footer from '@/components/footer/Footer';
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import NavBar from '@/components/navbar/Navbarlp'
+import Footer from '@/components/footer/Footer'
 
-import { FaStar } from 'react-icons/fa6';
-import { IoTimeOutline } from 'react-icons/io5';
-import Carousel from '@/components/carousel/Carousel';
+import { FaStar } from 'react-icons/fa6'
+import { IoTimeOutline } from 'react-icons/io5'
+import Carousel from '@/components/carousel/Carousel'
+import { useCourse } from '@/utils/swr'
 
-const allCourses = async () => {
-  try {
-    const res = await fetch(`${process.env.API_URL}/courses`);
-    const data = await res.json();
-    // console.log('API Response:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching courses:', error);
-    throw error;
-  }
-};
-
-const LandingPage = async () => {
-  const courses = await allCourses();
+const LandingPage = () => {
+  const { course: courses } = useCourse(null, '', '')
 
   return (
     <div className="overflow-x-hidden font-Montserrat">
@@ -68,13 +58,7 @@ const LandingPage = async () => {
       <form className="justify-center place-content-center">
         <div className="relative mx-auto bg-primary-dark-blue w-[300px] md:w-[500px] rounded-[15px] h-[60px] px-5 py-4  flex mb-10 justify-between">
           <div className="flex gap-2">
-            <Image
-              src="/search.svg"
-              width={25}
-              height={25}
-              alt=""
-              className="w-[25px] h-[25px]"
-            />
+            <Image src="/search.svg" width={25} height={25} alt="" className="w-[25px] h-[25px]" />
             <input
               className="text-white bg-primary-dark-blue text-[10px] md:text-[16px] mt-2 md:mt-0 leading-loose focus:outline-none active:outline-none md:w-[300px]"
               placeholder="Temukan Kursus..."
@@ -99,12 +83,9 @@ const LandingPage = async () => {
 
         {/* KOTAK KURSUS POPULER */}
         <div className="flex  mx-auto flex-wrap md:flex-row sm:flex-col md:gap-5 gap-0 flex-shrink-0 px-5 mb-[100px] mt-10 ">
-          {courses.data.map((course) => {
+          {courses?.map((course) => {
             return (
-              <div
-                className="relative mx-auto"
-                key={course._id}
-              >
+              <div className="relative mx-auto" key={course._id}>
                 <div className=" relative container flex flex-col bg-primary-dark-blue md:w-[290px] md:h-[326px] rounded-[15px] md:p-5 p-10 pb-8  z-10 mx-auto mb-10 ">
                   {/* GAMBAR */}
                   {course.thumbnail ? (
@@ -122,7 +103,7 @@ const LandingPage = async () => {
 
                   <div className="flex flex-col justify-between mt-2">
                     <h1 className="text-white text-[11px] font-bold mb-2">{course.title}</h1>
-                    <div className="flex mb-2 bintang">
+                    <div data-testid="star-container" className="flex mb-2 bintang">
                       <FaStar className={course.totalRating >= 1 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
                       <FaStar className={course.totalRating >= 2 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
                       <FaStar className={course.totalRating >= 3 ? 'text-bintang-hidup' : 'text-bintang-mati'} />
@@ -146,13 +127,7 @@ const LandingPage = async () => {
                     </div>
                     {/* MODUL */}
                     <div className="flex gap-1">
-                      <Image
-                        src="/modul.svg"
-                        width={10}
-                        height={10}
-                        alt="modul"
-                        className="w-4 h-4"
-                      />
+                      <Image src="/modul.svg" width={10} height={10} alt="modul" className="w-4 h-4" />
                       <p className="text-white text-[12px]">{`${course.totalModule} Modul`}</p>
                     </div>
                   </div>
@@ -162,7 +137,7 @@ const LandingPage = async () => {
                   Daftar
                 </button>
               </div>
-            );
+            )
           })}
         </div>
       </div>
@@ -192,18 +167,13 @@ const LandingPage = async () => {
             </div>
           </div>
           <div className="">
-            <Image
-              src="/hp.svg"
-              height={200}
-              width={200}
-              alt=""
-            />
+            <Image src="/hp.svg" height={200} width={200} alt="" />
           </div>
         </div>
       </div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

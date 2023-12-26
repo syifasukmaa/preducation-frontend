@@ -61,16 +61,13 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="w-48 px-4"
         >
           <div
-            class="flex flex-col justify-between h-full lg:flex-row"
+            class="flex flex-col h-full lg:flex-row"
           >
             <p
-              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
             />
             <p
-              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
-            />
-            <p
-              class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
             />
           </div>
         </td>
@@ -134,16 +131,13 @@ exports[`Course Loading renders loading skeleton 1`] = `
         class="w-48 px-4"
       >
         <div
-          class="flex flex-col justify-between h-full lg:flex-row"
+          class="flex flex-col h-full lg:flex-row"
         >
           <p
-            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
           />
           <p
-            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
-          />
-          <p
-            class="w-16 py-2 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
           />
         </div>
       </td>
