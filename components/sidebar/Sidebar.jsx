@@ -4,11 +4,11 @@ import Image from 'next/image'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { IoMdClose } from 'react-icons/io'
 import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu'
+import { FaDollarSign } from 'react-icons/fa'
 import { SiGoogleclassroom } from 'react-icons/si'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import Swal from 'sweetalert2'
-
 
 export default function Sidebar() {
   const url = usePathname()
@@ -26,6 +26,11 @@ export default function Sidebar() {
       id: '/admin/course',
       icon: <SiGoogleclassroom />,
       label: 'Kelola Kelas',
+    },
+    {
+      id: '/admin/payment',
+      icon: <FaDollarSign />,
+      label: 'Transaksi',
     },
   ]
 
@@ -83,17 +88,12 @@ export default function Sidebar() {
       <nav className="py-2 mt-6 md:mt-3">
         <ul className={`${open ? '' : 'flex flex-col justify-end items-end pr-3 md:pr-0 md:block'}`}>
           {sidebarItems?.map((item, index) => (
-            <li
-              key={index}
-              className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}
-
-            >
+            <li key={index} className={` text-white py-3 ${url.startsWith(item.id) ? 'bg-orange-05' : ''}`}>
               <button
                 href={item.id}
                 className={`flex items-center px-4 ${url.startsWith(item.id) ? 'ml-4' : ''}`}
                 onClick={() => handleClick(item.id)}
-              data-testid={item.label}
-                
+                data-testid={item.label}
               >
                 <span>{item.icon}</span>
                 <span className={`ml-3 ${open ? 'block' : 'hidden md:block'} font-bold`}>{item.label}</span>
@@ -102,11 +102,7 @@ export default function Sidebar() {
           ))}
 
           <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
-            <button
-              className={`flex items-center px-4`}
-              onClick={handleLogOut}
-              data-testid="handle-logout"
-            >
+            <button className={`flex items-center px-4`} onClick={handleLogOut} data-testid="handle-logout">
               <span>
                 <LuLogOut />
               </span>

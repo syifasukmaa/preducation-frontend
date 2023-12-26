@@ -46,22 +46,35 @@ export const useChapter = (token, id) => {
   }
 }
 
-export const usePayment = (token, status, username) => {
+export const usePayment = (token, status, username, limit, page) => {
   let statusQuery = ''
   let usernameQuery = ''
+  let limitQuery = ''
+  let pageQuery = ''
   if (status) {
     statusQuery = status
   }
   if (username) {
     usernameQuery = username
   }
+  if (limit) {
+    limitQuery = limit
+  }
+  if (page) {
+    pageQuery = page
+  }
 
   const { data, isLoading, mutate, error } = useSWR(
-    token ? [`${process.env.API_URL}/payments/all/?status=${statusQuery}&username=${usernameQuery}`, token] : null,
+    token
+      ? [
+          `${process.env.API_URL}/payments/all/?status=${statusQuery}&username=${usernameQuery}&limit=${limitQuery}&page=${pageQuery}`,
+          token,
+        ]
+      : null,
     ([url, token]) => fetcher(url, token)
   )
   return {
-    payment: data?.data,
+    payment: data?.data.payments,
     isLoading,
     mutate,
     error,
