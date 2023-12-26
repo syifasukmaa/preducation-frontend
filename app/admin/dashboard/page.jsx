@@ -1,101 +1,20 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { useSession } from 'next-auth/react'
-import SearchButton from '@/components/button/SearchButton'
-import FilterButton from '@/components/button/FilterButton'
-import FilterPopup from '@/components/popup/FilterPopup'
-import SearchPopup from '@/components/popup/SearchPopup'
 import { usePayment } from '@/utils/swr'
 import PaymentLoading from '@/components/loading/PaymentLoading'
-import { LuRefreshCcw } from 'react-icons/lu'
-import '../../globals.css'
-import convert from '../../../utils/convert'
+import convert from '@/utils/convert'
 
 export default function Page() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken
 
-  const [username, setUsername] = useState('')
-  const [showElements, setShowElements] = useState({
-    showFilter: false,
-    showInput: false,
-    filter: '',
-  })
-
-  const { payment: payments, isLoading, error, mutate } = usePayment(token, showElements.filter, username)
-
-  const overLay = useRef(null)
-
-  const filterCourses = (filterOption) => {
-    setShowElements({
-      ...showElements,
-      filter: filterOption,
-      showFilter: false,
-    })
-  }
-
-  const handleOutsideClick = (e) => {
-    if (!overLay.current.contains(e.target)) {
-      setShowElements({ showFilter: false })
-    }
-  }
-
-  const handleRefreshCourse = () => {
-    setShowElements({
-      ...showElements,
-      filter: '',
-    })
-  }
-
-  useEffect(() => {
-    if (showElements.showFilter) {
-      document.addEventListener('mousedown', handleOutsideClick)
-    } else {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-  }, [showElements.showFilter])
+  const { payment: payments, isLoading, error, mutate } = usePayment(token, null, null, 5)
 
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold text-primary-dark-blue">Status Pembayaran</p>
-        <div className="relative flex items-center">
-          <LuRefreshCcw
-            size={25}
-            className={`mr-3 cursor-pointer text-orange-05 cursorPointer`}
-            onClick={handleRefreshCourse}
-            data-testid="refresh-button"
-          />
-          <FilterButton onClick={() => setShowElements({ ...showElements, showFilter: true })} />
-
-          <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
-
-          {showElements.showInput && (
-            <SearchPopup
-              onClick={() => setShowElements({ ...showElements, showInput: false })}
-              title={username}
-              setTitle={setUsername}
-            />
-          )}
-        </div>
-
-        {showElements.showFilter && (
-          <div className="absolute right-0 z-30 top-12" ref={overLay}>
-            <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-              <div data-testid="paid-button" className="item-filter" onClick={() => filterCourses('Paid')}>
-                SUDAH BAYAR
-              </div>
-
-              <div data-testid="onprogress-button" className="item-filter" onClick={() => filterCourses('On Progress')}>
-                BELUM BAYAR
-              </div>
-            </FilterPopup>
-          </div>
-        )}
+        <p className="text-xl font-bold text-primary-dark-blue">Transaksi Terbaru</p>
       </div>
 
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
@@ -109,11 +28,11 @@ export default function Page() {
                 <td className="px-4 py-3">Status</td>
                 <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>
                 <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Tanggal Bayar</td>
+                <td className="pl-4 pr-4 py-3 md:pl-10">Total</td>
               </tr>
             </thead>
-
-            {error ? (
-              <tbody>
+            <tbody className="text-gray-700 whitespace-nowrap text-[10px] ">
+              {error ? (
                 <tr>
                   <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
@@ -121,11 +40,9 @@ export default function Page() {
                     </div>
                   </td>
                 </tr>
-              </tbody>
-            ) : payments ? (
-              payments.map((payment) => (
-                <tbody key={payment._id} className="text-gray-700 whitespace-nowrap text-[10px]">
-                  <tr>
+              ) : payments ? (
+                payments.map((payment) => (
+                  <tr key={payment._id}>
                     <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">
                       {payment.userId && payment.userId.username ? payment.userId.username : ''}
                     </td>
@@ -146,16 +63,15 @@ export default function Page() {
                     <td className="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05">
                       {convert.formatToDate(payment.createdAt)}
                     </td>
+                    <td className={`py-3 pl-4 pr-4 text-xs font-bold w-[15%] md:pl-10`}>
+                      {convert.formatToCurrency(payment.courseId.price)}
+                    </td>
                   </tr>
-                </tbody>
-              ))
-            ) : (
-              <tbody>
-                {[...Array(5)].map((_, index) => (
-                  <PaymentLoading key={index} testId={index} />
-                ))}
-              </tbody>
-            )}
+                ))
+              ) : (
+                [...Array(5)].map((_, index) => <PaymentLoading key={index} testId={index} />)
+              )}
+            </tbody>
           </table>
         </div>
       </div>
