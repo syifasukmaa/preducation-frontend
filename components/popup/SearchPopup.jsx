@@ -1,7 +1,7 @@
 import React from 'react'
 import ClosesButton from '../button/ClosesButton'
 
-export default function SearchPopup({ onClick, title, setTitle }) {
+export default function SearchPopup({ onClick, title, setTitle, handleChange }) {
   return (
     <div data-testid="search-popup-container" className="absolute bg-white z-10 top-0 right-0">
       <div className="flex">
@@ -10,7 +10,7 @@ export default function SearchPopup({ onClick, title, setTitle }) {
           placeholder="Cari..."
           className="border solid border-orange-05 px-6 py-1 rounded-md"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleChange}
         />
         <ClosesButton onClick={onClick} style={'bg-orange-05 ml-1 text-white px-3 py-1 rounded'} />
       </div>

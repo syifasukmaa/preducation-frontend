@@ -75,6 +75,7 @@ export const usePayment = (token, status, username, limit, page) => {
   )
   return {
     payment: data?.data.payments,
+    totalData: data?.data.total,
     isLoading,
     mutate,
     error,
