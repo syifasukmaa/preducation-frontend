@@ -47,6 +47,10 @@ export default function Page() {
 
   const { course: courses, isLoading, mutate, error } = useCourse(null, null, selectedCategoryKeys, title)
 
+  const handleSearch = (e) => {
+    setTitle(e.target.value)
+  }
+
   const goToCourseDetail = (chapterId) => {
     router.push(`/admin/course/${chapterId}`)
   }
@@ -117,7 +121,7 @@ export default function Page() {
             <SearchPopup
               onClick={() => setShowElements({ ...showElements, showInput: false })}
               title={title}
-              setTitle={setTitle}
+              handleChange={handleSearch}
             />
           )}
         </div>

@@ -10,21 +10,47 @@ import PaymentLoading from '@/components/loading/PaymentLoading'
 import { LuRefreshCcw } from 'react-icons/lu'
 import '../../globals.css'
 import convert from '@/utils/convert'
+import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function Page() {
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
-
   const [username, setUsername] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
     filter: '',
   })
-
-  const { payment: payments, isLoading, error, mutate } = usePayment(token, showElements.filter, username)
-
   const overLay = useRef(null)
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPage = searchParams.get('page') || 1
+  const search = searchParams.get('search') || ''
+  const filter = searchParams.get('filter') || ''
+  const limit = searchParams.get('limit') || 7
+  const { payment: payments, totalData, error } = usePayment(token, filter, search, limit, currentPage)
+
+  const handleCurrentPage = (newPage) => {
+    if (newPage <= 0) {
+      return
+    }
+    if (newPage > Math.ceil(totalData / limit)) {
+      return
+    }
+    router.push(`/admin/payment?page=${newPage}`)
+  }
+
+  const handleSearch = (e) => {
+    setUsername(e.target.value)
+    if (totalData) {
+      router.push(`/admin/payment/?search=${e.target.value}&filter=${filter}&limit=${totalData}`)
+    }
+    if (!e.target.value) {
+      router.push(`/admin/payment/?filter=${filter}`)
+      setUsername(search)
+    }
+  }
 
   const filterCourses = (filterOption) => {
     setShowElements({
@@ -32,6 +58,9 @@ export default function Page() {
       filter: filterOption,
       showFilter: false,
     })
+    if (totalData) {
+      router.push(`/admin/payment/?search=${search}&filter=${filterOption}&limit=${totalData}`)
+    }
   }
 
   const handleOutsideClick = (e) => {
@@ -45,6 +74,8 @@ export default function Page() {
       ...showElements,
       filter: '',
     })
+    router.push(`/admin/payment`)
+    setUsername('')
   }
 
   useEffect(() => {
@@ -76,16 +107,25 @@ export default function Page() {
 
           {showElements.showInput && (
             <SearchPopup
-              onClick={() => setShowElements({ ...showElements, showInput: false })}
+              onClick={() => {
+                setShowElements({ ...showElements, showInput: false })
+              }}
+              handleChange={handleSearch}
               title={username}
-              setTitle={setUsername}
             />
           )}
         </div>
 
         {showElements.showFilter && (
           <div className="absolute right-0 z-30 top-12" ref={overLay}>
-            <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
+            <FilterPopup
+              clickClose={() => {
+                setShowElements({ ...showElements, showFilter: false })
+                filterCourses('Paid')
+                setUsername('')
+                router.push(`/admin/payment`)
+              }}
+            >
               <div data-testid="paid-button" className="item-filter" onClick={() => filterCourses('Paid')}>
                 SUDAH BAYAR
               </div>
@@ -109,11 +149,12 @@ export default function Page() {
                 <td className="px-4 py-3">Status</td>
                 <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>
                 <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Tanggal Bayar</td>
+                <td className="pl-4 pr-4 py-3 md:pl-10">Total</td>
               </tr>
             </thead>
 
-            {error ? (
-              <tbody>
+            <tbody className="text-gray-700 whitespace-nowrap text-[10px] ">
+              {error ? (
                 <tr>
                   <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
@@ -121,11 +162,27 @@ export default function Page() {
                     </div>
                   </td>
                 </tr>
-              </tbody>
-            ) : payments ? (
-              payments.slice(0, 7).map((payment) => (
-                <tbody key={payment._id} className="text-gray-700 whitespace-nowrap text-[10px] ">
-                  <tr>
+              ) : payments?.length <= 0 ? (
+                <tr>
+                  <td colSpan="7" className="py-8 text-center">
+                    <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
+                      <Image
+                        src="/img/empty_3d.jpg"
+                        width={80}
+                        height={80}
+                        alt="empty image"
+                        className="w-[80px] h-[80px] mt-2"
+                        priority="true"
+                      />
+                      <div className="ml-4 md:text-start">
+                        <p className="mt-4 text-xl font-bold text-orange-05">Data tidak ditemukan</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ) : payments ? (
+                payments.map((payment) => (
+                  <tr key={payment._id}>
                     <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">
                       {payment.userId && payment.userId.username ? payment.userId.username : ''}
                     </td>
@@ -146,23 +203,41 @@ export default function Page() {
                     <td className="px-4 py-3 pl-4 text-xs font-bold lg:pl-0 lg:pr-1 text-gray-05">
                       {convert.formatToDate(payment.createdAt)}
                     </td>
+                    <td className={`py-3 pl-4 pr-4 text-xs font-bold w-[15%] md:pl-10`}>
+                      {convert.formatToCurrency(payment.courseId.price)}
+                    </td>
                   </tr>
-                </tbody>
-              ))
-            ) : (
-              <tbody>
-                {[...Array(5)].map((_, index) => (
-                  <PaymentLoading key={index} testId={index} />
-                ))}
-              </tbody>
-            )}
-            <tbody className="h-[300px] w-full"></tbody>
+                ))
+              ) : (
+                [...Array(7)].map((_, index) => <PaymentLoading key={index} testId={index} />)
+              )}
+            </tbody>
           </table>
         </div>
-        <div className="flex items-center justify-between mt-4 pl-4">
-          <button className="bg-primary-dark-blue text-white font-medium py-1 w-20 rounded text-sm">Previous</button>
-          <button className="bg-primary-dark-blue text-white font-medium py-1 w-20 rounded text-sm">Next</button>
-        </div>
+        {payments?.length !== 0 && Number(limit) !== totalData && !filter ? (
+          <div className="flex items-center justify-between mt-4 pl-4">
+            <button
+              disabled={currentPage <= 1 ? true : false}
+              onClick={() => handleCurrentPage(Number(currentPage) - 1)}
+              className={`${
+                currentPage <= 1 ? 'bg-slate-700/80 cursor-not-allowed' : 'bg-primary-dark-blue hover:bg-orange-05'
+              } text-white font-medium py-1 w-20 rounded text-sm`}
+            >
+              Previous
+            </button>
+            <button
+              disabled={currentPage >= Math.ceil(totalData / limit) ? true : false}
+              onClick={() => handleCurrentPage(Number(currentPage) + 1)}
+              className={`${
+                currentPage >= Math.ceil(totalData / limit)
+                  ? 'bg-slate-700/80 cursor-not-allowed'
+                  : 'bg-primary-dark-blue hover:bg-orange-05'
+              } text-white font-medium py-1 w-20 rounded text-sm `}
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )

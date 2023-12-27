@@ -101,7 +101,7 @@ export default function Sidebar() {
             </li>
           ))}
 
-          <li className={`text-white py-3 bg-orange-05} active:bg-orange-05`}>
+          <li className={`text-white py-3  active:bg-orange-05`}>
             <button className={`flex items-center px-4`} onClick={handleLogOut} data-testid="handle-logout">
               <span>
                 <LuLogOut />
