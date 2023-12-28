@@ -1,7 +1,7 @@
 import React from 'react';
 import ClosesButton from '../button/ClosesButton';
 
-export default function SearchPopup({ onClick, title, setTitle, handleChange }) {
+export default function SearchPopup({ onClick, title, handleChange }) {
   return (
     <div
       data-testid="search-popup-container"
