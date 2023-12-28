@@ -1,13 +1,12 @@
-'use state';
-import React, { useState } from 'react';
-import '../../../globals.css';
+'use client'
+import React, { useState } from 'react'
 
 export default function Input({ type, label, name, placeholder, value, textarea, onChange, required }) {
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(false)
 
   const handleInputClick = () => {
-    setClicked(true);
-  };
+    setClicked(true)
+  }
   return (
     <div className="w-full mt-3">
       <label
@@ -54,5 +53,5 @@ export default function Input({ type, label, name, placeholder, value, textarea,
         )}
       </div>
     </div>
-  );
+  )
 }

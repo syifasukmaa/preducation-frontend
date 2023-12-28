@@ -102,8 +102,7 @@ export const updateChapter = async (token, chapterData, chapterId) => {
     console.error('Error creating a new course:', error)
     throw error
   }
-
-};
+}
 export const deleteChapter = async (token, chapterId) => {
   try {
     const response = await fetch(`${process.env.API_URL}/chapters/${chapterId}`, {
@@ -112,14 +111,14 @@ export const deleteChapter = async (token, chapterId) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
 
-    return response;
+    return response
   } catch (error) {
-    console.error('Error updating the course:', error);
-    throw error;
+    console.error('Error updating the course:', error)
+    throw error
   }
-};
+}
 
 export const createNewVideo = async (token, videoData, Id) => {
   try {
@@ -162,7 +161,6 @@ export const deleteVideo = async (token, videoId) => {
     const response = await fetch(`${process.env.API_URL}/videos/${videoId}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     })
@@ -190,6 +188,40 @@ export const resetPassword = async (passwordResetToken, password, confirmPasswor
     return response
   } catch (error) {
     console.log('Error creating a new course:', error)
+    throw error
+  }
+}
+
+export const createUser = async (token, body) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/users/create-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    })
+
+    return response
+  } catch (error) {
+    console.error('Error creating a new course:', error)
+    throw error
+  }
+}
+
+export const deleteUser = async (token, userId) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return response
+  } catch (error) {
+    console.error('Error updating the course:', error)
     throw error
   }
 }

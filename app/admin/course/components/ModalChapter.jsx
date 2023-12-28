@@ -1,57 +1,62 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Modal from './Modal';
-import Input from './Input';
-import { createNewChapter, updateChapter } from '@/utils/fetch';
-import { useChapter } from '@/utils/swr';
-import successAlert from '@/components/alert/successAlert';
-import ToastSweet from '@/components/alert/ToastSweet';
+import React, { useState, useEffect, useRef } from 'react'
+import Modal from './Modal'
+import Input from './Input'
+import { createNewChapter, updateChapter } from '@/utils/fetch'
+import { useChapter } from '@/utils/swr'
+import successAlert from '@/components/alert/successAlert'
+import ToastSweet from '@/components/alert/ToastSweet'
 
 export default function ModalChapter({ onClose, editMode, token, Id, mutate, setShowModal }) {
-  const modalRef = useRef(null);
-  const [titleChapter, setTitleChapter] = useState('');
+  const [titleChapter, setTitleChapter] = useState('')
+  const [loading, setLoading] = useState(false)
+  const modalRef = useRef(null)
 
-  const { chapter, isLoding, mutate: singleMutate } = useChapter(token, Id);
+  const { chapter, isLoding, mutate: singleMutate } = useChapter(token, Id)
 
   useEffect(() => {
     if (editMode && chapter) {
-      setTitleChapter(chapter.title);
+      setTitleChapter(chapter.title)
     }
-  }, [editMode, chapter]);
+  }, [editMode, chapter])
 
   const handleInputChange = (e) => {
-    setTitleChapter(e.target.value);
-  };
+    setTitleChapter(e.target.value)
+  }
 
   const handleSave = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setLoading(true)
     try {
       if (titleChapter === '') {
-        ToastSweet();
-        return;
+        ToastSweet()
+        return
       }
 
-      const chapterData = { title: titleChapter };
+      const chapterData = { title: titleChapter }
 
       if (editMode) {
-        setTitleChapter(chapter.title);
-        const response = await updateChapter(token, chapterData, Id);
+        setTitleChapter(chapter.title)
+        const response = await updateChapter(token, chapterData, Id)
         if (response.ok) {
-          successAlert('edit', 'Chapter');
-          setTitleChapter('');
-          singleMutate();
+          successAlert('edit', 'Chapter')
+          setTitleChapter('')
+          singleMutate()
         }
       } else {
-        const response = await createNewChapter(token, chapterData, Id);
+        const response = await createNewChapter(token, chapterData, Id)
         if (response.ok) {
-          setShowModal(false);
-          mutate();
-          successAlert('membuat', 'Chapter');
+          setShowModal(false)
+          mutate()
+          successAlert('membuat', 'Chapter')
         }
       }
     } catch (err) {
-      console.error('Error creating or update chapter', err);
+      console.error('Error creating or update chapter', err)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
+  const isDisabled = titleChapter.length === 0
   return (
     <Modal
       title={editMode ? 'Edit Chapter' : 'Tambah Chapter'}
@@ -59,6 +64,8 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
       nameButton={editMode ? 'Perbarui' : 'Simpan'}
       handleSave={handleSave}
       modalRef={modalRef}
+      isLoading={loading}
+      isDisabled={isDisabled}
     >
       <Input
         type={'text'}
@@ -70,5 +77,5 @@ export default function ModalChapter({ onClose, editMode, token, Id, mutate, set
         required
       />
     </Modal>
-  );
+  )
 }

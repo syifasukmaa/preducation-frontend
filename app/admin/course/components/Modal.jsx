@@ -1,8 +1,10 @@
-'use client';
-import React, { useEffect } from 'react';
-import ClosesButton from '@/components/button/ClosesButton';
+'use client'
+import React, { useEffect } from 'react'
+import { LuLoader2 } from 'react-icons/lu'
+import ClosesButton from '@/components/button/ClosesButton'
 
-export default function Modal({ title, nameButton, onClose, handleSave, children, modalRef }) {
+
+export default function Modal({ title, nameButton, onClose, handleSave, children, modalRef, isDisabled, isLoading }) {
   let handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose();
@@ -30,10 +32,14 @@ export default function Modal({ title, nameButton, onClose, handleSave, children
 
           <button
             type="submit"
+            disabled={isDisabled || isLoading ? true : false}
             data-testid={nameButton}
-            className="mt-10 lg:px-32 py-3 bg-orange-05 w-full text-white rounded-[25px] font-bold shadow-xl border-2 border-transparent hover:border-2 hover:border-orange-05 hover:text-black hover:bg-white active:scale-75 dark:hover:bg-slate-300"
+            className={`${
+              isDisabled || isLoading ? 'cursor-not-allowed' : ''
+            } mt-10 lg:px-32 h-12 bg-orange-05 w-full text-white rounded-[25px] font-bold shadow-xl border-2 hover:border-orange-05 hover:text-black hover:bg-white active:scale-75 flex items-center justify-center`}
+
           >
-            {nameButton}
+            {isLoading ? <LuLoader2 className="animate-spin" size="24" /> : nameButton}
           </button>
         </form>
         <ClosesButton

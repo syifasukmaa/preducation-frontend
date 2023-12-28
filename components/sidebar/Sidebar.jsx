@@ -1,14 +1,16 @@
-'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoMdClose } from 'react-icons/io';
-import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
-import { FaDollarSign } from 'react-icons/fa';
-import { SiGoogleclassroom } from 'react-icons/si';
-import { usePathname, useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
-import Swal from 'sweetalert2';
+'use client'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { IoMdClose } from 'react-icons/io'
+import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu'
+import { FaDollarSign } from 'react-icons/fa'
+import { SiGoogleclassroom } from 'react-icons/si'
+import { usePathname, useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
+import Swal from 'sweetalert2'
+import { MdSupervisedUserCircle } from 'react-icons/md'
+
 
 export default function Sidebar() {
   const url = usePathname();
@@ -22,6 +24,11 @@ export default function Sidebar() {
 
   const sidebarItems = [
     { id: '/admin/dashboard', icon: <LuLayoutDashboard />, label: 'Dashboard' },
+    {
+      id: '/admin/user',
+      icon: <MdSupervisedUserCircle />,
+      label: 'User',
+    },
     {
       id: '/admin/course',
       icon: <SiGoogleclassroom />,

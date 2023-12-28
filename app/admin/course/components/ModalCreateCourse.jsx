@@ -8,11 +8,8 @@ import successAlert from '@/components/alert/successAlert';
 import ToastSweet from '@/components/alert/ToastSweet';
 
 export default function ModalCreateCourse({ onClose, token, mutate, setShowModal }) {
-  const modalRef = useRef(null);
-
-  const { categories } = useCategory(token);
-
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState({
     category: '',
     level: '',
@@ -25,7 +22,9 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     Materi: '',
     targetAudience: '',
     thumbnail: null,
-  });
+  })
+  const modalRef = useRef(null)
+  const { categories } = useCategory(token)
 
   const options = categories?.map((category) => ({ label: category.name, value: category._id }));
 
@@ -40,22 +39,23 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     { label: 'Tipe Kelas', value: 'tipekelas' },
     { label: 'FREE', value: 'FREE' },
     { label: 'PREMIUM', value: 'PREMIUM' },
-  ];
+  ]
+  const isDisabled =
+    form.namaKelas.trim() === '' ||
+    selectedOptions.category === '' ||
+    form.kodeKelas.trim() === '' ||
+    selectedOptions.tipeKelas === '' ||
+    selectedOptions.level === '' ||
+    form.harga === null ||
+    form.Materi.trim() === ''
 
   const handleSave = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setIsLoading(true)
     try {
-      if (
-        form.namaKelas.trim() === '' ||
-        selectedOptions.category === '' ||
-        form.kodeKelas.trim() === '' ||
-        selectedOptions.tipeKelas === '' ||
-        selectedOptions.level === '' ||
-        form.harga === null ||
-        form.Materi.trim() === ''
-      ) {
-        ToastSweet();
-        return;
+      if (isDisabled) {
+        ToastSweet()
+        return
       }
 
       const newCourseData = {
@@ -66,11 +66,10 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         level: selectedOptions.level,
         typeClass: selectedOptions.tipeKelas,
         level: selectedOptions.level,
-        price: form.harga,
-      };
+        price: Number(form.harga),
+      }
 
-      const response = await createNewCourse(token, newCourseData);
-      console.log(response);
+      const response = await createNewCourse(token, newCourseData)
 
       if (response.ok) {
         setShowModal(false);
@@ -78,7 +77,10 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         successAlert('membuat', 'Course');
       }
     } catch (error) {
-      console.error('Error creating or update course', error);
+      console.error('Error creating or update course', error)
+    } finally {
+      setIsLoading(false)
+
     }
   };
 
@@ -104,6 +106,8 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
       title={'Tambah Kelas'}
       onClose={onClose}
       nameButton={'Simpan'}
+      isDisabled={isDisabled}
+      isLoading={isLoading}
       handleSave={handleSave}
       modalRef={modalRef}
     >
@@ -196,7 +200,7 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         label="Harga"
         name="harga"
         placeholder="0 untuk Free"
-        value={form.harga}
+        value={selectedOptions.tipeKelas === 'FREE' ? '0' : form.harga}
         onChange={handleInputChange}
         required
       />

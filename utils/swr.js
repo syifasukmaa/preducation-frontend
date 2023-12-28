@@ -25,6 +25,7 @@ export const useCourse = (token, id, category, title) => {
       : [`${process.env.API_URL}/courses/?category=${category}&title=${titleQuery}`, token],
     ([url, token]) => fetcher(url, token)
   )
+
   return {
     course: data?.data,
     isLoading,
@@ -92,5 +93,33 @@ export const useCategory = (token, statistik) => {
     isLoading,
     mutate,
     error,
+  }
+}
+
+export const useUser = (token, id, name, limit, page) => {
+  let limitQuery = ''
+  let pageQuery = ''
+  let nameQuery = ''
+
+  if (limit) {
+    limitQuery = limit
+  }
+  if (page) {
+    pageQuery = page
+  }
+  if (name) {
+    nameQuery = name
+  }
+
+  const { data, isLoading, mutate, error } = useSWR(
+    token ? [`${process.env.API_URL}/users/?search=${nameQuery}&limit=${limitQuery}&page=${pageQuery}`, token] : null,
+    ([url, token]) => fetcher(url, token)
+  )
+  return {
+    data: data?.data.user,
+    isLoading,
+    mutate,
+    error,
+    totalData: data?.data.total,
   }
 }
