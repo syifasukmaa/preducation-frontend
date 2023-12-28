@@ -74,7 +74,7 @@ export default function page() {
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold">Kelola Video</p>
+        <p className="text-xl font-bold dark:text-dark-grey-02">Kelola Video</p>
         <div className="relative flex items-center">
           <AddButton onClick={() => handleAddVideo(idChapter)} />
 
@@ -91,8 +91,8 @@ export default function page() {
       </div>
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
-          <table className="min-w-full bg-white rounded-lg">
-            <thead className="text-sm font-semibold bg-orange-04 text-neutral-05">
+          <table className="min-w-full bg-white rounded-lg dark:bg-dark-backgroud">
+            <thead className="text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05">
               <tr className="">
                 <th className="p-4 text-left">No</th>
                 <th className="p-4 text-left w-72">Nama Video</th>
@@ -137,7 +137,7 @@ export default function page() {
                       />
                       <div className="ml-4 md:text-start">
                         <p className="mt-4 text-xl font-bold text-orange-05">Video masih kosong</p>
-                        <p className="mt-1 text-base">
+                        <p className="mt-1 text-base dark:text-dark-grey-02">
                           Cobalah untuk{' '}
                           <span
                             className="text-blue-600 cursor-pointer hover:underline"
@@ -161,13 +161,15 @@ export default function page() {
                     return (
                       <tr
                         key={video._id}
-                        className=" border-y border-orange-04"
+                        className=" border-y border-orange-04 dark:border-dark-grey-05"
                       >
-                        <td className="p-4 text-xs font-bold text-gray-05">{index + 1}</td>
-                        <td className="p-4 text-xs font-bold text-gray-04">{video.title}</td>
-                        <td className="p-4 text-xs font-bold text-gray-04">{video.duration} min</td>
-                        <td className="p-4 text-xs font-bold text-gray-04">{video.index}</td>
-                        <td className="px-4 py-3 text-xs font-bold text-gray-04">
+                        <td className="p-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02">{index + 1}</td>
+                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">{video.title}</td>
+                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">
+                          {video.duration} min
+                        </td>
+                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">{video.index}</td>
+                        <td className="px-4 py-3 text-xs font-bold text-gray-04 dark:text-dark-grey-02">
                           <iframe
                             className="w-full h-full"
                             src={`https://www.youtube.com/embed/${url}`}
