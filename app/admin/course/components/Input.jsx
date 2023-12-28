@@ -12,10 +12,10 @@ export default function Input({ type, label, name, placeholder, value, textarea,
     <div className="w-full mt-3">
       <label
         htmlFor={name}
-        className="label-modal"
+        className="label-modal dark:text-dark-grey-02"
       >
         {label}
-        {required && clicked && !value && <p className="text-red-500">Field Required</p>}
+        {required && clicked && !value && <p className="text-red-500 ">Field Required</p>}
       </label>
       <div className={`input-modal-wrapper`}>
         {textarea ? (
@@ -25,12 +25,12 @@ export default function Input({ type, label, name, placeholder, value, textarea,
             value={value}
             onChange={onChange}
             onClick={handleInputClick}
-            className={`input-modal h-32 ${
+            className={`input-modal h-32 dark:text-dark-grey-02  ${
               required && clicked && !value
                 ? 'ring-1 ring-inset ring-red-600'
                 : value
-                ? 'ring-1 ring-inset ring-black'
-                : ''
+                ? 'ring-1 ring-inset ring-black dark:ring-dark-grey-02'
+                : 'ring-1 ring-dark-grey-02'
             }`}
             placeholder={placeholder}
           />
@@ -42,12 +42,12 @@ export default function Input({ type, label, name, placeholder, value, textarea,
             value={value}
             onChange={onChange}
             onClick={handleInputClick}
-            className={`input-modal ${
+            className={`input-modal dark:text-dark-grey-02 ${
               required && clicked && !value
                 ? 'ring-1 ring-inset ring-red-600'
                 : value
-                ? 'ring-1 ring-inset ring-black'
-                : ''
+                ? 'ring-1 ring-inset ring-black dark:ring-dark-grey-02'
+                : 'ring-1 ring-dark-grey-02'
             }`}
             placeholder={placeholder}
           />

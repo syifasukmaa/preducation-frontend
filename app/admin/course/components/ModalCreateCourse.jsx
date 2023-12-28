@@ -1,23 +1,23 @@
-import React, { useEffect, useState, useRef } from 'react'
-import Dropdown from './Dropdown'
-import Input from './Input'
-import Modal from './Modal'
-import { createNewCourse } from '@/utils/fetch'
-import { useCategory } from '@/utils/swr'
-import successAlert from '@/components/alert/successAlert'
-import ToastSweet from '@/components/alert/ToastSweet'
+import React, { useEffect, useState, useRef } from 'react';
+import Dropdown from './Dropdown';
+import Input from './Input';
+import Modal from './Modal';
+import { createNewCourse } from '@/utils/fetch';
+import { useCategory } from '@/utils/swr';
+import successAlert from '@/components/alert/successAlert';
+import ToastSweet from '@/components/alert/ToastSweet';
 
 export default function ModalCreateCourse({ onClose, token, mutate, setShowModal }) {
-  const modalRef = useRef(null)
+  const modalRef = useRef(null);
 
-  const { categories } = useCategory(token)
+  const { categories } = useCategory(token);
 
-  const [click, setClick] = useState(false)
+  const [click, setClick] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({
     category: '',
     level: '',
     tipeKelas: '',
-  })
+  });
   const [form, setForm] = useState({
     namaKelas: '',
     kodeKelas: '',
@@ -25,25 +25,25 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     Materi: '',
     targetAudience: '',
     thumbnail: null,
-  })
+  });
 
-  const options = categories?.map((category) => ({ label: category.name, value: category._id }))
+  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
 
   const levelOptions = [
     { label: 'Level', value: 'Level' },
     { label: 'Beginner', value: 'Beginner' },
     { label: 'Intermediate', value: 'Intermediate' },
     { label: 'Advanced', value: 'Advanced' },
-  ]
+  ];
 
   const tipeKelasOptions = [
     { label: 'Tipe Kelas', value: 'tipekelas' },
     { label: 'FREE', value: 'FREE' },
     { label: 'PREMIUM', value: 'PREMIUM' },
-  ]
+  ];
 
   const handleSave = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       if (
         form.namaKelas.trim() === '' ||
@@ -51,11 +51,11 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         form.kodeKelas.trim() === '' ||
         selectedOptions.tipeKelas === '' ||
         selectedOptions.level === '' ||
-        form.harga === 0 ||
+        form.harga === null ||
         form.Materi.trim() === ''
       ) {
-        ToastSweet()
-        return
+        ToastSweet();
+        return;
       }
 
       const newCourseData = {
@@ -67,40 +67,46 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         typeClass: selectedOptions.tipeKelas,
         level: selectedOptions.level,
         price: form.harga,
-      }
+      };
 
-      const response = await createNewCourse(token, newCourseData)
-      console.log(response)
+      const response = await createNewCourse(token, newCourseData);
+      console.log(response);
 
       if (response.ok) {
-        setShowModal(false)
-        mutate()
-        successAlert('membuat', 'Course')
+        setShowModal(false);
+        mutate();
+        successAlert('membuat', 'Course');
       }
     } catch (error) {
-      console.error('Error creating or update course', error)
+      console.error('Error creating or update course', error);
     }
-  }
+  };
 
   const handleSelectChange = (event) => {
-    const { name, value } = event.target
-    setSelectedOptions({ ...selectedOptions, [name]: value })
-  }
+    const { name, value } = event.target;
+    setSelectedOptions({ ...selectedOptions, [name]: value });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setForm((prevData) => ({
       ...prevData,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSelectClick = (e) => {
-    setClick(true)
-  }
+    setClick(true);
+  };
 
   return (
-    <Modal title={'Tambah Kelas'} onClose={onClose} nameButton={'Simpan'} handleSave={handleSave} modalRef={modalRef}>
+    <Modal
+      title={'Tambah Kelas'}
+      onClose={onClose}
+      nameButton={'Simpan'}
+      handleSave={handleSave}
+      modalRef={modalRef}
+    >
       <Input
         type={'text'}
         label="Nama Kelas"
@@ -124,12 +130,16 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
           value={selectedOptions.category}
           onChange={handleSelectChange}
           onClick={handleSelectClick}
-          className={`select-dropdown ${
+          className={`select-dropdown dark:bg-slate-300 ${
             selectedOptions.category == 'All' && click ? 'ring-fail' : selectedOptions.category ? 'ring-success' : ''
           }`}
         >
           {options?.map((option, index) => (
-            <option key={index} value={option.value} className="text-[14px]">
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
               {option.label}
             </option>
           ))}
@@ -141,7 +151,7 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
           value={selectedOptions.tipeKelas}
           onChange={handleSelectChange}
           onClick={handleSelectClick}
-          className={`select-dropdown ${
+          className={`select-dropdown dark:bg-slate-300  ${
             selectedOptions.tipeKelas == 'tipekelas' && click
               ? 'ring-fail'
               : selectedOptions.tipeKelas
@@ -150,7 +160,11 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
           }`}
         >
           {tipeKelasOptions?.map((option, index) => (
-            <option key={index} value={option.value} className="text-[14px]">
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
               {option.label}
             </option>
           ))}
@@ -162,12 +176,16 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
           value={selectedOptions.level}
           onChange={handleSelectChange}
           onClick={handleSelectClick}
-          className={`select-dropdown ${
+          className={`select-dropdown dark:bg-slate-300  ${
             selectedOptions.level == 'Level' && click ? 'ring-fail' : selectedOptions.level ? 'ring-success' : ''
           }`}
         >
           {levelOptions?.map((option, index) => (
-            <option key={index} value={option.value} className="text-[14px]">
+            <option
+              key={index}
+              value={option.value}
+              className="text-[14px]"
+            >
               {option.label}
             </option>
           ))}
@@ -192,5 +210,5 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         required
       />
     </Modal>
-  )
+  );
 }
