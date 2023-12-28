@@ -5,6 +5,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: ['class'],
   theme: {
     fontFamily: {
       Montserrat: ['Montserrat', 'sans-serif'],
@@ -13,8 +14,9 @@ module.exports = {
       colors: {
         'primary-dark-blue': '#202244',
         'secondary-dark-blue': '#56598E',
-        'orange-05': '#EB5437',
         'orange-04': '#FFD8D1',
+        'orange-05': '#EB5437',
+        'orange-06': '#d1260c',
         'alert-red': '#DF0000',
         'alert-yellow': '#F9CC00',
         'alert-green': '#73CA5C',
@@ -30,6 +32,13 @@ module.exports = {
         'dark-blue-01': '#E2D4F0 ',
         'neutral-05': '#151515',
         'neutral-04': '#3C3C3C',
+        'dark-grey': '#282828',
+        'dark-grey-02': '#E2DFDF',
+        'dark-grey-03': '#3B3A39',
+        'dark-grey-04': '#1E1F20',
+        'dark-grey-05': '#A8A6A5',
+        'dark-backgroud': '#1B1A19',
+        'dark-yellow': '#F4DAB0',
         'bintang-hidup': '#EBB12B',
         'bintang-mati': '#F9D4AB',
       },

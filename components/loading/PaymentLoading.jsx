@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 export default function PaymentLoading({ testId }) {
   return (
-    <tr data-testid={`payment-loading${testId}`} className="my-10">
+    <tr
+      data-testid={`payment-loading${testId}`}
+      className="my-10"
+    >
       <td className="px-4 w-[15%]">
         <p className="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03"></p>
       </td>
@@ -27,6 +30,9 @@ export default function PaymentLoading({ testId }) {
           <p className="w-3/4 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 lg:pl-0 lg:pr-1"></p>
         </div>
       </td>
+      <td className="px-2 w-[25%]">
+        <p className="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"></p>
+      </td>
     </tr>
-  )
+  );
 }

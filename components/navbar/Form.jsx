@@ -7,7 +7,7 @@ export default function Form() {
         <input
           type="text"
           placeholder="Cari"
-          className="py-2 md:py-3 pl-4 pr-12 md:pl-4 md:pr-12 rounded-[12px] md:rounded-[16px] focus:outline-none box-border bg-neutral-02 text-orange-05"
+          className="py-2 md:py-3 pl-4 pr-12 md:pl-4 md:pr-12 rounded-[12px] md:rounded-[16px] focus:outline-none box-border bg-neutral-02 dark:bg-dark-grey-03 text-orange-05"
           style={{ width: 'calc(100% - 12px)' }}
         />
         <button className="h-8 bg-orange-05 w-8 rounded-[10px] absolute right-6 top-1/2 transform -translate-y-1/2">

@@ -1,51 +1,51 @@
-'use client'
-import React, { useState } from 'react'
-import { useCourse } from '@/utils/swr'
-import { useParams, useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import convert from '@/utils/convert'
-import { IoDiamondOutline, IoTimer, IoSpeedometerOutline } from 'react-icons/io5'
-import { FaUsers, FaRegUser } from 'react-icons/fa'
-import { MdOutlineUploadFile } from 'react-icons/md'
-import { FaStar } from 'react-icons/fa6'
-import DetailCourseLoading from '@/components/loading/DetailCourseLoading'
-import ModalUpdateCourse from '../components/ModalUpdateCourse'
+'use client';
+import React, { useState } from 'react';
+import { useCourse } from '@/utils/swr';
+import { useParams, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import convert from '@/utils/convert';
+import { IoDiamondOutline, IoTimer, IoSpeedometerOutline } from 'react-icons/io5';
+import { FaUsers, FaRegUser } from 'react-icons/fa';
+import { MdOutlineUploadFile } from 'react-icons/md';
+import { FaStar } from 'react-icons/fa6';
+import DetailCourseLoading from '@/components/loading/DetailCourseLoading';
+import ModalUpdateCourse from '../components/ModalUpdateCourse';
 
 export default function page() {
-  const router = useRouter()
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
-  const { id } = useParams()
-  const { course, error, isLoading, mutate } = useCourse(token, id)
+  const router = useRouter();
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
+  const { id } = useParams();
+  const { course, error, isLoading, mutate } = useCourse(token, id);
 
-  const [showModal, setShowModal] = useState(false)
-  const [courseId, setCourseId] = useState(null)
+  const [showModal, setShowModal] = useState(false);
+  const [courseId, setCourseId] = useState(null);
 
   const goToChapter = () => {
-    router.push(`/admin/course/chapter/${id}`)
-  }
+    router.push(`/admin/course/chapter/${id}`);
+  };
   const handleEditCourse = (courseId) => {
-    setShowModal(true)
-    setCourseId(courseId)
-  }
+    setShowModal(true);
+    setCourseId(courseId);
+  };
 
   return (
     <div className={`md:px-12 px-4 mt-6`}>
-      <p className="text-2xl font-bold">Detail Course</p>
+      <p className="text-2xl font-bold dark:text-dark-grey-02">Detail Course</p>
       {course ? (
         <>
-          <div className="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl border-slate-900 lg:flex">
+          <div className="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl dark:bg-dark-backgroud dark:border-slate-300 border-slate-900 lg:flex">
             <div className="flex order-1 mb-4 mr-4 text-sm lg:order-2 lg:flex-col lg:mb-0 lg:ml-4">
               <button
                 onClick={goToChapter}
-                className="px-4 py-2 font-bold text-white rounded-md bg-secondary-dark-blue"
+                className="px-4 py-2 font-bold text-white rounded-md bg-secondary-dark-blue hover:scale-95"
               >
                 Chapter
               </button>
               <button
                 onClick={() => handleEditCourse(course._id)}
-                className="px-4 py-2 ml-2 font-bold text-white rounded-md w-[98px] lg:ml-0 lg:mt-2 bg-light-green"
+                className="px-4 py-2 ml-2 font-bold text-white rounded-md w-[98px] lg:ml-0 lg:mt-2  hover:scale-95 bg-light-green"
               >
                 Ubah
               </button>
@@ -64,7 +64,7 @@ export default function page() {
 
               <div className="flex flex-col my-4 md:ml-4">
                 <p className="mb-2 text-xl font-semibold lg:text-2xl text-orange-05">{course?.classCode}</p>
-                <p className="mb-2 text-lg font-medium lg:text-xl">{course?.category.name}</p>
+                <p className="mb-2 text-lg font-medium lg:text-xl dark:text-dark-grey-02">{course?.category?.name}</p>
                 <p className="mb-2 text-base lg:text-lg text-orange-05">{course?.title}</p>
                 <p className="text-sm text-neutral-03">{convert.formatToCurrency(course?.price)}</p>
                 <p className="flex mt-2 text-lg text-neutral-03">
@@ -81,14 +81,17 @@ export default function page() {
             <div className="lg:w-3/5">
               <div>
                 <h2 className="text-xl font-semibold text-orange-05">Tentang Kelas</h2>
-                <p className="mt-2 text-justify">{course?.description}</p>
+                <p className="mt-2 text-justify dark:text-dark-grey-02">{course?.description}</p>
               </div>
               <div className="mt-4">
                 <h2 className="text-xl font-semibold text-orange-05">Kelas Ini Ditunjukan Untuk</h2>
                 {course?.targetAudience ? (
                   <div className="mt-2 text-justify">
                     {course.targetAudience.map((item, index) => (
-                      <p key={index} className="mt-1.5">
+                      <p
+                        key={index}
+                        className="mt-1.5 dark:text-dark-grey-02"
+                      >
                         <span>
                           {item.substring(0, 2)} {''}
                         </span>
@@ -101,7 +104,7 @@ export default function page() {
                 )}
               </div>
             </div>
-            <div className="xl:px-[60px] py-6 lg:py-10 border border-black rounded-lg shadow-lg w-full px-[90px] md:w-1/2 md:px-[35px] lg:w-[25%] lg:h-3/5 mt-8 lg:mt-0">
+            <div className="xl:px-[60px] py-6 lg:py-10 border border-black rounded-lg shadow-lg w-full px-[90px] md:w-1/2 md:px-[35px] lg:w-[25%] lg:h-3/5 mt-8 lg:mt-0 dark:border-slate-300 dark:text-dark-grey-02">
               <div className="flex items-center mb-4">
                 <IoDiamondOutline size={20} />
                 <p className="ml-6 font-medium">{course?.typeClass}</p>
@@ -141,5 +144,5 @@ export default function page() {
         </div>
       )}
     </div>
-  )
+  );
 }

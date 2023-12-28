@@ -6,7 +6,7 @@ export default function Dropdown({ label, children }) {
     <div className="w-full mt-3">
       <label
         htmlFor="dropdown"
-        className="label-dropdown"
+        className="label-dropdown dark:text-dark-grey-02"
       >
         {label}
       </label>
