@@ -44,6 +44,10 @@ export default function page() {
     setId(id);
   };
 
+  const handleSearch = (e) => {
+    setTitle(e.target.value);
+  };
+
   const handleDeleteVideo = async (id) => {
     const isConfirmed = await ConfirmDeleteAlert('Delete Video');
 
@@ -58,8 +62,10 @@ export default function page() {
 
   const searchVideos = (video) => {
     const titleLower = title.toLowerCase();
+    console.log(titleLower);
 
-    const isTitleMatch = video.title?.toLowerCase().includes(titleLower);
+    const isTitleMatch = video?.title.toLowerCase().includes(titleLower);
+    console.log(isTitleMatch);
     return isTitleMatch;
   };
 
@@ -84,7 +90,7 @@ export default function page() {
             <SearchPopup
               onClick={() => setShowElements({ ...showElements, showInput: false })}
               title={title}
-              setTitle={setTitle}
+              handleChange={handleSearch}
             />
           )}
         </div>

@@ -1,22 +1,21 @@
-'use client'
-import React from 'react'
-import { useSession } from 'next-auth/react'
-import { usePayment, useCategory } from '@/utils/swr'
-import PaymentLoading from '@/components/loading/PaymentLoading'
-import convert from '@/utils/convert'
-import Chart from './components/Chart'
-
+'use client';
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import { usePayment, useCategory } from '@/utils/swr';
+import PaymentLoading from '@/components/loading/PaymentLoading';
+import convert from '@/utils/convert';
+import Chart from './components/Chart';
 
 export default function Page() {
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
-  const { payment: payments, isLoading, error, mutate } = usePayment(token, null, null, 5)
-  const { categories } = useCategory(token, true)
+  const { payment: payments, isLoading, error, mutate } = usePayment(token, null, null, 5);
+  const { categories } = useCategory(token, true);
 
   return (
     <div className={`md:px-12 mb-20 px-4`}>
-      <div className="relative flex items-center mt-5 justify-between md:py-2">
+      <div className="relative flex items-center justify-between mt-5 md:py-2">
         <p className="text-xl font-bold text-primary-dark-blue dark:text-dark-grey-02">
           Rekap Pertumbuhan User dan Pendapatan satu bulan terakhir
         </p>
@@ -31,11 +30,10 @@ export default function Page() {
         <Chart data={categories?.chartUser} />
         <Chart data={categories?.chartTransaction} />
       </div>
-      <div className="relative flex items-center mt-5 justify-between md:pt-2">
-        <p className="text-xl font-bold text-primary-dark-blue">Transaksi Terbaru</p>
-
+      <div className="relative flex items-center justify-between mt-5 md:pt-2">
+        <p className="text-xl font-bold text-primary-dark-blue dark:text-dark-grey-02">Transaksi Terbaru</p>
       </div>
-      <div className="mt-4 mb- overflow-x-auto md:mt-6">
+      <div className="mt-4 overflow-x-auto mb- md:mt-6">
         <div className="overflow-y-auto">
           <table className="min-w-full bg-white rounded-lg dark:bg-dark-backgroud">
             <thead className="text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05">
