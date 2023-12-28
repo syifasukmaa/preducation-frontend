@@ -8,7 +8,6 @@ import SearchPopup from '@/components/popup/SearchPopup'
 import { usePayment } from '@/utils/swr'
 import PaymentLoading from '@/components/loading/PaymentLoading'
 import { LuRefreshCcw } from 'react-icons/lu'
-import '../../globals.css'
 import convert from '@/utils/convert'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -38,17 +37,17 @@ export default function Page() {
     if (newPage > Math.ceil(totalData / limit)) {
       return
     }
-    router.push(`/admin/payment?page=${newPage}`)
+    router.push(`/admin/payment?page=${newPage}`, { scroll: false })
   }
 
   const handleSearch = (e) => {
     setUsername(e.target.value)
     if (totalData) {
-      router.push(`/admin/payment/?search=${e.target.value}&filter=${filter}&limit=${totalData}`)
+      router.push(`/admin/payment/?search=${e.target.value}&filter=${filter}&limit=${totalData}`, { scroll: false })
     }
     if (!e.target.value) {
-      router.push(`/admin/payment/?filter=${filter}`)
-      setUsername(search)
+      router.push(`/admin/payment/?filter=${filter}`, { scroll: false })
+      setUsername('')
     }
   }
 
@@ -59,7 +58,7 @@ export default function Page() {
       showFilter: false,
     })
     if (totalData) {
-      router.push(`/admin/payment/?search=${search}&filter=${filterOption}&limit=${totalData}`)
+      router.push(`/admin/payment/?search=${search}&filter=${filterOption}&limit=${totalData}`, { scroll: false })
     }
   }
 
@@ -74,7 +73,7 @@ export default function Page() {
       ...showElements,
       filter: '',
     })
-    router.push(`/admin/payment`)
+    router.push(`/admin/payment`, { scroll: false })
     setUsername('')
   }
 

@@ -1,19 +1,16 @@
-'use state';
-import React, { useState } from 'react';
-import '../../../globals.css';
+'use state'
+import React, { useState } from 'react'
+import '../../../globals.css'
 
 export default function Input({ type, label, name, placeholder, value, textarea, onChange, required }) {
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(false)
 
   const handleInputClick = () => {
-    setClicked(true);
-  };
+    setClicked(true)
+  }
   return (
     <div className="w-full mt-3">
-      <label
-        htmlFor={name}
-        className="label-modal"
-      >
+      <label htmlFor={name} className="label-modal">
         {label}
         {required && clicked && !value && <p className="text-red-500">Field Required</p>}
       </label>
@@ -54,5 +51,5 @@ export default function Input({ type, label, name, placeholder, value, textarea,
         )}
       </div>
     </div>
-  );
+  )
 }

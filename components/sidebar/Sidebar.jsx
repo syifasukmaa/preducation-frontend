@@ -9,6 +9,7 @@ import { SiGoogleclassroom } from 'react-icons/si'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import Swal from 'sweetalert2'
+import { MdSupervisedUserCircle } from 'react-icons/md'
 
 export default function Sidebar() {
   const url = usePathname()
@@ -22,6 +23,11 @@ export default function Sidebar() {
 
   const sidebarItems = [
     { id: '/admin/dashboard', icon: <LuLayoutDashboard />, label: 'Dashboard' },
+    {
+      id: '/admin/user',
+      icon: <MdSupervisedUserCircle />,
+      label: 'User',
+    },
     {
       id: '/admin/course',
       icon: <SiGoogleclassroom />,
