@@ -1,16 +1,15 @@
-'use client'
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { RxHamburgerMenu } from 'react-icons/rx'
-import { IoMdClose } from 'react-icons/io'
-import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu'
-import { FaDollarSign } from 'react-icons/fa'
-import { SiGoogleclassroom } from 'react-icons/si'
-import { usePathname, useRouter } from 'next/navigation'
-import { signOut } from 'next-auth/react'
-import Swal from 'sweetalert2'
-import { MdSupervisedUserCircle } from 'react-icons/md'
-
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { IoMdClose } from 'react-icons/io';
+import { LuLayoutDashboard, LuLogOut } from 'react-icons/lu';
+import { FaDollarSign } from 'react-icons/fa';
+import { SiGoogleclassroom } from 'react-icons/si';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
+import Swal from 'sweetalert2';
+import { MdSupervisedUserCircle } from 'react-icons/md';
 
 export default function Sidebar() {
   const url = usePathname();
@@ -111,7 +110,9 @@ export default function Sidebar() {
           ))}
 
           <li
-            className={`text-white py-3 pr-[98.5px] dark:text-dark-yellow active:bg-orange-05 absolute bottom-10 md:bottom-8`}
+            className={` ${
+              open ? '' : 'right-2'
+            } text-white py-3 dark:text-dark-yellow px- active:bg-orange-05 absolute bottom-10 md:bottom-8`}
           >
             <button
               className={`flex items-center px-4`}

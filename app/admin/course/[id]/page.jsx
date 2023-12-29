@@ -92,10 +92,8 @@ export default function page() {
                         key={index}
                         className="mt-1.5 dark:text-dark-grey-02"
                       >
-                        <span>
-                          {item.substring(0, 2)} {''}
-                        </span>
-                        <span className="mt-2">{item.substring(2)}</span>
+                        <span>{index + 1}. </span>
+                        <span className="mt-2">{item}</span>
                       </p>
                     ))}
                   </div>

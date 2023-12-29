@@ -16,8 +16,9 @@ import convert from '@/utils/convert'
 import ModalUpdateUser from './components/ModalUpdateUser'
 import ModalCreateUser from './components/ModalCreateUser'
 
+
 export default function Page() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
   const [showElements, setShowElements] = useState({
     showInput: false,
   })
@@ -30,35 +31,32 @@ export default function Page() {
   const search = searchParams.get('search') || ''
   const limit = searchParams.get('limit') || 7
 
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
 
-  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage)
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
+
+  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage);
 
   const handleCurrentPage = (newPage) => {
     if (newPage <= 0) {
-      return
+      return;
     }
     if (newPage > Math.ceil(totalData / limit)) {
-      return
+      return;
     }
-    router.push(`/admin/user?page=${newPage}`, { scroll: false })
-  }
-
-  const goToChapter = (chapterId) => {
-    router.push(`/admin/course/video/${chapterId}`, { scroll: false })
-  }
+    router.push(`/admin/user?page=${newPage}`, { scroll: false });
+  };
 
   const handleSearch = (e) => {
-    setName(e.target.value)
+    setName(e.target.value);
     if (totalData) {
-      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false })
+      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false });
     }
     if (!e.target.value) {
-      router.push(`/admin/user`, { scroll: false })
-      setName('')
+      router.push(`/admin/user`, { scroll: false });
+      setName('');
     }
-  }
+  };
 
   const handleAddUser = () => {
     setShowModalAdd(true)
@@ -70,16 +68,16 @@ export default function Page() {
   }
 
   const handleDeleteUser = async (id) => {
-    const isConfirmed = await ConfirmDeleteAlert('Hapus User')
+    const isConfirmed = await ConfirmDeleteAlert('Hapus User');
 
     if (isConfirmed) {
-      const response = await deleteUser(token, id)
+      const response = await deleteUser(token, id);
       if (response.ok) {
-        mutate()
-        DeleteSuccessAlert('User')
+        mutate();
+        DeleteSuccessAlert('User');
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (showModalAdd) {
@@ -90,10 +88,11 @@ export default function Page() {
     }
   }, [showModalAdd])
 
+
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold">User</p>
+        <p className="text-xl font-bold dark:text-dark-grey-02">User</p>
         <div className="relative flex items-center">
           <AddButton onClick={handleAddUser} />
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
@@ -110,22 +109,25 @@ export default function Page() {
 
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
         <div className="overflow-y-auto">
-          <table className="min-w-full bg-white rounded-lg">
-            <thead className="text-sm font-semibold bg-orange-04 text-neutral-05">
+          <table className="min-w-full bg-white rounded-lg dark:bg-dark-backgroud">
+            <thead className="text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05">
               <tr className="text-left">
                 <td className="w-24 px-4 py-3">Nama</td>
                 <td className="w-32 px-4 py-3">Email</td>
                 <td className="px-4 py-3">Tanggal Daftar</td>
                 <td className="px-4 py-3">Role</td>
-                <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Terverifikasi</td>
-                <td className="pl-4 pr-4 py-3 md:pl-10">Aksi</td>
+                <td className="px-4 py-3 pl-4 lg:pl-0 xl:pr-1">Terverifikasi</td>
+                <td className="py-3 pl-4 pr-4 md:pl-10">Aksi</td>
               </tr>
             </thead>
 
             <tbody className="text-gray-700  text-[10px]">
               {error ? (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center">
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -133,7 +135,10 @@ export default function Page() {
                 </tr>
               ) : users?.length <= 0 ? (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center">
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
                     <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
                       <Image
                         src="/img/empty_3d.jpg"
@@ -152,20 +157,24 @@ export default function Page() {
               ) : users ? (
                 users.map((user) => (
                   <tr key={user._id}>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">{user.name}</td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">{user.email}</td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
+                      {user.name}
+                    </td>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
+                      {user.email}
+                    </td>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
                       {convert.formatToDate(user.createdAt)}
                     </td>
                     <td
-                      className={`px-4 py-4 text-xs font-bold text-gray-05 w-[15%] ${
+                      className={`px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%] ${
                         user.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
                       }`}
                     >
                       {user.role}
                     </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 w-[15%]">{user.isVerify ? ' ✅' : '❌'}</td>
-                    <td className="grid px-4 py-4 text-xs font-bold text-gray-05 w-full xl:grid-cols-2 ">
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">{user.isVerify ? ' ✅' : '❌'}</td>
+                    <td className="grid w-[85%] px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
                         onClick={() => handleUpdateUser(user._id)}
@@ -182,13 +191,18 @@ export default function Page() {
                   </tr>
                 ))
               ) : (
-                [...Array(7)].map((_, index) => <PaymentLoading key={index} testId={index} />)
+                [...Array(7)].map((_, index) => (
+                  <UserLoading
+                    key={index}
+                    testId={index}
+                  />
+                ))
               )}
             </tbody>
           </table>
         </div>
         {users?.length !== 0 && Number(limit) !== totalData ? (
-          <div className="flex items-center justify-between mt-4 pl-4">
+          <div className="flex items-center justify-between pl-4 mt-4">
             <button
               disabled={currentPage <= 1 ? true : false}
               onClick={() => handleCurrentPage(Number(currentPage) - 1)}
@@ -231,5 +245,5 @@ export default function Page() {
         />
       )}
     </div>
-  )
+  );
 }
