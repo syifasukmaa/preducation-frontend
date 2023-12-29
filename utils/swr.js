@@ -12,7 +12,7 @@ export const fetcher = async (url, token) => {
   return data
 }
 
-export const useCourse = (token, id, category, title) => {
+export const useCourse = (token, id, category, title, limit, page) => {
   let titleQuery = ''
 
   if (title) {
@@ -22,12 +22,12 @@ export const useCourse = (token, id, category, title) => {
   const { data, isLoading, mutate, error } = useSWR(
     token && id
       ? [`${process.env.API_URL}/courses/${id}`, token]
-      : [`${process.env.API_URL}/courses/?category=${category}&title=${titleQuery}`, token],
+      : [`${process.env.API_URL}/courses/?category=${category}&title=${titleQuery}&limit=${limit}&page=${page}`, token],
     ([url, token]) => fetcher(url, token)
   )
-
   return {
     course: data?.data,
+    totalData: data?.totalData,
     isLoading,
     mutate,
     error,
@@ -112,11 +112,15 @@ export const useUser = (token, id, name, limit, page) => {
   }
 
   const { data, isLoading, mutate, error } = useSWR(
-    token ? [`${process.env.API_URL}/users/?search=${nameQuery}&limit=${limitQuery}&page=${pageQuery}`, token] : null,
+    token
+      ? id
+        ? [`${process.env.API_URL}/users/${id}`, token]
+        : [`${process.env.API_URL}/users/?name=${nameQuery}&limit=${limitQuery}&page=${pageQuery}`, token]
+      : null,
     ([url, token]) => fetcher(url, token)
   )
   return {
-    data: data?.data.user,
+    data: id ? data?.data : data?.data.user,
     isLoading,
     mutate,
     error,

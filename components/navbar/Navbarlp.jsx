@@ -1,36 +1,39 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
-import { IoMenu, IoClose } from 'react-icons/io5';
-import DarkModeButton from '../button/DarkModeButton';
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import { IoMenu, IoClose } from 'react-icons/io5'
+import DarkModeButton from '../button/DarkModeButton'
+import { motion } from 'framer-motion'
+import { navVariants } from '../../utils/motion'
+import { Link } from 'react-scroll'
 
 const NavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   useEffect(() => {
-    // Mengubah style body saat isMenuOpen berubah
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset'
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen])
 
   return (
     <>
       {isMenuOpen && <div className="fixed top-0 left-0 z-20 w-full h-full bg-black opacity-80" />}
-
-      <nav
+      <motion.nav
+        variants={navVariants}
+        initial="hidden"
+        whileInView="show"
         className={`${'flex justify-between bg-primary-dark-blue p-5 items-center w-[95%] mx-auto rounded-[10px] mt-5'}`}
       >
         <div>
@@ -47,7 +50,7 @@ const NavBar = () => {
           className={`${
             !isMenuOpen
               ? 'lg:static absolute bg-primary-dark-blue  min-h-[30vh] md:min-h-fit w-[95%] left-3 top-[-100%] flex items-center px-5'
-              : 'lg:static absolute bg-primary-dark-blue pb-10 pt-24 min-h-[100vh] z-50 lg:min-h-fit w-[50%] right-0 top-0 flex items-start px-5'
+              : 'lg:static fixed bg-primary-dark-blue pb-10 pt-24 min-h-[100vh] z-50 lg:min-h-fit w-[50%] right-0 top-0 flex items-start px-5'
           }`}
         >
           <ul className="flex lg:items-center lg:gap-[4vw] gap-8 lg:flex-row flex-col text-dark-grey-02 mx-auto text-center">
@@ -56,36 +59,46 @@ const NavBar = () => {
               onClick={toggleMenu}
             />
             <li>
-              <a
-                href="#"
-                className="font-bold"
-              >
+              <Link spy={true} smooth={true} offset={-50} duration={500} to="home" className="cursor-pointer font-bold">
                 Beranda
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="font-bold"
-              >
-                Tentang Kami
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="font-bold"
+              <Link
+                spy={true}
+                smooth={true}
+                offset={-50}
+                duration={500}
+                to="course"
+                className="cursor-pointer font-bold"
               >
                 Kursus
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="font-bold"
+              <Link
+                spy={true}
+                smooth={true}
+                offset={-50}
+                duration={500}
+                to="review"
+                className="cursor-pointer font-bold"
               >
-                Kontak
-              </a>
+                Ulasan
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                spy={true}
+                smooth={true}
+                offset={-50}
+                duration={500}
+                to="download"
+                className="cursor-pointer font-bold"
+              >
+                Download
+              </Link>
             </li>
             <li className="text-2xl md:hidden">
               <DarkModeButton />
@@ -106,9 +119,9 @@ const NavBar = () => {
             data-testid="menu-button"
           />
         </div>
-      </nav>
+      </motion.nav>
     </>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

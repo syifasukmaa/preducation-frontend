@@ -13,6 +13,7 @@ import { deleteUser } from '@/utils/fetch'
 import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
 import PaymentLoading from '@/components/loading/PaymentLoading'
 import convert from '@/utils/convert'
+import ModalUpdateUser from './components/ModalUpdateUser'
 import ModalCreateUser from './components/ModalCreateUser'
 
 export default function Page() {
@@ -20,7 +21,9 @@ export default function Page() {
   const [showElements, setShowElements] = useState({
     showInput: false,
   })
-  const [showModal, setShowModal] = useState(false)
+  const [showModalAdd, setShowModalAdd] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [updateId, setUpdateId] = useState('')
   const searchParams = useSearchParams()
   const router = useRouter()
   const currentPage = searchParams.get('page') || 1
@@ -58,7 +61,12 @@ export default function Page() {
   }
 
   const handleAddUser = () => {
-    setShowModal(true)
+    setShowModalAdd(true)
+  }
+
+  const handleUpdateUser = (id) => {
+    setShowModalUpdate(true)
+    setUpdateId(id)
   }
 
   const handleDeleteUser = async (id) => {
@@ -74,13 +82,13 @@ export default function Page() {
   }
 
   useEffect(() => {
-    if (showModal) {
+    if (showModalAdd) {
       document.body.classList.add('overflow-hidden')
     }
     return () => {
       document.body.classList.remove('overflow-hidden')
     }
-  }, [showModal])
+  }, [showModalAdd])
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -160,7 +168,7 @@ export default function Page() {
                     <td className="grid px-4 py-4 text-xs font-bold text-gray-05 w-full xl:grid-cols-2 ">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
-                        // onClick={() => handleEditChapter(chapter._id)}
+                        onClick={() => handleUpdateUser(user._id)}
                       >
                         Ubah
                       </ActionButton>
@@ -205,12 +213,21 @@ export default function Page() {
         ) : null}
       </div>
 
-      {showModal && (
-        <ModalCreateUser
-          onClose={() => setShowModal(false)}
+      {showModalUpdate && (
+        <ModalUpdateUser
+          onClose={() => setShowModalUpdate(false)}
           token={token}
           mutate={mutate}
-          setShowModal={setShowModal}
+          userId={updateId}
+          setShowModal={setShowModalUpdate}
+        />
+      )}
+      {showModalAdd && (
+        <ModalCreateUser
+          onClose={() => setShowModalAdd(false)}
+          token={token}
+          mutate={mutate}
+          setShowModal={setShowModalAdd}
         />
       )}
     </div>

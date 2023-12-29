@@ -1,30 +1,31 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import SearchButton from '@/components/button/SearchButton';
-import FilterButton from '@/components/button/FilterButton';
-import FilterPopup from '@/components/popup/FilterPopup';
-import SearchPopup from '@/components/popup/SearchPopup';
-import AddButton from '@/components/button/AddButton';
-import ActionButton from '@/components/button/ActionButton';
-import Checkbox from './components/Checkbox';
-import CourseLoading from '@/components/loading/CourseLoading';
-import convert from '@/utils/convert';
-import { useCourse } from '@/utils/swr';
-import { deleteCourse } from '@/utils/fetch';
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
-import { useSession } from 'next-auth/react';
-import ModalCreateCourse from './components/ModalCreateCourse';
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import SearchButton from '@/components/button/SearchButton'
+import FilterButton from '@/components/button/FilterButton'
+import FilterPopup from '@/components/popup/FilterPopup'
+import SearchPopup from '@/components/popup/SearchPopup'
+import AddButton from '@/components/button/AddButton'
+import ActionButton from '@/components/button/ActionButton'
+import Checkbox from './components/Checkbox'
+import CourseLoading from '@/components/loading/CourseLoading'
+import convert from '@/utils/convert'
+import { useCourse } from '@/utils/swr'
+import { deleteCourse } from '@/utils/fetch'
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
+import { useSession } from 'next-auth/react'
+import ModalCreateCourse from './components/ModalCreateCourse'
+import Image from 'next/image'
 
 export default function Page() {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('')
   const [showElements, setShowElements] = useState({
     showFilter: false,
     showInput: false,
-  });
-  const [editMode, setEditMode] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  })
+  const [editMode, setEditMode] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState({
     'Data Science': false,
     'Web Development': false,
@@ -33,78 +34,109 @@ export default function Page() {
     'Data Science': false,
     'IOS Development': false,
     'Product Management': false,
-  });
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  })
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPage = searchParams.get('page') || 1
+  const search = searchParams.get('search') || ''
+  const limit = searchParams.get('limit') || 7
+  const filter = searchParams.get('filter') || ''
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const overLay = useRef(null);
+  const overLay = useRef(null)
 
   const selectedCategoryKeys = Object.entries(selectedCategories)
     .filter(([key, value]) => value === true)
-    .map(([key]) => key);
+    .map(([key]) => key)
 
-  const router = useRouter();
+  const {
+    course: courses,
+    totalData,
+    isLoading,
+    mutate,
+    error,
+  } = useCourse(null, null, selectedCategoryKeys, title, limit, currentPage)
 
-  const { course: courses, isLoading, mutate, error } = useCourse(null, null, selectedCategoryKeys, title);
-
+  const handleCurrentPage = (newPage) => {
+    if (newPage <= 0) {
+      return
+    }
+    if (newPage > Math.ceil(totalData / limit)) {
+      return
+    }
+    router.push(`/admin/course?page=${newPage}`, { scroll: false })
+  }
   const handleSearch = (e) => {
-    setTitle(e.target.value);
-  };
+    setTitle(e.target.value)
+    if (totalData) {
+      router.push(`/admin/course/?search=${e.target.value}&filter=${filter}&limit=${totalData}`, { scroll: false })
+    }
+    if (!e.target.value) {
+      router.push(`/admin/course/?filter=${filter}`, { scroll: false })
+      setTitle('')
+    }
+  }
 
   const goToCourseDetail = (chapterId) => {
-    router.push(`/admin/course/${chapterId}`);
-  };
+    router.push(`/admin/course/${chapterId}`)
+  }
 
   const handleAddCourse = () => {
-    setEditMode(false);
-    setShowModal(true);
-  };
+    setEditMode(false)
+    setShowModal(true)
+  }
 
   const handleDeleteCourse = async (courseId) => {
-    const isConfirmed = await ConfirmDeleteAlert('Delete Course');
+    const isConfirmed = await ConfirmDeleteAlert('Delete Course')
 
     if (isConfirmed) {
-      const response = await deleteCourse(token, courseId);
+      const response = await deleteCourse(token, courseId)
       if (response.ok) {
-        mutate();
-        DeleteSuccessAlert('Course');
+        mutate()
+        DeleteSuccessAlert('Course')
       }
     }
-  };
+  }
 
   const handleCheckboxChange = (label) => {
     setSelectedCategories({
       ...selectedCategories,
       [label]: !selectedCategories[label],
-    });
-  };
+    })
+    if (totalData) {
+      router.push(`/admin/course/?search=${search}&limit=${totalData}`, {
+        scroll: false,
+      })
+    }
+  }
 
   const handleOutsideClick = (e) => {
     if (!overLay.current.contains(e.target)) {
-      setShowElements({ showFilter: false });
+      setShowElements({ showFilter: false })
     }
-  };
+  }
 
   useEffect(() => {
     if (showElements.showFilter) {
-      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [showElements.showFilter]);
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [showElements.showFilter])
 
   useEffect(() => {
     if (showModal) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add('overflow-hidden')
     }
     return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [showModal]);
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [showModal])
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -127,10 +159,7 @@ export default function Page() {
         </div>
 
         {showElements.showFilter && (
-          <div
-            className="absolute right-0 z-30 top-12"
-            ref={overLay}
-          >
+          <div className="absolute right-0 z-30 top-12" ref={overLay}>
             <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
               <Checkbox
                 label="Data Science"
@@ -181,32 +210,42 @@ export default function Page() {
                 <th className="px-4 py-3 text-left">Aksi</th>
               </tr>
             </thead>
-            {isLoading ? (
-              <tbody className="text-[10px]">
-                {[...Array(8)].map((_, index) => (
-                  <CourseLoading key={index} />
-                ))}
-              </tbody>
-            ) : error ? (
-              <tbody className="text-[10px]">
+            <tbody className="text-gray-700 text-[10px]">
+              {isLoading ? (
+                <>
+                  {[...Array(8)].map((_, index) => (
+                    <CourseLoading key={index} />
+                  ))}
+                </>
+              ) : error ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
                   </td>
                 </tr>
-              </tbody>
-            ) : courses ? (
-              courses.map((course, index) => (
-                <tbody
-                  key={course._id}
-                  className="text-gray-700 text-[10px]"
-                >
-                  <tr>
+              ) : courses?.length <= 0 ? (
+                <tr>
+                  <td colSpan="7" className="py-8 text-center">
+                    <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
+                      <Image
+                        src="/img/empty_3d.jpg"
+                        width={80}
+                        height={80}
+                        alt="empty image"
+                        className="w-[80px] h-[80px] mt-2"
+                        priority="true"
+                      />
+                      <div className="ml-4 md:text-start">
+                        <p className="mt-4 text-xl font-bold text-orange-05">Data tidak ditemukan</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ) : courses ? (
+                courses.map((course, index) => (
+                  <tr key={course._id}>
                     <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02">
                       {course.classCode}
                     </td>
@@ -245,17 +284,35 @@ export default function Page() {
                       </ActionButton>
                     </td>
                   </tr>
-                </tbody>
-              ))
-            ) : (
-              <tbody>
-                {[...Array(8)].map((_, index) => (
-                  <CourseLoading key={index} />
-                ))}
-              </tbody>
-            )}
+                ))
+              ) : null}
+            </tbody>
           </table>
         </div>
+        {courses?.length !== 0 && Number(limit) !== totalData && !filter ? (
+          <div className="flex items-center justify-between pl-4 mt-4">
+            <button
+              disabled={currentPage <= 1 ? true : false}
+              onClick={() => handleCurrentPage(Number(currentPage) - 1)}
+              className={`${
+                currentPage <= 1 ? 'bg-slate-700/80 cursor-not-allowed' : 'bg-primary-dark-blue hover:bg-orange-05'
+              } text-white font-medium py-1 w-20 rounded text-sm`}
+            >
+              Previous
+            </button>
+            <button
+              disabled={currentPage >= Math.ceil(totalData / limit) ? true : false}
+              onClick={() => handleCurrentPage(Number(currentPage) + 1)}
+              className={`${
+                currentPage >= Math.ceil(totalData / limit)
+                  ? 'bg-slate-700/80 cursor-not-allowed'
+                  : 'bg-primary-dark-blue hover:bg-orange-05'
+              } text-white font-medium py-1 w-20 rounded text-sm `}
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {showModal && (
@@ -270,5 +327,5 @@ export default function Page() {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,18 +1,24 @@
-import React from 'react';
-import Image from 'next/image';
-import NavBar from '@/components/navbar/Navbarlp';
-import Footer from '@/components/footer/Footer';
-import Carousel from '@/components/carousel/Carousel';
-import CourseLandingPage from '@/components/landingPage/CourseLandingPage';
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import NavBar from '@/components/navbar/Navbarlp'
+import Footer from '@/components/footer/Footer'
+import Carousel from '@/components/carousel/Carousel'
+import CourseLandingPage from '@/components/landingPage/CourseLandingPage'
+import { motion } from 'framer-motion'
+import { slideIn } from '@/utils/motion'
 
 const LandingPage = () => {
   return (
     <div className="overflow-x-hidden font-Montserrat">
       <NavBar />
-
-      {/* HEADER */}
-      <div className="flex flex-col justify-between gap-5 p-5 mb-10 xl:mx-12 lg:mx-2 md:flex-col lg:flex-row">
-        <div className="mx-auto leading-none lg:w-3/5 font-Montserrat lg:ml-0 xl:ml-0">
+      <div id="home" className="flex flex-col justify-between gap-5 p-5 mb-10 xl:mx-12 lg:mx-2 md:flex-col lg:flex-row">
+        <motion.div
+          variants={slideIn('left', 'tween', 0.5, 1.5)}
+          initial="hidden"
+          whileInView="show"
+          className="mx-auto leading-none lg:w-3/5 font-Montserrat lg:ml-0 xl:ml-0"
+        >
           <div className="flex gap-5 mb-2">
             <h1 className="text-orange-05 md:text-[60px] lg:text-[60px] xl:text-[60px] text-[40px] max-[376px]:text-[37px] font-bold">
               Preducation
@@ -33,13 +39,16 @@ const LandingPage = () => {
               ini dan mulailah menggapai sukses!
             </p>
           </div>
-          {/* BUTTON BERGABUNG */}
           <button className="bergabungBtn bg-orange-05 p-5 hover:scale-95 text-white rounded-[10px] mt-2 font-bold">
             Bergabung Sekarang
           </button>
-        </div>
-
-        <div className="mx-auto">
+        </motion.div>
+        <motion.div
+          variants={slideIn('right', 'tween', 0.5, 1.5)}
+          initial="hidden"
+          whileInView="show"
+          className="mx-auto"
+        >
           <Image
             src="/object.svg"
             width={500}
@@ -47,22 +56,22 @@ const LandingPage = () => {
             alt="gambar w-full w-auto md:mx-auto h-auto object-contain flex-shrink-0"
             priority={true}
           />
-        </div>
+        </motion.div>
       </div>
-
       <CourseLandingPage />
-
-      {/* ULASAN */}
-      <div className="text-center md:mb-5]">
-        <h1 className="text-orange-05 md:text-[44px] text-[24px]  font-semibold">Ulasan</h1>
+      <div id="review" className="text-center md:mb-5]">
+        <h1 className="text-orange-05 md:text-[44px] text-[24px] font-semibold">Ulasan</h1>
         <p className="md:text-[24px] dark:text-dark-grey-02">Pengalaman Belajar Alumni</p>
       </div>
       <Carousel />
-
-      {/* DAPATKAN APLIKASI DI GOOGLEPLAY */}
-      <div className="flex p-3 mt-10 mb-8">
+      <div id="download" className="flex p-3 mt-10 mb-8">
         <div className="flex mx-auto">
-          <div className="flex flex-col mx-auto relative p-5 mt-[50px]">
+          <motion.div
+            variants={slideIn('left', 'tween', 0.5, 1.5)}
+            initial="hidden"
+            whileInView="show"
+            className="flex flex-col mx-auto relative p-5 mt-[50px]"
+          >
             <h1 className="font-bold text-orange-05 md:text-[32px] ">Dapatkan Aplikasi Kami Di</h1>
             <div>
               <a href="#">
@@ -75,19 +84,15 @@ const LandingPage = () => {
                 />
               </a>
             </div>
-          </div>
-
-          <Image
-            src="/jjj.png"
-            height={200}
-            width={200}
-            alt=""
-          />
+          </motion.div>
+          <motion.div variants={slideIn('right', 'tween', 0.5, 1.5)} initial="hidden" whileInView="show">
+            <Image src="/jjj.png" height={200} width={200} alt="" />
+          </motion.div>
         </div>
       </div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage
