@@ -110,9 +110,9 @@ export default function Sidebar() {
           ))}
 
           <li
-            className={` ${
-              open ? '' : 'right-2'
-            } text-white py-3 dark:text-dark-yellow px- active:bg-orange-05 absolute bottom-10 md:bottom-8`}
+            className={`  ${
+              open ? 'left-0' : 'right-2 md:left-0'
+            } text-white py-3 dark:text-dark-yellow px- active:bg-orange-05 absolute bottom-10 md:bottom-8 `}
           >
             <button
               className={`flex items-center px-4`}
