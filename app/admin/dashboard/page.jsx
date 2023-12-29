@@ -6,13 +6,12 @@ import PaymentLoading from '@/components/loading/PaymentLoading'
 import convert from '@/utils/convert'
 import Chart from './components/Chart'
 
-
 export default function Page() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken
 
-  const { payment: payments, isLoading, error, mutate } = usePayment(token, null, null, 5);
-  const { categories } = useCategory(token, true);
+  const { payment: payments, isLoading, error } = usePayment(token, null, null, 5)
+  const { categories } = useCategory(token, true)
 
   return (
     <div className={`md:px-12 mb-20 px-4`}>
