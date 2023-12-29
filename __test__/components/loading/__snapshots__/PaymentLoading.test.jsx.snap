@@ -63,6 +63,13 @@ exports[`Payment Loading renders loading skeleton 1`] = `
             />
           </div>
         </td>
+        <td
+          class="px-2 w-[25%]"
+        >
+          <p
+            class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+          />
+        </td>
       </tr>
     </div>
   </body>,
@@ -124,6 +131,13 @@ exports[`Payment Loading renders loading skeleton 1`] = `
             class="w-3/4 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 lg:pl-0 lg:pr-1"
           />
         </div>
+      </td>
+      <td
+        class="px-2 w-[25%]"
+      >
+        <p
+          class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+        />
       </td>
     </tr>
   </div>,

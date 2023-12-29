@@ -15,6 +15,7 @@ export default function ModalCreateUser({ onClose, token, mutate, setShowModal }
     password: '',
     role: '',
   })
+
   const modalRef = useRef(null)
 
   const roleOptions = [

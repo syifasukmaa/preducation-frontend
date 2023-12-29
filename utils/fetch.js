@@ -225,3 +225,20 @@ export const deleteUser = async (token, userId) => {
     throw error
   }
 }
+
+export const updateUser = async (token, id, formData) => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/users/${id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+
+    return response
+  } catch (error) {
+    console.error('Error creating a new course:', error)
+    throw error
+  }
+}

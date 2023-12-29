@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-export default function Chart({ data }) {
+export default function Chart({ data, type }) {
   const manipulatedData = data?.map((item) => ({
     ...item,
     week: `Minggu ${item.week}`,
@@ -35,7 +35,7 @@ export default function Chart({ data }) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="total" barSize={60} fill="#413ea0" />
+        <Bar dataKey="total" barSize={60} fill={type === 'user' ? '#413ea0' : '#EB5437'} />
         <Line type="monotone" dataKey="total" stroke="#ff7300" />
       </ComposedChart>
     </ResponsiveContainer>

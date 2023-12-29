@@ -1,31 +1,36 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import AddButton from '@/components/button/AddButton';
-import SearchButton from '@/components/button/SearchButton';
-import ActionButton from '@/components/button/ActionButton';
-import SearchPopup from '@/components/popup/SearchPopup';
-import { useUser } from '@/utils/swr';
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
-import { deleteUser } from '@/utils/fetch';
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
-import convert from '@/utils/convert';
-import ModalCreateUser from './components/ModalCreateUser';
-import UserLoading from '../../../components/loading/UserLoading';
+'use client'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import AddButton from '@/components/button/AddButton'
+import SearchButton from '@/components/button/SearchButton'
+import ActionButton from '@/components/button/ActionButton'
+import SearchPopup from '@/components/popup/SearchPopup'
+import { useUser } from '@/utils/swr'
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
+import { deleteUser } from '@/utils/fetch'
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
+import PaymentLoading from '@/components/loading/PaymentLoading'
+import convert from '@/utils/convert'
+import ModalUpdateUser from './components/ModalUpdateUser'
+import ModalCreateUser from './components/ModalCreateUser'
+
 
 export default function Page() {
   const [name, setName] = useState('');
   const [showElements, setShowElements] = useState({
     showInput: false,
-  });
-  const [showModal, setShowModal] = useState(false);
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const currentPage = searchParams.get('page') || 1;
-  const search = searchParams.get('search') || '';
-  const limit = searchParams.get('limit') || 7;
+  })
+  const [showModalAdd, setShowModalAdd] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [updateId, setUpdateId] = useState('')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPage = searchParams.get('page') || 1
+  const search = searchParams.get('search') || ''
+  const limit = searchParams.get('limit') || 7
+
 
   const { data: session } = useSession();
   const token = session?.user?.accessToken;
@@ -54,8 +59,13 @@ export default function Page() {
   };
 
   const handleAddUser = () => {
-    setShowModal(true);
-  };
+    setShowModalAdd(true)
+  }
+
+  const handleUpdateUser = (id) => {
+    setShowModalUpdate(true)
+    setUpdateId(id)
+  }
 
   const handleDeleteUser = async (id) => {
     const isConfirmed = await ConfirmDeleteAlert('Hapus User');
@@ -70,13 +80,14 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (showModal) {
-      document.body.classList.add('overflow-hidden');
+    if (showModalAdd) {
+      document.body.classList.add('overflow-hidden')
     }
     return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [showModal]);
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [showModalAdd])
+
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -162,11 +173,14 @@ export default function Page() {
                     >
                       {user.role}
                     </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">
-                      {user.isVerify ? ' ✅' : '❌'}
-                    </td>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">{user.isVerify ? ' ✅' : '❌'}</td>
                     <td className="grid w-[85%] px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
-                      <ActionButton styles={'bg-light-green hover:border-light-green py-2'}>Ubah</ActionButton>
+                      <ActionButton
+                        styles={'bg-light-green hover:border-light-green py-2'}
+                        onClick={() => handleUpdateUser(user._id)}
+                      >
+                        Ubah
+                      </ActionButton>
                       <ActionButton
                         styles={'bg-alert-red hover:border-alert-red py-2'}
                         onClick={() => handleDeleteUser(user._id)}
@@ -213,12 +227,21 @@ export default function Page() {
         ) : null}
       </div>
 
-      {showModal && (
-        <ModalCreateUser
-          onClose={() => setShowModal(false)}
+      {showModalUpdate && (
+        <ModalUpdateUser
+          onClose={() => setShowModalUpdate(false)}
           token={token}
           mutate={mutate}
-          setShowModal={setShowModal}
+          userId={updateId}
+          setShowModal={setShowModalUpdate}
+        />
+      )}
+      {showModalAdd && (
+        <ModalCreateUser
+          onClose={() => setShowModalAdd(false)}
+          token={token}
+          mutate={mutate}
+          setShowModal={setShowModalAdd}
         />
       )}
     </div>

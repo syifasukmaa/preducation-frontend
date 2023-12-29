@@ -1,14 +1,15 @@
-'use client';
-import React from 'react';
-import { useSession } from 'next-auth/react';
-import { usePayment, useCategory } from '@/utils/swr';
-import PaymentLoading from '@/components/loading/PaymentLoading';
-import convert from '@/utils/convert';
-import Chart from './components/Chart';
+'use client'
+import React from 'react'
+import { useSession } from 'next-auth/react'
+import { usePayment, useCategory } from '@/utils/swr'
+import PaymentLoading from '@/components/loading/PaymentLoading'
+import convert from '@/utils/convert'
+import Chart from './components/Chart'
+
 
 export default function Page() {
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
   const { payment: payments, isLoading, error, mutate } = usePayment(token, null, null, 5);
   const { categories } = useCategory(token, true);
@@ -21,15 +22,16 @@ export default function Page() {
         </p>
       </div>
       <div className="flex flex-col gap-3 md:flex-row items-center md:gap-20 mt-3 md:h-[400px] relative">
-        <p className="hidden md:block absolute transform text-sm text-orange-05 -rotate-90 scale-x-(-1) origin-bottom-left -translate-y-1/2">
+        <p className="hidden md:block absolute transform text-sm text-[#413ea0] -rotate-90 scale-x-(-1) origin-bottom-left -translate-y-1/2">
           Total user
         </p>
         <p className="hidden md:block absolute transform text-sm text-orange-05 -rotate-90 scale-x-(-1) origin-bottom-left  inset-1/2 -translate-x-6 -translate-y-1/2">
           Pendapatan
         </p>
-        <Chart data={categories?.chartUser} />
-        <Chart data={categories?.chartTransaction} />
+        <Chart type={'user'} data={categories?.chartUser} />
+        <Chart type={'payment'} data={categories?.chartTransaction} />
       </div>
+
       <div className="relative flex items-center justify-between mt-5 md:pt-2">
         <p className="text-xl font-bold text-primary-dark-blue dark:text-dark-grey-02">Transaksi Terbaru</p>
       </div>
@@ -50,10 +52,7 @@ export default function Page() {
             <tbody className="text-gray-700 whitespace-nowrap text-[10px] ">
               {error ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -90,17 +89,12 @@ export default function Page() {
                   </tr>
                 ))
               ) : (
-                [...Array(5)].map((_, index) => (
-                  <PaymentLoading
-                    key={index}
-                    testId={index}
-                  />
-                ))
+                [...Array(5)].map((_, index) => <PaymentLoading key={index} testId={index} />)
               )}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  );
+  )
 }
