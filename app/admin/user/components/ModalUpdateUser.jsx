@@ -7,6 +7,8 @@ import { useUser } from '@/utils/swr'
 import successAlert from '@/components/alert/successAlert'
 import ToastSweet from '@/components/alert/ToastSweet'
 import Image from 'next/image'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ModalUpdateUser({ onClose, token, userId, mutate, setShowModal }) {
   const [click, setClick] = useState(false)
