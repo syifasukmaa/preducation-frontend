@@ -75,8 +75,8 @@ export const usePayment = (token, status, username, limit, page) => {
     ([url, token]) => fetcher(url, token),
   );
   return {
-    payment: data?.data.payments,
-    totalData: data?.data.total,
+    payment: data?.data?.payments,
+    totalData: data?.data?.total,
     isLoading,
     mutate,
     error,
@@ -116,10 +116,10 @@ export const useUser = (token, id, name, limit, page) => {
     ([url, token]) => fetcher(url, token),
   );
   return {
-    data: data?.data.user,
+    data: data?.data?.user,
     isLoading,
     mutate,
     error,
-    totalData: data?.data.total,
+    totalData: data?.data?.total,
   };
 };

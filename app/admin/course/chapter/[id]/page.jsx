@@ -57,7 +57,7 @@ export default function Page() {
   };
 
   const handleDeleteChapter = async (id) => {
-    const isConfirmed = await ConfirmDeleteAlert('Delete Course');
+    const isConfirmed = await ConfirmDeleteAlert('Delete Chapter');
 
     if (isConfirmed) {
       const response = await deleteChapter(token, id);

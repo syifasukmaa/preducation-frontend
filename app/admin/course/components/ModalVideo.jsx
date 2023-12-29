@@ -37,7 +37,7 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
       }
       const videoData = {
         title: formData.namaVideo,
-        duration: formData.durasi,
+        duration: Number(formData.durasi),
         videoUrl: formData.videoUrl,
       };
 
@@ -49,6 +49,8 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
         }
       } else {
         const response = await createNewVideo(token, videoData, Id);
+        console.log(response);
+        console.log(videoData);
         if (response.ok) {
           setShowModal(false);
           mutate();

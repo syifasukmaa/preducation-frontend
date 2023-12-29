@@ -8,8 +8,8 @@ import successAlert from '@/components/alert/successAlert';
 import ToastSweet from '@/components/alert/ToastSweet';
 
 export default function ModalUpdateCourse({ onClose, token, courseId, mutate, setShowModal }) {
-  const [click, setClick] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [click, setClick] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({
     category: '',
     level: '',
@@ -24,11 +24,11 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
     thumbnail: null,
   });
 
-  const modalRef = useRef(null)
-  const { course } = useCourse(token, courseId, null, null)
-  const { categories } = useCategory(token)
+  const modalRef = useRef(null);
+  const { course } = useCourse(token, courseId, null, null);
+  const { categories } = useCategory(token);
 
-  const options = categories?.map((category) => ({ label: category.name, value: category._id }))
+  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
 
   const levelOptions = [
     { label: 'Level', value: 'Level' },
@@ -68,27 +68,27 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
     selectedOptions.tipeKelas === '' ||
     selectedOptions.level === '' ||
     form.harga === null ||
-    form.Materi.trim() === ''
+    form.Materi.trim() === '';
 
   const handleSave = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
     try {
       if (isDisabled) {
-        ToastSweet()
-        return
+        ToastSweet();
+        return;
       }
 
-      const formData = new FormData()
-      formData.append('title', form.namaKelas)
-      formData.append('description', form.Materi)
-      formData.append('classCode', form.kodeKelas)
-      formData.append('category', selectedOptions.category)
-      formData.append('level', selectedOptions.level)
-      formData.append('typeClass', selectedOptions.tipeKelas)
-      formData.append('price', Number(form.harga))
-      formData.append('targetAudience', form.targetAudience)
-      formData.append('thumbnail', form.thumbnail)
+      const formData = new FormData();
+      formData.append('title', form.namaKelas);
+      formData.append('description', form.Materi);
+      formData.append('classCode', form.kodeKelas);
+      formData.append('category', selectedOptions.category);
+      formData.append('level', selectedOptions.level);
+      formData.append('typeClass', selectedOptions.tipeKelas);
+      formData.append('price', Number(form.harga));
+      formData.append('targetAudience', form.targetAudience);
+      formData.append('thumbnail', form.thumbnail);
 
       const response = await updateCourse(token, courseId, formData);
 
@@ -98,10 +98,9 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         successAlert('edit', 'Course');
       }
     } catch (error) {
-      console.error('Error  update course', error)
+      console.error('Error  update course', error);
     } finally {
-      setIsLoading(false)
-
+      setIsLoading(false);
     }
   };
 
@@ -149,7 +148,7 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
               accept="image/*"
               thumbnail="image"
               onChange={handleImageChange}
-              className="input-modal"
+              className={`input-modal dark:text-dark-grey-02 ring-1 ring-dark-grey-02 `}
             />
           </div>
         </div>

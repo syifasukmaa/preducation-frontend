@@ -62,10 +62,8 @@ export default function page() {
 
   const searchVideos = (video) => {
     const titleLower = title.toLowerCase();
-    console.log(titleLower);
 
     const isTitleMatch = video?.title.toLowerCase().includes(titleLower);
-    console.log(isTitleMatch);
     return isTitleMatch;
   };
 

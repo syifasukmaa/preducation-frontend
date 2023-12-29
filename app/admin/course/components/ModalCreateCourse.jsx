@@ -70,8 +70,6 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
       };
 
       const response = await createNewCourse(token, newCourseData);
-      console.log(response);
-      console.log(newCourseData);
 
       if (response.ok) {
         setShowModal(false);

@@ -105,7 +105,7 @@ export default function Page() {
                 <td className="w-32 px-4 py-3">Email</td>
                 <td className="px-4 py-3">Tanggal Daftar</td>
                 <td className="px-4 py-3">Role</td>
-                <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Terverifikasi</td>
+                <td className="px-4 py-3 pl-4 lg:pl-0 xl:pr-1">Terverifikasi</td>
                 <td className="py-3 pl-4 pr-4 md:pl-10">Aksi</td>
               </tr>
             </thead>
@@ -162,10 +162,10 @@ export default function Page() {
                     >
                       {user.role}
                     </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">
                       {user.isVerify ? ' ✅' : '❌'}
                     </td>
-                    <td className="grid w-full px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2 ">
+                    <td className="grid w-[85%] px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
                       <ActionButton styles={'bg-light-green hover:border-light-green py-2'}>Ubah</ActionButton>
                       <ActionButton
                         styles={'bg-alert-red hover:border-alert-red py-2'}
