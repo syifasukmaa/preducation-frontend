@@ -11,14 +11,13 @@ import { useUser } from '@/utils/swr'
 import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
 import { deleteUser } from '@/utils/fetch'
 import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
-import PaymentLoading from '@/components/loading/PaymentLoading'
+import UserLoading from '@/components/loading/UserLoading'
 import convert from '@/utils/convert'
 import ModalUpdateUser from './components/ModalUpdateUser'
 import ModalCreateUser from './components/ModalCreateUser'
 
-
 export default function Page() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('')
   const [showElements, setShowElements] = useState({
     showInput: false,
   })
@@ -31,32 +30,31 @@ export default function Page() {
   const search = searchParams.get('search') || ''
   const limit = searchParams.get('limit') || 7
 
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
-
-  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage);
+  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage)
 
   const handleCurrentPage = (newPage) => {
     if (newPage <= 0) {
-      return;
+      return
     }
     if (newPage > Math.ceil(totalData / limit)) {
-      return;
+      return
     }
-    router.push(`/admin/user?page=${newPage}`, { scroll: false });
-  };
+    router.push(`/admin/user?page=${newPage}`, { scroll: false })
+  }
 
   const handleSearch = (e) => {
-    setName(e.target.value);
+    setName(e.target.value)
     if (totalData) {
-      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false });
+      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false })
     }
     if (!e.target.value) {
-      router.push(`/admin/user`, { scroll: false });
-      setName('');
+      router.push(`/admin/user`, { scroll: false })
+      setName('')
     }
-  };
+  }
 
   const handleAddUser = () => {
     setShowModalAdd(true)
@@ -68,16 +66,16 @@ export default function Page() {
   }
 
   const handleDeleteUser = async (id) => {
-    const isConfirmed = await ConfirmDeleteAlert('Hapus User');
+    const isConfirmed = await ConfirmDeleteAlert('Hapus User')
 
     if (isConfirmed) {
-      const response = await deleteUser(token, id);
+      const response = await deleteUser(token, id)
       if (response.ok) {
-        mutate();
-        DeleteSuccessAlert('User');
+        mutate()
+        DeleteSuccessAlert('User')
       }
     }
-  };
+  }
 
   useEffect(() => {
     if (showModalAdd) {
@@ -87,7 +85,6 @@ export default function Page() {
       document.body.classList.remove('overflow-hidden')
     }
   }, [showModalAdd])
-
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -124,10 +121,7 @@ export default function Page() {
             <tbody className="text-gray-700  text-[10px]">
               {error ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -135,10 +129,7 @@ export default function Page() {
                 </tr>
               ) : users?.length <= 0 ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
+                  <td colSpan="7" className="py-8 text-center">
                     <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
                       <Image
                         src="/img/empty_3d.jpg"
@@ -173,7 +164,9 @@ export default function Page() {
                     >
                       {user.role}
                     </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">{user.isVerify ? ' ✅' : '❌'}</td>
+                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">
+                      {user.isVerify ? ' ✅' : '❌'}
+                    </td>
                     <td className="grid w-[85%] px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
@@ -191,12 +184,7 @@ export default function Page() {
                   </tr>
                 ))
               ) : (
-                [...Array(7)].map((_, index) => (
-                  <UserLoading
-                    key={index}
-                    testId={index}
-                  />
-                ))
+                [...Array(7)].map((_, index) => <UserLoading key={index} testId={index} />)
               )}
             </tbody>
           </table>
@@ -245,5 +233,5 @@ export default function Page() {
         />
       )}
     </div>
-  );
+  )
 }
