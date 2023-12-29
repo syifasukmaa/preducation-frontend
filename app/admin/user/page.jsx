@@ -184,7 +184,11 @@ export default function Page() {
                   </tr>
                 ))
               ) : (
-                [...Array(7)].map((_, index) => <UserLoading key={index} testId={index} />)
+                [...Array(7)].map((_, index) => (
+                  <>
+                    <UserLoading key={index} testId={index} />
+                  </>
+                ))
               )}
             </tbody>
           </table>
