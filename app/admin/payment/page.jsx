@@ -1,17 +1,16 @@
-'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import { useSession } from 'next-auth/react'
-import SearchButton from '@/components/button/SearchButton'
-import FilterButton from '@/components/button/FilterButton'
-import FilterPopup from '@/components/popup/FilterPopup'
-import SearchPopup from '@/components/popup/SearchPopup'
-import { usePayment } from '@/utils/swr'
-import PaymentLoading from '@/components/loading/PaymentLoading'
-import { LuRefreshCcw } from 'react-icons/lu'
-import convert from '@/utils/convert'
-import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import SearchButton from '@/components/button/SearchButton';
+import FilterButton from '@/components/button/FilterButton';
+import FilterPopup from '@/components/popup/FilterPopup';
+import SearchPopup from '@/components/popup/SearchPopup';
+import { usePayment } from '@/utils/swr';
+import PaymentLoading from '@/components/loading/PaymentLoading';
+import { LuRefreshCcw } from 'react-icons/lu';
+import convert from '@/utils/convert';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Page() {
   const [username, setUsername] = useState('');
@@ -38,19 +37,17 @@ export default function Page() {
     if (newPage > Math.ceil(totalData / limit)) {
       return;
     }
-    router.push(`/admin/payment?page=${newPage}`, { scroll: false })
-  }
-
+    router.push(`/admin/payment?page=${newPage}`, { scroll: false });
+  };
 
   const handleSearch = (e) => {
     setUsername(e.target.value);
     if (totalData) {
-      router.push(`/admin/payment/?search=${e.target.value}&filter=${filter}&limit=${totalData}`, { scroll: false })
+      router.push(`/admin/payment/?search=${e.target.value}&filter=${filter}&limit=${totalData}`, { scroll: false });
     }
     if (!e.target.value) {
-      router.push(`/admin/payment/?filter=${filter}`, { scroll: false })
-      setUsername('')
-
+      router.push(`/admin/payment/?filter=${filter}`, { scroll: false });
+      setUsername('');
     }
   };
 
@@ -61,7 +58,7 @@ export default function Page() {
       showFilter: false,
     });
     if (totalData) {
-      router.push(`/admin/payment/?search=${search}&filter=${filterOption}&limit=${totalData}`, { scroll: false })
+      router.push(`/admin/payment/?search=${search}&filter=${filterOption}&limit=${totalData}`, { scroll: false });
     }
   };
 
@@ -75,11 +72,10 @@ export default function Page() {
     setShowElements({
       ...showElements,
       filter: '',
-    })
-    router.push(`/admin/payment`, { scroll: false })
-    setUsername('')
-  }
-
+    });
+    router.push(`/admin/payment`, { scroll: false });
+    setUsername('');
+  };
 
   useEffect(() => {
     if (showElements.showFilter) {
@@ -161,9 +157,9 @@ export default function Page() {
                 <td className="w-32 px-4 py-3">Kategori</td>
                 <td className="px-4 py-3">Kelas Premium</td>
                 <td className="px-4 py-3">Status</td>
-                <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>
-                <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Tanggal Bayar</td>
-                <td className="py-3 pl-4 pr-4 md:pl-10">Total</td>
+                <td className="px-4 py-3 lg:pl-4">Metode Pembayaran</td>
+                <td className="px-4 py-3 lg:pl-0">Tanggal Bayar</td>
+                <td className="py-3 pl-4 pr-4 md:pl-8">Total</td>
               </tr>
             </thead>
 
@@ -242,7 +238,7 @@ export default function Page() {
           </table>
         </div>
         {payments?.length !== 0 && Number(limit) !== totalData && !filter ? (
-          <div className="flex items-center justify-between pl-4 mt-4">
+          <div className="flex items-center justify-end pl-4 mt-8">
             <button
               disabled={currentPage <= 1 ? true : false}
               onClick={() => handleCurrentPage(Number(currentPage) - 1)}
@@ -259,7 +255,7 @@ export default function Page() {
                 currentPage >= Math.ceil(totalData / limit)
                   ? 'bg-slate-700/80 cursor-not-allowed'
                   : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm `}
+              } text-white font-medium py-1 w-20 rounded text-sm ml-5`}
             >
               Next
             </button>

@@ -24,6 +24,7 @@ export default function ChapterLoading() {
       <td className="px-4 w-[40%]">
         <div className="flex flex-col justify-start h-full lg:flex-row">
           <p className="w-16 py-3 mt-2 mr-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-xl"></p>
+          <p className="w-16 py-3 mt-2 mr-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-xl"></p>
           <p className="w-16 py-3 mt-2 xl:mt-0 animate-pulse bg-neutral-03 rounded-xl"></p>
         </div>
       </td>

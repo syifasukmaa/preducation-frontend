@@ -1,90 +1,90 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import AddButton from '@/components/button/AddButton'
-import SearchButton from '@/components/button/SearchButton'
-import ActionButton from '@/components/button/ActionButton'
-import SearchPopup from '@/components/popup/SearchPopup'
-import { useUser } from '@/utils/swr'
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
-import { deleteUser } from '@/utils/fetch'
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
-import UserLoading from '@/components/loading/UserLoading'
-import convert from '@/utils/convert'
-import ModalUpdateUser from './components/ModalUpdateUser'
-import ModalCreateUser from './components/ModalCreateUser'
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import AddButton from '@/components/button/AddButton';
+import SearchButton from '@/components/button/SearchButton';
+import ActionButton from '@/components/button/ActionButton';
+import SearchPopup from '@/components/popup/SearchPopup';
+import { useUser } from '@/utils/swr';
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
+import { deleteUser } from '@/utils/fetch';
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
+import UserLoading from '@/components/loading/UserLoading';
+import convert from '@/utils/convert';
+import ModalUpdateUser from './components/ModalUpdateUser';
+import ModalCreateUser from './components/ModalCreateUser';
 
 export default function Page() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
   const [showElements, setShowElements] = useState({
     showInput: false,
-  })
-  const [showModalAdd, setShowModalAdd] = useState(false)
-  const [showModalUpdate, setShowModalUpdate] = useState(false)
-  const [updateId, setUpdateId] = useState('')
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const currentPage = searchParams.get('page') || 1
-  const search = searchParams.get('search') || ''
-  const limit = searchParams.get('limit') || 7
+  });
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [updateId, setUpdateId] = useState('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const currentPage = searchParams.get('page') || 1;
+  const search = searchParams.get('search') || '';
+  const limit = searchParams.get('limit') || 7;
 
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
 
-  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage)
+  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage);
 
   const handleCurrentPage = (newPage) => {
     if (newPage <= 0) {
-      return
+      return;
     }
     if (newPage > Math.ceil(totalData / limit)) {
-      return
+      return;
     }
-    router.push(`/admin/user?page=${newPage}`, { scroll: false })
-  }
+    router.push(`/admin/user?page=${newPage}`, { scroll: false });
+  };
 
   const handleSearch = (e) => {
-    setName(e.target.value)
+    setName(e.target.value);
     if (totalData) {
-      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false })
+      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false });
     }
     if (!e.target.value) {
-      router.push(`/admin/user`, { scroll: false })
-      setName('')
+      router.push(`/admin/user`, { scroll: false });
+      setName('');
     }
-  }
+  };
 
   const handleAddUser = () => {
-    setShowModalAdd(true)
-  }
+    setShowModalAdd(true);
+  };
 
   const handleUpdateUser = (id) => {
-    setShowModalUpdate(true)
-    setUpdateId(id)
-  }
+    setShowModalUpdate(true);
+    setUpdateId(id);
+  };
 
   const handleDeleteUser = async (id) => {
-    const isConfirmed = await ConfirmDeleteAlert('Hapus User')
+    const isConfirmed = await ConfirmDeleteAlert('Hapus User');
 
     if (isConfirmed) {
-      const response = await deleteUser(token, id)
+      const response = await deleteUser(token, id);
       if (response.ok) {
-        mutate()
-        DeleteSuccessAlert('User')
+        mutate();
+        DeleteSuccessAlert('User');
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (showModalAdd) {
-      document.body.classList.add('overflow-hidden')
+      document.body.classList.add('overflow-hidden');
     }
     return () => {
-      document.body.classList.remove('overflow-hidden')
-    }
-  }, [showModalAdd])
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showModalAdd]);
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -112,8 +112,8 @@ export default function Page() {
                 <td className="w-24 px-4 py-3">Nama</td>
                 <td className="w-32 px-4 py-3">Email</td>
                 <td className="px-4 py-3">Tanggal Daftar</td>
-                <td className="px-4 py-3">Role</td>
-                <td className="px-4 py-3 pl-4 lg:pl-0 xl:pr-1">Terverifikasi</td>
+                <td className="py-3 pl-8 pr-4">Role</td>
+                <td className="px-4 py-3 lg:pl-0 xl:pr-1">Terverifikasi</td>
                 <td className="py-3 pl-4 pr-4 md:pl-10">Aksi</td>
               </tr>
             </thead>
@@ -121,7 +121,10 @@ export default function Page() {
             <tbody className="text-gray-700  text-[10px]">
               {error ? (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center">
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -129,7 +132,10 @@ export default function Page() {
                 </tr>
               ) : users?.length <= 0 ? (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center">
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
                     <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
                       <Image
                         src="/img/empty_3d.jpg"
@@ -158,8 +164,8 @@ export default function Page() {
                       {convert.formatToDate(user.createdAt)}
                     </td>
                     <td
-                      className={`px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%] ${
-                        user.status === 'On Progress' ? 'text-alert-red' : 'text-alert-green'
+                      className={`pl-8 pr-4 py-4 text-xs font-bold w-[15%] ${
+                        user.role === 'user' ? 'text-gray-05 dark:text-dark-grey-02' : 'text-orange-05'
                       }`}
                     >
                       {user.role}
@@ -167,7 +173,7 @@ export default function Page() {
                     <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">
                       {user.isVerify ? ' ✅' : '❌'}
                     </td>
-                    <td className="grid w-[85%] px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
+                    <td className="grid w-[85%] px-4 md:ml-6 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
                       <ActionButton
                         styles={'bg-light-green hover:border-light-green py-2'}
                         onClick={() => handleUpdateUser(user._id)}
@@ -186,7 +192,10 @@ export default function Page() {
               ) : (
                 [...Array(7)].map((_, index) => (
                   <>
-                    <UserLoading key={index} testId={index} />
+                    <UserLoading
+                      key={index}
+                      testId={index}
+                    />
                   </>
                 ))
               )}
@@ -194,7 +203,7 @@ export default function Page() {
           </table>
         </div>
         {users?.length !== 0 && Number(limit) !== totalData ? (
-          <div className="flex items-center justify-between pl-4 mt-4">
+          <div className="flex items-center justify-end pl-4 mt-8">
             <button
               disabled={currentPage <= 1 ? true : false}
               onClick={() => handleCurrentPage(Number(currentPage) - 1)}
@@ -211,7 +220,7 @@ export default function Page() {
                 currentPage >= Math.ceil(totalData / limit)
                   ? 'bg-slate-700/80 cursor-not-allowed'
                   : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm `}
+              } text-white font-medium py-1 w-20 rounded text-sm ml-5 `}
             >
               Next
             </button>
@@ -237,5 +246,5 @@ export default function Page() {
         />
       )}
     </div>
-  )
+  );
 }

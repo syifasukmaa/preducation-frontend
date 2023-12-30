@@ -1,17 +1,17 @@
-'use client'
-import React from 'react'
-import { useSession } from 'next-auth/react'
-import { usePayment, useCategory } from '@/utils/swr'
-import PaymentLoading from '@/components/loading/PaymentLoading'
-import convert from '@/utils/convert'
-import Chart from './components/Chart'
+'use client';
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import { usePayment, useCategory } from '@/utils/swr';
+import PaymentLoading from '@/components/loading/PaymentLoading';
+import convert from '@/utils/convert';
+import Chart from './components/Chart';
 
 export default function Page() {
-  const { data: session } = useSession()
-  const token = session?.user?.accessToken
+  const { data: session } = useSession();
+  const token = session?.user?.accessToken;
 
-  const { payment: payments, isLoading, error } = usePayment(token, null, null, 5)
-  const { categories } = useCategory(token, true)
+  const { payment: payments, isLoading, error } = usePayment(token, null, null, 5);
+  const { categories } = useCategory(token, true);
 
   return (
     <div className={`md:px-12 mb-20 px-4`}>
@@ -27,8 +27,14 @@ export default function Page() {
         <p className="hidden md:block absolute transform text-sm text-orange-05 -rotate-90 scale-x-(-1) origin-bottom-left  inset-1/2 -translate-x-6 -translate-y-1/2">
           Pendapatan
         </p>
-        <Chart type={'user'} data={categories?.chartUser} />
-        <Chart type={'payment'} data={categories?.chartTransaction} />
+        <Chart
+          type={'user'}
+          data={categories?.chartUser}
+        />
+        <Chart
+          type={'payment'}
+          data={categories?.chartTransaction}
+        />
       </div>
 
       <div className="relative flex items-center justify-between mt-5 md:pt-2">
@@ -43,15 +49,18 @@ export default function Page() {
                 <td className="w-32 px-4 py-3">Kategori</td>
                 <td className="px-4 py-3">Kelas Premium</td>
                 <td className="px-4 py-3">Status</td>
-                <td className="px-4 py-3 lg:pl-4 lg:pr-0">Metode Pembayaran</td>
-                <td className="px-4 py-3 pl-4 lg:pl-0 lg:pr-1">Tanggal Bayar</td>
-                <td className="py-3 pl-4 pr-4 md:pl-10">Total</td>
+                <td className="px-4 py-3 lg:pl-4">Metode Pembayaran</td>
+                <td className="px-4 py-3 lg:pl-0">Tanggal Bayar</td>
+                <td className="py-3 pl-4 pr-4 md:pl-8">Total</td>
               </tr>
             </thead>
             <tbody className="text-gray-700 whitespace-nowrap text-[10px] ">
               {error ? (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center">
+                  <td
+                    colSpan="7"
+                    className="py-8 text-center"
+                  >
                     <div className="flex items-center justify-center">
                       <span>{`Error: ${error}`}</span>
                     </div>
@@ -88,12 +97,17 @@ export default function Page() {
                   </tr>
                 ))
               ) : (
-                [...Array(5)].map((_, index) => <PaymentLoading key={index} testId={index} />)
+                [...Array(5)].map((_, index) => (
+                  <PaymentLoading
+                    key={index}
+                    testId={index}
+                  />
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  )
+  );
 }
