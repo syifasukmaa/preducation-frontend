@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useRef } from 'react';
-import Dropdown from './Dropdown';
-import Input from './Input';
-import Modal from './Modal';
-import { updateCourse } from '@/utils/fetch';
-import { useCategory, useCourse } from '@/utils/swr';
-import successAlert from '@/components/alert/successAlert';
-import ToastSweet from '@/components/alert/ToastSweet';
+import React, { useEffect, useState, useRef } from 'react'
+import Dropdown from './Dropdown'
+import Input from './Input'
+import Modal from './Modal'
+import { updateCourse } from '@/utils/fetch'
+import { useCategory, useCourse } from '@/utils/swr'
+import successAlert from '@/components/alert/successAlert'
+import ToastSweet from '@/components/alert/ToastSweet'
 
 export default function ModalUpdateCourse({ onClose, token, courseId, mutate, setShowModal }) {
-  const [click, setClick] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [click, setClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState({
     category: '',
     level: '',
     tipeKelas: '',
-  });
+  })
   const [form, setForm] = useState({
     namaKelas: '',
     kodeKelas: '',
@@ -22,26 +22,27 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
     Materi: '',
     targetAudience: '',
     thumbnail: null,
-  });
+    totalRating: 0,
+  })
 
-  const modalRef = useRef(null);
-  const { course } = useCourse(token, courseId, null, null);
-  const { categories } = useCategory(token);
+  const modalRef = useRef(null)
+  const { course } = useCourse(token, courseId, null, null)
+  const { categories } = useCategory(token)
 
-  const options = categories?.map((category) => ({ label: category.name, value: category._id }));
+  const options = categories?.map((category) => ({ label: category.name, value: category._id }))
 
   const levelOptions = [
     { label: 'Level', value: 'Level' },
     { label: 'Beginner', value: 'Beginner' },
     { label: 'Intermediate', value: 'Intermediate' },
     { label: 'Advanced', value: 'Advanced' },
-  ];
+  ]
 
   const tipeKelasOptions = [
     { label: 'Tipe Kelas', value: 'tipekelas' },
     { label: 'FREE', value: 'FREE' },
     { label: 'PREMIUM', value: 'PREMIUM' },
-  ];
+  ]
 
   useEffect(() => {
     if (course) {
@@ -52,14 +53,15 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         harga: course.price,
         targetAudience: course.targetAudience,
         thumbnail: course.thumbnail,
-      });
+        totalRating: course.totalRating,
+      })
       setSelectedOptions({
         category: course.category._id,
         level: course.level,
         tipeKelas: course.typeClass,
-      });
+      })
     }
-  }, [course]);
+  }, [course])
 
   const isDisabled =
     form.namaKelas.trim() === '' ||
@@ -68,66 +70,69 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
     selectedOptions.tipeKelas === '' ||
     selectedOptions.level === '' ||
     form.harga === null ||
-    form.Materi.trim() === '';
+    form.Materi.trim() === '' ||
+    form.totalRating < 0 ||
+    form.totalRating > 5
 
   const handleSave = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault()
+    setIsLoading(true)
     try {
       if (isDisabled) {
-        ToastSweet();
-        return;
+        ToastSweet()
+        return
       }
 
-      const formData = new FormData();
-      formData.append('title', form.namaKelas);
-      formData.append('description', form.Materi);
-      formData.append('classCode', form.kodeKelas);
-      formData.append('category', selectedOptions.category);
-      formData.append('level', selectedOptions.level);
-      formData.append('typeClass', selectedOptions.tipeKelas);
-      formData.append('price', Number(form.harga));
-      formData.append('targetAudience', form.targetAudience);
-      formData.append('thumbnail', form.thumbnail);
+      const formData = new FormData()
+      formData.append('title', form.namaKelas)
+      formData.append('description', form.Materi)
+      formData.append('classCode', form.kodeKelas)
+      formData.append('category', selectedOptions.category)
+      formData.append('level', selectedOptions.level)
+      formData.append('typeClass', selectedOptions.tipeKelas)
+      formData.append('price', Number(form.harga))
+      formData.append('targetAudience', form.targetAudience)
+      formData.append('thumbnail', form.thumbnail)
+      formData.append('totalRating', form.totalRating)
 
-      const response = await updateCourse(token, courseId, formData);
+      const response = await updateCourse(token, courseId, formData)
 
       if (response.ok) {
-        setShowModal(false);
-        mutate();
-        successAlert('edit', 'Course');
+        setShowModal(false)
+        mutate()
+        successAlert('edit', 'Course')
       }
     } catch (error) {
-      console.error('Error  update course', error);
+      console.error('Error  update course', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleSelectChange = (event) => {
-    const { name, value } = event.target;
-    setSelectedOptions({ ...selectedOptions, [name]: value });
-  };
+    const { name, value } = event.target
+    setSelectedOptions({ ...selectedOptions, [name]: value })
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setForm((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleImageChange = (e) => {
-    const imageFile = e.target.files[0];
+    const imageFile = e.target.files[0]
     setForm((prevData) => ({
       ...prevData,
       thumbnail: imageFile,
-    }));
-  };
+    }))
+  }
 
   const handleSelectClick = (e) => {
-    setClick(true);
-  };
+    setClick(true)
+  }
 
   return (
     <Modal
@@ -190,11 +195,7 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
           }`}
         >
           {options?.map((option, index) => (
-            <option
-              key={index}
-              value={option.value}
-              className="text-[14px]"
-            >
+            <option key={index} value={option.value} className="text-[14px]">
               {option.label}
             </option>
           ))}
@@ -215,11 +216,7 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
           }`}
         >
           {tipeKelasOptions?.map((option, index) => (
-            <option
-              key={index}
-              value={option.value}
-              className="text-[14px]"
-            >
+            <option key={index} value={option.value} className="text-[14px]">
               {option.label}
             </option>
           ))}
@@ -236,11 +233,7 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
           }`}
         >
           {levelOptions?.map((option, index) => (
-            <option
-              key={index}
-              value={option.value}
-              className="text-[14px]"
-            >
+            <option key={index} value={option.value} className="text-[14px]">
               {option.label}
             </option>
           ))}
@@ -256,6 +249,17 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         required
       />
       <Input
+        type={'number'}
+        label="Rating"
+        name="totalRating"
+        placeholder="Isi antara 0 sapai 5"
+        value={form.totalRating}
+        min={0}
+        max={5}
+        onChange={handleInputChange}
+        required
+      />
+      <Input
         label="Materi"
         name="Materi"
         placeholder="Materi"
@@ -265,5 +269,5 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         required
       />
     </Modal>
-  );
+  )
 }
