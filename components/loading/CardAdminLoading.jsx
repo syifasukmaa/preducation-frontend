@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 export default function CardAdminLoading() {
   return (
     <>
       <div
         data-testid="first-loading-admin"
-        className={`w-full h-[95px] bg-neutral-03 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
+        className={`w-full h-[95px] bg-neutral-03 dark:bg-neutral-04 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
       >
         <div className="bg-gray-05 p-2 rounded-[10px] mr-4 h-12 w-12 animate-pulse"></div>
 
@@ -16,7 +16,7 @@ export default function CardAdminLoading() {
       </div>
       <div
         data-testid="second-loading-admin"
-        className={`w-full h-[95px] bg-neutral-03 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
+        className={`w-full h-[95px] bg-neutral-03 dark:bg-neutral-04 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
       >
         <div className="bg-gray-05 p-2 rounded-[10px] mr-4 h-12 w-12 animate-pulse"></div>
 
@@ -27,7 +27,7 @@ export default function CardAdminLoading() {
       </div>
       <div
         data-testid="third-loading-admin"
-        className={`w-full h-[95px] bg-neutral-03 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
+        className={`w-full h-[95px] bg-neutral-03 dark:bg-neutral-04 flex items-center py-5 pl-6 pr-6 rounded-[15px] animate-pulse`}
       >
         <div className="bg-gray-05 p-2 rounded-[10px] mr-4 h-12 w-12 animate-pulse"></div>
 
@@ -37,5 +37,5 @@ export default function CardAdminLoading() {
         </div>
       </div>
     </>
-  )
+  );
 }

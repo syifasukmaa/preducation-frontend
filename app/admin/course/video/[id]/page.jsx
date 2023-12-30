@@ -181,7 +181,7 @@ export default function page() {
                             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                           ></iframe>
                           <span className="mt-3 lg:flex">
-                            <p>Link Youtube:</p>
+                            <p>Link Youtube : </p>
                             <a
                               href={url}
                               target="_blank"

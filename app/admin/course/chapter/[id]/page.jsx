@@ -62,8 +62,8 @@ export default function Page() {
     if (isConfirmed) {
       const response = await deleteChapter(token, id);
       if (response.ok) {
-        mutate();
         DeleteSuccessAlert('Chapter');
+        mutate();
       }
     }
   };
