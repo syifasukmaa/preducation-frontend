@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 
-export default function Input({ type, label, name, placeholder, value, textarea, onChange, required }) {
+export default function Input({ type, label, name, placeholder, value, textarea, onChange, required, min, max }) {
   const [clicked, setClicked] = useState(false)
 
   const handleInputClick = () => {
@@ -9,10 +9,7 @@ export default function Input({ type, label, name, placeholder, value, textarea,
   }
   return (
     <div className="w-full mt-3">
-      <label
-        htmlFor={name}
-        className="label-modal dark:text-dark-grey-02"
-      >
+      <label htmlFor={name} className="label-modal dark:text-dark-grey-02">
         {label}
         {required && clicked && !value && <p className="text-red-500 ">Field Required</p>}
       </label>
@@ -40,6 +37,8 @@ export default function Input({ type, label, name, placeholder, value, textarea,
             id={name}
             value={value}
             onChange={onChange}
+            min={min}
+            max={max}
             onClick={handleInputClick}
             className={`input-modal dark:text-dark-grey-02 ${
               required && clicked && !value
