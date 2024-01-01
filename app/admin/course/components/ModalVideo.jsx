@@ -26,7 +26,7 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
         videoUrl: video.videoUrl,
       });
     }
-  }, [editMode, chapter]);
+  }, [editMode, chapter, Id]);
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -80,27 +80,27 @@ export default function ModalVideo({ onClose, editMode, token, Id, mutate, chapt
     >
       <Input
         type={'text'}
-        label="Nama Video"
-        name="namaVideo"
-        placeholder="Nama Video"
+        label='Nama Video'
+        name='namaVideo'
+        placeholder='Nama Video'
         value={formData.namaVideo}
         onChange={handleInputChange}
         required
       />
       <Input
         type={'number'}
-        label="Durasi"
-        name="durasi"
-        placeholder="Durasi"
+        label='Durasi'
+        name='durasi'
+        placeholder='Durasi'
         value={formData.durasi}
         onChange={handleInputChange}
         required
       />
       <Input
         type={'text'}
-        label="Video Url"
-        name="videoUrl"
-        placeholder="Video Url"
+        label='Video Url'
+        name='videoUrl'
+        placeholder='Video Url'
         value={formData.videoUrl}
         onChange={handleInputChange}
         required
