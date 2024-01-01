@@ -132,7 +132,7 @@ export default function Page() {
                   >
                     <div className='flex flex-col items-center justify-center md:items-start md:flex-row'>
                       <Image
-                        src='/img/empty_3d.jpg'
+                        src='/img/empty_3d.png'
                         width={80}
                         height={80}
                         alt='empty image'
