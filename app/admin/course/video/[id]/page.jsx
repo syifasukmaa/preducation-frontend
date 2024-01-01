@@ -15,7 +15,7 @@ import { deleteVideo } from '@/utils/fetch';
 import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
 import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
 
-export default function page() {
+export default function Page() {
   const params = useParams();
   const idChapter = params.id;
 
@@ -77,9 +77,9 @@ export default function page() {
   }, [showModal]);
   return (
     <div className={`md:px-12 px-4`}>
-      <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold dark:text-dark-grey-02">Kelola Video</p>
-        <div className="relative flex items-center">
+      <div className='relative flex items-center justify-between md:pt-2'>
+        <p className='text-xl font-bold dark:text-dark-grey-02'>Kelola Video</p>
+        <div className='relative flex items-center'>
           <AddButton onClick={() => handleAddVideo(idChapter)} />
 
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
@@ -93,20 +93,20 @@ export default function page() {
           )}
         </div>
       </div>
-      <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
-        <div className="overflow-y-auto">
-          <table className="min-w-full bg-white rounded-lg dark:bg-dark-backgroud">
-            <thead className="text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05">
-              <tr className="">
-                <th className="p-4 text-left">No</th>
-                <th className="p-4 text-left w-72">Nama Video</th>
-                <th className="p-4 text-left">Total Durasi</th>
-                <th className="p-4 text-left">Index</th>
-                <th className="px-4 py-3 text-left">Video</th>
-                <th className="px-4 py-3 text-left">Aksi</th>
+      <div className='mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6'>
+        <div className='overflow-y-auto'>
+          <table className='min-w-full bg-white rounded-lg dark:bg-dark-backgroud'>
+            <thead className='text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05'>
+              <tr className=''>
+                <th className='p-4 text-left'>No</th>
+                <th className='p-4 text-left w-72'>Nama Video</th>
+                <th className='p-4 text-left'>Total Durasi</th>
+                <th className='p-4 text-left'>Index</th>
+                <th className='px-4 py-3 text-left'>Video</th>
+                <th className='px-4 py-3 text-left'>Aksi</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700 text-[10px]">
+            <tbody className='text-gray-700 text-[10px]'>
               {isLoading ? (
                 <>
                   {[...Array(3)].map((_, index) => (
@@ -116,10 +116,10 @@ export default function page() {
               ) : error ? (
                 <tr>
                   <td
-                    colSpan="7"
-                    className="py-8 text-center"
+                    colSpan='7'
+                    className='py-8 text-center'
                   >
-                    <div className="flex items-center justify-center">
+                    <div className='flex items-center justify-center'>
                       <span>{`Error: ${error}`}</span>
                     </div>
                   </td>
@@ -127,24 +127,24 @@ export default function page() {
               ) : chapter && chapter.videos && chapter.videos.length <= 0 ? (
                 <tr>
                   <td
-                    colSpan="7"
-                    className="py-8 text-center"
+                    colSpan='7'
+                    className='py-8 text-center'
                   >
-                    <div className="flex flex-col items-center justify-center md:items-start md:flex-row">
+                    <div className='flex flex-col items-center justify-center md:items-start md:flex-row'>
                       <Image
-                        src="/img/empty_3d.jpg"
+                        src='/img/empty_3d.jpg'
                         width={80}
                         height={80}
-                        alt="empty image"
-                        className="w-[80px] h-[80px] mt-2"
-                        priority="true"
+                        alt='empty image'
+                        className='w-[80px] h-[80px] mt-2'
+                        priority='true'
                       />
-                      <div className="ml-4 md:text-start">
-                        <p className="mt-4 text-xl font-bold text-orange-05">Video masih kosong</p>
-                        <p className="mt-1 text-base dark:text-dark-grey-02">
+                      <div className='ml-4 md:text-start'>
+                        <p className='mt-4 text-xl font-bold text-orange-05'>Video masih kosong</p>
+                        <p className='mt-1 text-base dark:text-dark-grey-02'>
                           Cobalah untuk{' '}
                           <span
-                            className="text-blue-600 cursor-pointer hover:underline"
+                            className='text-blue-600 cursor-pointer hover:underline'
                             onClick={() => handleAddVideo(idChapter)}
                           >
                             menambahkan video
@@ -165,41 +165,41 @@ export default function page() {
                     return (
                       <tr
                         key={video._id}
-                        className=" border-y border-orange-04 dark:border-dark-grey-05"
+                        className=' border-y border-orange-04 dark:border-dark-grey-05'
                       >
-                        <td className="p-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02">{index + 1}</td>
-                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">{video.title}</td>
-                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">
+                        <td className='p-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02'>{index + 1}</td>
+                        <td className='p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02'>{video.title}</td>
+                        <td className='p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02'>
                           {video.duration} min
                         </td>
-                        <td className="p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02">{video.index}</td>
-                        <td className="px-4 py-3 text-xs font-bold text-gray-04 dark:text-dark-grey-02">
+                        <td className='p-4 text-xs font-bold text-gray-04 dark:text-dark-grey-02'>{video.index}</td>
+                        <td className='px-4 py-3 text-xs font-bold text-gray-04 dark:text-dark-grey-02'>
                           <iframe
-                            className="w-full h-full"
+                            className='w-full h-full'
                             src={`https://www.youtube.com/embed/${url}`}
-                            title="YouTube video player"
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            title='YouTube video player'
+                            allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
                           ></iframe>
-                          <span className="mt-3 lg:flex">
+                          <span className='mt-3 lg:flex'>
                             <p>Link Youtube : </p>
                             <a
                               href={url}
-                              target="_blank"
-                              className="no-underline text-orange-05 hover:text-dark-blue-05"
+                              target='_blank'
+                              className='no-underline text-orange-05 hover:text-dark-blue-05'
                             >
                               {video.videoUrl}
                             </a>
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-xs font-bold">
+                        <td className='px-4 py-3 text-xs font-bold'>
                           <button
-                            className="px-1 py-1 mb-2 mr-2 text-white rounded bg-light-green"
+                            className='px-1 py-1 mb-2 mr-2 text-white rounded bg-light-green'
                             onClick={() => handleEditVideo(video._id)}
                           >
                             <MdUpgrade size={20} />
                           </button>
                           <button
-                            className="px-1 py-1 mb-2 mr-2 text-white rounded bg-alert-red"
+                            className='px-1 py-1 mb-2 mr-2 text-white rounded bg-alert-red'
                             onClick={() => handleDeleteVideo(video._id)}
                           >
                             <MdDeleteOutline size={20} />
