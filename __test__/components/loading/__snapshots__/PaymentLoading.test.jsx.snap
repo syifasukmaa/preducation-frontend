@@ -13,7 +13,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
           class="px-4 w-[15%]"
         >
           <p
-            class="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+            class="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -23,7 +23,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="py-1 rounded-sm animate-pulse bg-neutral-03"
+              class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
           </div>
         </td>
@@ -31,14 +31,14 @@ exports[`Payment Loading renders loading skeleton 1`] = `
           class="px-4 w-[15%]"
         >
           <p
-            class="w-[60%] py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="w-[60%] py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
           class="px-4 w-[15%]"
         >
           <p
-            class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -48,7 +48,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 w-[50%]"
+              class="py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04 w-[50%]"
             />
           </div>
         </td>
@@ -59,15 +59,15 @@ exports[`Payment Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="w-3/4 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 lg:pl-0 lg:pr-1"
+              class="w-3/5 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04 lg:pl-0 lg:pr-1"
             />
           </div>
         </td>
         <td
-          class="px-2 w-[25%]"
+          class="pl-8 w-[10%]"
         >
           <p
-            class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm w-[100%] animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
       </tr>
@@ -82,7 +82,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
         class="px-4 w-[15%]"
       >
         <p
-          class="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+          class="w-20 py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -92,7 +92,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </div>
       </td>
@@ -100,14 +100,14 @@ exports[`Payment Loading renders loading skeleton 1`] = `
         class="px-4 w-[15%]"
       >
         <p
-          class="w-[60%] py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="w-[60%] py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
         class="px-4 w-[15%]"
       >
         <p
-          class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+          class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -117,7 +117,7 @@ exports[`Payment Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 w-[50%]"
+            class="py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04 w-[50%]"
           />
         </div>
       </td>
@@ -128,15 +128,15 @@ exports[`Payment Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="w-3/4 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 lg:pl-0 lg:pr-1"
+            class="w-3/5 py-1 pl-4 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04 lg:pl-0 lg:pr-1"
           />
         </div>
       </td>
       <td
-        class="px-2 w-[25%]"
+        class="pl-8 w-[10%]"
       >
         <p
-          class="py-1 rounded-sm w-[60%] animate-pulse bg-neutral-03"
+          class="py-1 rounded-sm w-[100%] animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
     </tr>

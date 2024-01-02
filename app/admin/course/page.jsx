@@ -1,22 +1,22 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SearchButton from '@/components/button/SearchButton'
 import FilterButton from '@/components/button/FilterButton'
-import FilterPopup from '@/components/popup/FilterPopup'
 import SearchPopup from '@/components/popup/SearchPopup'
 import AddButton from '@/components/button/AddButton'
-import ActionButton from '@/components/button/ActionButton'
-import Checkbox from './components/Checkbox'
 import CourseLoading from '@/components/loading/CourseLoading'
-import convert from '@/utils/convert'
 import { useCourse } from '@/utils/swr'
-import { deleteCourse } from '@/utils/fetch'
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
 import { useSession } from 'next-auth/react'
 import ModalCreateCourse from './components/ModalCreateCourse'
-import Image from 'next/image'
+import CourseBody from './components/CourseBody'
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
+import { deleteCourse } from '@/utils/fetch'
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
+import FilterCourse from './components/FilterCourse'
+import PaginationButton from '@/components/button/PaginationButton'
+import DataNotFound from '@/components/DataNotFound'
+import ErrorData from '@/components/ErrorData'
 
 export default function Page() {
   const [title, setTitle] = useState('')
@@ -24,7 +24,6 @@ export default function Page() {
     showFilter: false,
     showInput: false,
   })
-  const [editMode, setEditMode] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState({
     'Data Science': false,
@@ -44,14 +43,12 @@ export default function Page() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken
 
-  const overLay = useRef(null)
-
   const selectedCategoryKeys = Object.entries(selectedCategories)
     .filter(([key, value]) => value === true)
     .map(([key]) => key)
 
   const {
-    course: courses,
+    data: courses,
     totalData,
     isLoading,
     mutate,
@@ -59,20 +56,17 @@ export default function Page() {
   } = useCourse(null, null, selectedCategoryKeys, title, limit, currentPage)
 
   const handleCurrentPage = (newPage) => {
-    if (newPage <= 0) {
-      return
+    if (newPage > 0 && newPage <= Math.ceil(totalData / limit)) {
+      router.push(`/admin/course?page=${newPage}`, { scroll: false })
     }
-    if (newPage > Math.ceil(totalData / limit)) {
-      return
-    }
-    router.push(`/admin/course?page=${newPage}`, { scroll: false })
   }
   const handleSearch = (e) => {
-    setTitle(e.target.value)
+    const inputValue = e.target.value
+    setTitle(inputValue)
     if (totalData) {
-      router.push(`/admin/course/?search=${e.target.value}&filter=${filter}&limit=${totalData}`, { scroll: false })
+      router.push(`/admin/course/?search=${inputValue}&filter=${filter}&limit=${totalData}`, { scroll: false })
     }
-    if (!e.target.value) {
+    if (!inputValue) {
       router.push(`/admin/course/?filter=${filter}`, { scroll: false })
       setTitle('')
     }
@@ -82,14 +76,8 @@ export default function Page() {
     router.push(`/admin/course/${chapterId}`)
   }
 
-  const handleAddCourse = () => {
-    setEditMode(false)
-    setShowModal(true)
-  }
-
   const handleDeleteCourse = async (courseId) => {
     const isConfirmed = await ConfirmDeleteAlert('Delete Course')
-
     if (isConfirmed) {
       const response = await deleteCourse(token, courseId)
       if (response.ok) {
@@ -97,6 +85,10 @@ export default function Page() {
         DeleteSuccessAlert('Course')
       }
     }
+  }
+
+  const handleAddCourse = () => {
+    setShowModal(true)
   }
 
   const handleCheckboxChange = (label) => {
@@ -110,24 +102,6 @@ export default function Page() {
       })
     }
   }
-
-  const handleOutsideClick = (e) => {
-    if (!overLay.current.contains(e.target)) {
-      setShowElements({ showFilter: false })
-    }
-  }
-
-  useEffect(() => {
-    if (showElements.showFilter) {
-      document.addEventListener('mousedown', handleOutsideClick)
-    } else {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-  }, [showElements.showFilter])
 
   useEffect(() => {
     if (showModal) {
@@ -143,57 +117,26 @@ export default function Page() {
       <div className="relative flex items-center justify-between md:pt-2">
         <p className="text-xl font-bold dark:text-dark-grey-02">Kelola Kelas</p>
         <div className="relative flex items-center">
-          <AddButton onClick={() => handleAddCourse()} />
-
+          <AddButton onClick={handleAddCourse} />
           <FilterButton onClick={() => setShowElements({ ...showElements, showFilter: true })} />
-
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
-
-          {showElements.showInput && (
+          {showElements.showInput ? (
             <SearchPopup
               onClick={() => setShowElements({ ...showElements, showInput: false })}
               title={title}
               handleChange={handleSearch}
             />
-          )}
+          ) : null}
         </div>
 
-        {showElements.showFilter && (
-          <div className="absolute right-0 z-30 top-12" ref={overLay}>
-            <FilterPopup clickClose={() => setShowElements({ ...showElements, showFilter: false })}>
-              <Checkbox
-                label="Data Science"
-                checked={selectedCategories['Data Science']}
-                onChange={() => handleCheckboxChange('Data Science')}
-              />
-              <Checkbox
-                label="Web Development"
-                checked={selectedCategories['Web Development']}
-                onChange={() => handleCheckboxChange('Web Development')}
-              />
-              <Checkbox
-                label="Android Development"
-                checked={selectedCategories['Android Development']}
-                onChange={() => handleCheckboxChange('Android Development')}
-              />
-              <Checkbox
-                label="IOS Development"
-                checked={selectedCategories['IOS Development']}
-                onChange={() => handleCheckboxChange('IOS Development')}
-              />
-              <Checkbox
-                label="UI/UX Design"
-                checked={selectedCategories['UI/UX Design']}
-                onChange={() => handleCheckboxChange('UI/UX Design')}
-              />
-              <Checkbox
-                label="Product Management"
-                checked={selectedCategories['Product Management']}
-                onChange={() => handleCheckboxChange('Product Management')}
-              />
-            </FilterPopup>
-          </div>
-        )}
+        {showElements.showFilter ? (
+          <FilterCourse
+            handleCheckboxChange={handleCheckboxChange}
+            selectedCategories={selectedCategories}
+            setShowElements={setShowElements}
+            showElements={showElements}
+          />
+        ) : null}
       </div>
 
       <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
@@ -218,113 +161,40 @@ export default function Page() {
                   ))}
                 </>
               ) : error ? (
-                <tr>
-                  <td colSpan="7" className="py-8 text-center">
-                    <div className="flex items-center justify-center">
-                      <span>{`Error: ${error}`}</span>
-                    </div>
-                  </td>
-                </tr>
+                <ErrorData error={error} />
               ) : courses?.length <= 0 ? (
-                <tr>
-                  <td colSpan="7" className="py-8 text-center">
-                    <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
-                      <Image
-                        src="/img/empty_3d.jpg"
-                        width={80}
-                        height={80}
-                        alt="empty image"
-                        className="w-[80px] h-[80px] mt-2"
-                        priority="true"
-                      />
-                      <div className="ml-4 md:text-start">
-                        <p className="mt-4 text-xl font-bold text-orange-05">Data tidak ditemukan</p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                <DataNotFound />
               ) : courses ? (
                 courses.map((course, index) => (
-                  <tr key={course._id}>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02">
-                      {course.classCode}
-                    </td>
-                    <td className="py-3 px-4 text-xs font-bold text-gray-05 w-[10%] dark:text-dark-grey-02">
-                      {course.category.name}
-                    </td>
-                    <td className="py-3 px-4 text-xs font-bold text-gray-04 lg:w-[25%] whitespace-pre-wrap dark:text-dark-grey-02">
-                      {course.title}
-                    </td>
-                    <td
-                      className={`py-3 px-4 text-xs font-bold ${
-                        course.typeClass === 'PREMIUM' ? 'text-orange-05' : 'text-alert-green'
-                      }`}
-                    >
-                      {course.typeClass}
-                    </td>
-                    <td className="py-3 px-4 text-xs font-bold text-black dark:text-dark-grey-02 w-[12%]">
-                      {course.level}
-                    </td>
-                    <td className="px-4 py-3 text-xs font-bold text-black dark:text-dark-grey-02">
-                      {convert.formatToCurrency(course.price)}
-                    </td>
-                    <td className="grid px-4 py-3 text-xs font-bold xl:grid-cols-2">
-                      <ActionButton
-                        styles={'bg-light-green hover:border-light-green py-2'}
-                        onClick={() => goToCourseDetail(course._id)}
-                        testId={index}
-                      >
-                        Detail
-                      </ActionButton>
-                      <ActionButton
-                        styles={'bg-alert-red hover:border-alert-red py-2'}
-                        onClick={() => handleDeleteCourse(course._id)}
-                      >
-                        Hapus
-                      </ActionButton>
-                    </td>
-                  </tr>
+                  <CourseBody
+                    key={course._id}
+                    course={course}
+                    index={index}
+                    goToCourseDetail={goToCourseDetail}
+                    handleDeleteCourse={handleDeleteCourse}
+                  />
                 ))
               ) : null}
             </tbody>
           </table>
         </div>
         {courses?.length !== 0 && Number(limit) !== totalData && !filter ? (
-          <div className="flex items-center justify-between pl-4 mt-4">
-            <button
-              disabled={currentPage <= 1 ? true : false}
-              onClick={() => handleCurrentPage(Number(currentPage) - 1)}
-              className={`${
-                currentPage <= 1 ? 'bg-slate-700/80 cursor-not-allowed' : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm`}
-            >
-              Previous
-            </button>
-            <button
-              disabled={currentPage >= Math.ceil(totalData / limit) ? true : false}
-              onClick={() => handleCurrentPage(Number(currentPage) + 1)}
-              className={`${
-                currentPage >= Math.ceil(totalData / limit)
-                  ? 'bg-slate-700/80 cursor-not-allowed'
-                  : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm `}
-            >
-              Next
-            </button>
-          </div>
+          <PaginationButton
+            currentPage={currentPage}
+            handleCurrentPage={handleCurrentPage}
+            totalData={totalData}
+            limit={limit}
+          />
         ) : null}
       </div>
 
       {showModal && (
-        <div>
-          <ModalCreateCourse
-            onClose={() => setShowModal(false)}
-            editMode={editMode}
-            token={token}
-            mutate={mutate}
-            setShowModal={setShowModal}
-          />
-        </div>
+        <ModalCreateCourse
+          onClose={() => setShowModal(false)}
+          token={token}
+          mutate={mutate}
+          setShowModal={setShowModal}
+        />
       )}
     </div>
   )

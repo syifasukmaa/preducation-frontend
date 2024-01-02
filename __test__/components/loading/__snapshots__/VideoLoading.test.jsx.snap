@@ -12,7 +12,7 @@ exports[`Video Loading renders loading skeleton 1`] = `
           class="px-4 w-[5%]"
         >
           <p
-            class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -22,7 +22,7 @@ exports[`Video Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="py-1 rounded-sm animate-pulse bg-neutral-03"
+              class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
           </div>
         </td>
@@ -30,14 +30,14 @@ exports[`Video Loading renders loading skeleton 1`] = `
           class="px-4 w-[15%]"
         >
           <p
-            class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
           class="px-4 w-[10%]"
         >
           <p
-            class="w-1/4 py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="w-1/4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -47,10 +47,10 @@ exports[`Video Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="py-16 mt-5 rounded-sm animate-pulse bg-neutral-03"
+              class="py-16 mt-5 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
             <p
-              class="w-3/4 py-1 mt-1 rounded-sm animate-pulse bg-neutral-03"
+              class="w-3/4 py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
           </div>
         </td>
@@ -61,10 +61,10 @@ exports[`Video Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-start h-full lg:flex-row"
           >
             <p
-              class="w-8 py-4 mt-2 mr-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-8 py-4 mt-2 mr-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
             <p
-              class="w-8 py-4 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-8 py-4 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
           </div>
         </td>
@@ -79,7 +79,7 @@ exports[`Video Loading renders loading skeleton 1`] = `
         class="px-4 w-[5%]"
       >
         <p
-          class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+          class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -89,7 +89,7 @@ exports[`Video Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </div>
       </td>
@@ -97,14 +97,14 @@ exports[`Video Loading renders loading skeleton 1`] = `
         class="px-4 w-[15%]"
       >
         <p
-          class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
         class="px-4 w-[10%]"
       >
         <p
-          class="w-1/4 py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="w-1/4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -114,10 +114,10 @@ exports[`Video Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="py-16 mt-5 rounded-sm animate-pulse bg-neutral-03"
+            class="py-16 mt-5 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
           <p
-            class="w-3/4 py-1 mt-1 rounded-sm animate-pulse bg-neutral-03"
+            class="w-3/4 py-1 mt-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </div>
       </td>
@@ -128,10 +128,10 @@ exports[`Video Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-start h-full lg:flex-row"
         >
           <p
-            class="w-8 py-4 mt-2 mr-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-8 py-4 mt-2 mr-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
           <p
-            class="w-8 py-4 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-8 py-4 mt-2 rounded-md xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </div>
       </td>

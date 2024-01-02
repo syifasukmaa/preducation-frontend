@@ -24,4 +24,4 @@ const formatToDate = (date) => {
   return formattedDate
 }
 
-export default { formatToCurrency, formatToDate }
+export { formatToCurrency, formatToDate }

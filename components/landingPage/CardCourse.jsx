@@ -1,19 +1,28 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { useCourse } from '@/utils/swr'
 import { FaStar } from 'react-icons/fa6'
 import { IoTimeOutline } from 'react-icons/io5'
 import { motion } from 'framer-motion'
-import { galleryContainerVariant, galleryVariant, navVariants, slideIn } from '../../utils/motion'
+import { galleryContainerVariant, galleryVariant, slideIn } from '../../utils/motion'
+import { Link } from 'react-scroll'
 
-export default function CourseLandingPage() {
+export default function CardCourse({ courses }) {
   const [title, setTitle] = useState('')
-  const { course: courses } = useCourse(null, '', '', title)
+  const [filterCourses, setFilterCourses] = useState(courses)
+  const [triger, setTriger] = useState(false)
 
   const handleSearch = (e) => {
     e.preventDefault()
+    setTriger(true)
+    if (title.length === 0) {
+      setFilterCourses(courses)
+      setTriger(false)
+    }
+    const filteredCourse = courses.filter((course) => course.title.toLowerCase().includes(title.toLowerCase()))
+    setFilterCourses(filteredCourse)
   }
+
   return (
     <>
       <motion.form
@@ -59,11 +68,11 @@ export default function CourseLandingPage() {
 
         <motion.div
           variants={galleryContainerVariant}
-          initial="hidden"
+          initial={triger ? 'visible' : 'hidden'}
           whileInView="show"
           className="px-5 mb-[100px] mt-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
-          {courses?.map((course) => {
+          {filterCourses?.map((course) => {
             return (
               <div className="relative mx-auto" key={course._id}>
                 <motion.div
@@ -75,7 +84,7 @@ export default function CourseLandingPage() {
                       src={course.thumbnail}
                       width={263}
                       height={153}
-                      alt=""
+                      alt={course.title}
                       priority={true}
                       className="w-[263px] h-[153px] rounded-lg"
                     />
@@ -109,12 +118,14 @@ export default function CourseLandingPage() {
                     </div>
                   </div>
                 </motion.div>
-                <motion.button
+                <motion.span
                   variants={galleryVariant}
-                  className="relative font-bold hover:scale-95 bg-orange-05 py-4 px-16 top-[-60px]  md:top-[-55px] text-white rounded-[10px] z-30 md:left-14 left-20"
+                  className="relative cursor-pointer font-bold hover:scale-95 bg-orange-05 py-4 px-16 top-[-60px]  md:top-[-55px] text-white rounded-[10px] z-30 md:left-14 left-20"
                 >
-                  Daftar
-                </motion.button>
+                  <Link to="download" smooth>
+                    Daftar
+                  </Link>
+                </motion.span>
               </div>
             )
           })}
