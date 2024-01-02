@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { IoMenu, IoClose } from 'react-icons/io5'
@@ -106,8 +105,7 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="flex items-center gap-6">
-          <button className="text-white">Masuk</button>
-          <button className="bg-orange-05 text-white px-5 py-2 rounded-[10px] hover:scale-95">Daftar</button>
+          <button className="bg-orange-05 text-white px-5 py-2 rounded-[10px] hover:scale-95">Download</button>
           <div className="flex-col items-center justify-center hidden px-1 py-1 text-2xl rounded-lg dark:bg-orange-06 text-dark-grey-02 md:flex disp md:py-2 md:px-3 bg-orange-05 hover:scale-95">
             <DarkModeButton />
           </div>

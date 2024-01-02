@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Input from '../../course/components/Input'
-import Dropdown from '../../course/components/Dropdown'
-import Modal from '../../course/components/Modal'
 import { updateUser } from '@/utils/fetch'
 import { useUser } from '@/utils/swr'
 import successAlert from '@/components/alert/successAlert'
 import ToastSweet from '@/components/alert/ToastSweet'
 import Image from 'next/image'
+import 'react-toastify/dist/ReactToastify.css'
+import Modal from '@/components/Modal'
+import Input from '@/components/input-form/Input'
+import Dropdown from '@/components/input-form/Dropdown'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -80,9 +81,13 @@ export default function ModalUpdateUser({ onClose, token, userId, mutate, setSho
         setShowModal(false)
         mutate()
         successAlert('edit', 'User')
+      } else {
+        throw new Error('Terjadi Kesalahan')
       }
     } catch (error) {
-      console.error('Error  update User', error)
+      toast.error(error.message, {
+        position: 'top-right',
+      })
     } finally {
       setIsLoading(false)
     }
@@ -123,7 +128,7 @@ export default function ModalUpdateUser({ onClose, token, userId, mutate, setSho
     >
       <>
         <div className=" flex justify-between items-center  gap-3 w-full px-3 py-4 mt-4">
-          <div className="flex flex-col items-center justify-center w-full gap-3">
+          <div className=" flex flex-col items-center justify-center w-full gap-3">
             <label htmlFor="postFile" className="cursor-pointer">
               {image ? (
                 <Image
@@ -132,6 +137,7 @@ export default function ModalUpdateUser({ onClose, token, userId, mutate, setSho
                   width={1000}
                   height={1000}
                   className="object-cover w-16 h-16 rounded-full"
+                  priority
                 />
               ) : (
                 <Image
@@ -140,6 +146,7 @@ export default function ModalUpdateUser({ onClose, token, userId, mutate, setSho
                   width={1000}
                   height={1000}
                   className="object-cover rounded-full w-16 h-16"
+                  priority
                 />
               )}
             </label>
@@ -219,6 +226,7 @@ export default function ModalUpdateUser({ onClose, token, userId, mutate, setSho
           ))}
         </select>
       </Dropdown>
+      <ToastContainer />
     </Modal>
   )
 }

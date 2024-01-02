@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Dropdown from './Dropdown'
-import Input from './Input'
-import Modal from './Modal'
 import { updateCourse } from '@/utils/fetch'
 import { useCategory, useCourse } from '@/utils/swr'
 import successAlert from '@/components/alert/successAlert'
 import ToastSweet from '@/components/alert/ToastSweet'
+import Modal from '@/components/Modal'
+import Input from '@/components/input-form/Input'
+import Dropdown from '@/components/input-form/Dropdown'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ModalUpdateCourse({ onClose, token, courseId, mutate, setShowModal }) {
   const [click, setClick] = useState(false)
@@ -26,8 +28,8 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
   })
 
   const modalRef = useRef(null)
-  const { course } = useCourse(token, courseId, null, null)
-  const { categories } = useCategory(token)
+  const { data: course } = useCourse(token, courseId, null, null)
+  const { data: categories } = useCategory(token)
 
   const options = categories?.map((category) => ({ label: category.name, value: category._id }))
 
@@ -101,9 +103,13 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         setShowModal(false)
         mutate()
         successAlert('edit', 'Course')
+      } else {
+        throw new Error('Terjadi kesalahan')
       }
     } catch (error) {
-      console.error('Error  update course', error)
+      toast.error(error.message, {
+        position: 'top-right',
+      })
     } finally {
       setIsLoading(false)
     }
@@ -268,6 +274,7 @@ export default function ModalUpdateCourse({ onClose, token, courseId, mutate, se
         textarea
         required
       />
+      <ToastContainer />
     </Modal>
   )
 }

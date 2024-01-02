@@ -1,90 +1,96 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import AddButton from '@/components/button/AddButton';
-import SearchButton from '@/components/button/SearchButton';
-import ActionButton from '@/components/button/ActionButton';
-import SearchPopup from '@/components/popup/SearchPopup';
-import { useUser } from '@/utils/swr';
-import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert';
-import { deleteUser } from '@/utils/fetch';
-import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert';
-import UserLoading from '@/components/loading/UserLoading';
-import convert from '@/utils/convert';
-import ModalUpdateUser from './components/ModalUpdateUser';
-import ModalCreateUser from './components/ModalCreateUser';
+'use client'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import AddButton from '@/components/button/AddButton'
+import SearchButton from '@/components/button/SearchButton'
+import SearchPopup from '@/components/popup/SearchPopup'
+import { useUser } from '@/utils/swr'
+import ConfirmDeleteAlert from '@/components/alert/confirmDeleteAlert'
+import { deleteUser } from '@/utils/fetch'
+import DeleteSuccessAlert from '@/components/alert/DeleteSuccessAlert'
+import UserLoading from '@/components/loading/UserLoading'
+import ModalUpdateUser from './components/ModalUpdateUser'
+import ModalCreateUser from './components/ModalCreateUser'
+import ErrorData from '@/components/ErrorData'
+import PaginationButton from '@/components/button/PaginationButton'
+import DataNotFound from '@/components/DataNotFound'
+import UserList from './components/UserList'
 
 export default function Page() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('')
   const [showElements, setShowElements] = useState({
     showInput: false,
-  });
-  const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
-  const [updateId, setUpdateId] = useState('');
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const currentPage = searchParams.get('page') || 1;
-  const search = searchParams.get('search') || '';
-  const limit = searchParams.get('limit') || 7;
+  })
+  const [showModalAdd, setShowModalAdd] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [updateId, setUpdateId] = useState('')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPage = searchParams.get('page') || 1
+  const search = searchParams.get('search') || ''
+  const limit = searchParams.get('limit') || 7
 
-  const { data: session } = useSession();
-  const token = session?.user?.accessToken;
+  const { data: session } = useSession()
+  const token = session?.user?.accessToken
 
-  const { data: users, mutate, error, totalData } = useUser(token, null, search, limit, currentPage);
+  const { data: users, mutate, isLoading, error, totalData } = useUser(token, null, search, limit, currentPage)
 
   const handleCurrentPage = (newPage) => {
-    if (newPage <= 0) {
-      return;
+    if (newPage > 0 && newPage <= Math.ceil(totalData / limit)) {
+      router.push(`/admin/user?page=${newPage}`, { scroll: false })
     }
-    if (newPage > Math.ceil(totalData / limit)) {
-      return;
-    }
-    router.push(`/admin/user?page=${newPage}`, { scroll: false });
-  };
+  }
 
   const handleSearch = (e) => {
-    setName(e.target.value);
+    const inputValue = e.target.value
+    setName(inputValue)
     if (totalData) {
-      router.push(`/admin/user/?search=${e.target.value}&limit=${totalData}`, { scroll: false });
+      router.push(`/admin/user/?search=${inputValue}&limit=${totalData}`, { scroll: false })
     }
-    if (!e.target.value) {
-      router.push(`/admin/user`, { scroll: false });
-      setName('');
+    if (!inputValue) {
+      router.push(`/admin/user`, { scroll: false })
+      setName('')
     }
-  };
+  }
 
   const handleAddUser = () => {
-    setShowModalAdd(true);
-  };
+    setShowModalAdd(true)
+  }
 
   const handleUpdateUser = (id) => {
-    setShowModalUpdate(true);
-    setUpdateId(id);
-  };
+    setShowModalUpdate(true)
+    setUpdateId(id)
+  }
 
   const handleDeleteUser = async (id) => {
-    const isConfirmed = await ConfirmDeleteAlert('Hapus User');
-
+    const isConfirmed = await ConfirmDeleteAlert('Hapus User')
     if (isConfirmed) {
-      const response = await deleteUser(token, id);
+      const response = await deleteUser(token, id)
       if (response.ok) {
-        mutate();
-        DeleteSuccessAlert('User');
+        mutate()
+        DeleteSuccessAlert('User')
       }
     }
-  };
+  }
 
   useEffect(() => {
     if (showModalAdd) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add('overflow-hidden')
     }
     return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [showModalAdd]);
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [showModalAdd])
+
+  useEffect(() => {
+    if (showModalAdd || showModalUpdate) {
+      document.body.classList.add('overflow-hidden')
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [showModalAdd, showModalUpdate])
 
   return (
     <div className={`md:px-12 px-4`}>
@@ -93,7 +99,6 @@ export default function Page() {
         <div className="relative flex items-center">
           <AddButton onClick={handleAddUser} />
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
-
           {showElements.showInput && (
             <SearchPopup
               onClick={() => setShowElements({ ...showElements, showInput: false })}
@@ -119,112 +124,36 @@ export default function Page() {
             </thead>
 
             <tbody className="text-gray-700  text-[10px]">
-              {error ? (
-                <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
-                    <div className="flex items-center justify-center">
-                      <span>{`Error: ${error}`}</span>
-                    </div>
-                  </td>
-                </tr>
-              ) : users?.length <= 0 ? (
-                <tr>
-                  <td
-                    colSpan="7"
-                    className="py-8 text-center"
-                  >
-                    <div className="flex flex-col items-center justify-center min-h-[200px] md:items-start md:flex-row">
-                      <Image
-                        src="/img/empty_3d.jpg"
-                        width={80}
-                        height={80}
-                        alt="empty image"
-                        className="w-[80px] h-[80px] mt-2"
-                        priority="true"
-                      />
-                      <div className="ml-4 md:text-start">
-                        <p className="mt-4 text-xl font-bold text-orange-05">Data tidak ditemukan</p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ) : users ? (
-                users.map((user) => (
-                  <tr key={user._id}>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
-                      {user.name}
-                    </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
-                      {user.email}
-                    </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[15%]">
-                      {convert.formatToDate(user.createdAt)}
-                    </td>
-                    <td
-                      className={`pl-8 pr-4 py-4 text-xs font-bold w-[15%] ${
-                        user.role === 'user' ? 'text-gray-05 dark:text-dark-grey-02' : 'text-orange-05'
-                      }`}
-                    >
-                      {user.role}
-                    </td>
-                    <td className="px-4 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 w-[10%]">
-                      {user.isVerify ? ' ✅' : '❌'}
-                    </td>
-                    <td className="grid w-[85%] px-4 md:ml-6 py-4 text-xs font-bold text-gray-05 dark:text-dark-grey-02 xl:grid-cols-2">
-                      <ActionButton
-                        styles={'bg-light-green hover:border-light-green py-2'}
-                        onClick={() => handleUpdateUser(user._id)}
-                      >
-                        Ubah
-                      </ActionButton>
-                      <ActionButton
-                        styles={'bg-alert-red hover:border-alert-red py-2'}
-                        onClick={() => handleDeleteUser(user._id)}
-                      >
-                        Hapus
-                      </ActionButton>
-                    </td>
-                  </tr>
-                ))
-              ) : (
+              {isLoading ? (
                 [...Array(7)].map((_, index) => (
                   <>
-                    <UserLoading
-                      key={index}
-                      testId={index}
-                    />
+                    <UserLoading key={index} testId={index} />
                   </>
                 ))
-              )}
+              ) : error ? (
+                <ErrorData error={error} />
+              ) : users?.length <= 0 ? (
+                <DataNotFound />
+              ) : users ? (
+                users.map((user) => (
+                  <UserList
+                    key={user._id}
+                    handleDeleteUser={handleDeleteUser}
+                    handleUpdateUser={handleUpdateUser}
+                    user={user}
+                  />
+                ))
+              ) : null}
             </tbody>
           </table>
         </div>
         {users?.length !== 0 && Number(limit) !== totalData ? (
-          <div className="flex items-center justify-end pl-4 mt-8">
-            <button
-              disabled={currentPage <= 1 ? true : false}
-              onClick={() => handleCurrentPage(Number(currentPage) - 1)}
-              className={`${
-                currentPage <= 1 ? 'bg-slate-700/80 cursor-not-allowed' : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm`}
-            >
-              Previous
-            </button>
-            <button
-              disabled={currentPage >= Math.ceil(totalData / limit) ? true : false}
-              onClick={() => handleCurrentPage(Number(currentPage) + 1)}
-              className={`${
-                currentPage >= Math.ceil(totalData / limit)
-                  ? 'bg-slate-700/80 cursor-not-allowed'
-                  : 'bg-primary-dark-blue hover:bg-orange-05'
-              } text-white font-medium py-1 w-20 rounded text-sm ml-5 `}
-            >
-              Next
-            </button>
-          </div>
+          <PaginationButton
+            currentPage={currentPage}
+            handleCurrentPage={handleCurrentPage}
+            limit={limit}
+            totalData={totalData}
+          />
         ) : null}
       </div>
 
@@ -246,5 +175,5 @@ export default function Page() {
         />
       )}
     </div>
-  );
+  )
 }

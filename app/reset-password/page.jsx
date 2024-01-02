@@ -66,7 +66,6 @@ const ResetPass = () => {
           <div className="mt-2 block lg:mb-4">
             <br />
             <label htmlFor="passInput">Masukkan Password Baru</label>
-
             <br />
             <div className="relative">
               <input

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-export default function UserLoading() {
+export default function UserLoading({ testId }) {
   return (
-    <tr className="my-10">
+    <tr key={testId} className="my-10">
       <td className="w-12 px-4">
         <p className="py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"></p>
       </td>
@@ -25,5 +25,5 @@ export default function UserLoading() {
         </div>
       </td>
     </tr>
-  );
+  )
 }

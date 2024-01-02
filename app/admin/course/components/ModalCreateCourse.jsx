@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react'
-import Dropdown from './Dropdown'
-import Input from './Input'
-import Modal from './Modal'
+import React, { useState, useRef } from 'react'
 import { createNewCourse } from '@/utils/fetch'
 import { useCategory } from '@/utils/swr'
 import successAlert from '@/components/alert/successAlert'
 import ToastSweet from '@/components/alert/ToastSweet'
+import Dropdown from '@/components/input-form/Dropdown'
+import Modal from '@/components/Modal'
+import Input from '@/components/input-form/Input'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ModalCreateCourse({ onClose, token, mutate, setShowModal }) {
-  const [click, setClick] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [click, setClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState({
     category: '',
     level: '',
@@ -22,9 +24,9 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     Materi: '',
     targetAudience: '',
     thumbnail: null,
-  });
-  const modalRef = useRef(null);
-  const { categories } = useCategory(token);
+  })
+  const modalRef = useRef(null)
+  const { data: categories } = useCategory(token)
 
   const options = categories?.map((category) => ({ label: category.name, value: category._id }))
 
@@ -39,7 +41,7 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     { label: 'Tipe Kelas', value: 'tipekelas' },
     { label: 'FREE', value: 'FREE' },
     { label: 'PREMIUM', value: 'PREMIUM' },
-  ];
+  ]
   const isDisabled =
     form.namaKelas.trim() === '' ||
     selectedOptions.category === '' ||
@@ -47,15 +49,15 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
     selectedOptions.tipeKelas === '' ||
     selectedOptions.level === '' ||
     form.harga === null ||
-    form.Materi.trim() === '';
+    form.Materi.trim() === ''
 
   const handleSave = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault()
+    setIsLoading(true)
     try {
       if (isDisabled) {
-        ToastSweet();
-        return;
+        ToastSweet()
+        return
       }
 
       const newCourseData = {
@@ -69,16 +71,19 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         price: selectedOptions.tipeKelas === 'FREE' ? '0' : form.harga,
       }
 
-
-      const response = await createNewCourse(token, newCourseData);
+      const response = await createNewCourse(token, newCourseData)
 
       if (response.ok) {
         setShowModal(false)
         mutate()
         successAlert('membuat', 'Course')
+      } else {
+        throw new Error('Terjadi kesalahan')
       }
     } catch (error) {
-      console.error('Error creating or update course', error);
+      toast.error(error.message, {
+        position: 'top-right',
+      })
     } finally {
       setIsLoading(false)
     }
@@ -100,7 +105,7 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
 
   const handleSelectClick = (e) => {
     setClick(true)
-  };
+  }
   return (
     <Modal
       title={'Tambah Kelas'}
@@ -201,6 +206,7 @@ export default function ModalCreateCourse({ onClose, token, mutate, setShowModal
         textarea
         required
       />
+      <ToastContainer />
     </Modal>
   )
 }

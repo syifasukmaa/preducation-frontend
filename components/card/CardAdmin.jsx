@@ -16,7 +16,7 @@ export default function CardAdmin() {
   const pathName = usePathname()
 
   const urlShould = pathName === `/admin/course/${id}`
-  const { categories, isLoading, error } = useCategory(token, true)
+  const { data: categories, error } = useCategory(token, true)
 
   return (
     <div

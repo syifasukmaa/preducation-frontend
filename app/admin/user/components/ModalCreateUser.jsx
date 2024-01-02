@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
 import { createUser } from '@/utils/fetch'
 import successAlert from '@/components/alert/successAlert'
-import Input from '../../course/components/Input'
-import Dropdown from '../../course/components/Dropdown'
-import Modal from '../../course/components/Modal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Modal from '@/components/Modal'
+import Input from '@/components/input-form/Input'
+import Dropdown from '@/components/input-form/Dropdown'
 
 export default function ModalCreateUser({ onClose, token, mutate, setShowModal }) {
   const [click, setClick] = useState(false)
@@ -44,23 +44,28 @@ export default function ModalCreateUser({ onClose, token, mutate, setShowModal }
         setShowModal(false)
         mutate()
         successAlert('membuat', 'User')
-      } else if (data.message === 'Minimum password 8 characters') {
-        toast.error('Minimal password adalah 8 karakter', {
-          position: 'top-right',
-        })
-      } else if (data.message === 'Email address already registered') {
-        toast.error('Email sudah terdaftar', {
-          position: 'top-right',
-        })
-      } else if (data.message === 'Mobile phone already registered') {
-        toast.error('No HP sudah terdaftar', {
-          position: 'top-right',
-        })
+      } else {
+        handleErrorResponse(data.message)
       }
     } catch (error) {
-      console.error('Error creating or update course', error)
+      toast.error(error.message, {
+        position: 'top-right',
+      })
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleErrorResponse = (errorMessage) => {
+    switch (errorMessage) {
+      case 'Minimum password 8 characters':
+        throw new Error('Minimal password adalah 8 karakter')
+      case 'Email address already registered':
+        throw new Error('Email sudah terdaftar')
+      case 'Mobile phone already registered':
+        throw new Error('No HP sudah terdaftar')
+      default:
+        throw new Error('Terjadi Kesalahan')
     }
   }
 

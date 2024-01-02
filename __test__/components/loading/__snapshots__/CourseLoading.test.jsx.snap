@@ -12,7 +12,7 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="w-12 px-4"
         >
           <p
-            class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -22,10 +22,10 @@ exports[`Course Loading renders loading skeleton 1`] = `
             class="flex flex-col justify-between h-full"
           >
             <p
-              class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
+              class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
             <p
-              class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
+              class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 dark:bg-neutral-04 rounded-sm"
             />
           </div>
         </td>
@@ -33,28 +33,28 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="px-4 w-72"
         >
           <p
-            class="py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
           class="w-12 px-4"
         >
           <p
-            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
           class="w-16 px-4"
         >
           <p
-            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
           class="w-16 px-4"
         >
           <p
-            class="py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </td>
         <td
@@ -64,10 +64,10 @@ exports[`Course Loading renders loading skeleton 1`] = `
             class="flex flex-col h-full lg:flex-row"
           >
             <p
-              class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
             <p
-              class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
+              class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
             />
           </div>
         </td>
@@ -82,7 +82,7 @@ exports[`Course Loading renders loading skeleton 1`] = `
         class="w-12 px-4"
       >
         <p
-          class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03"
+          class="py-1 my-4 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -92,10 +92,10 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="flex flex-col justify-between h-full"
         >
           <p
-            class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03"
+            class="w-1/2 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
           <p
-            class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 rounded-sm"
+            class="py-1 mt-[3px] w-3/4 animate-pulse bg-neutral-03 dark:bg-neutral-04 rounded-sm"
           />
         </div>
       </td>
@@ -103,28 +103,28 @@ exports[`Course Loading renders loading skeleton 1`] = `
         class="px-4 w-72"
       >
         <p
-          class="py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
         class="w-12 px-4"
       >
         <p
-          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
         class="w-16 px-4"
       >
         <p
-          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="px-4 py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
         class="w-16 px-4"
       >
         <p
-          class="py-1 rounded-sm animate-pulse bg-neutral-03"
+          class="py-1 rounded-sm animate-pulse bg-neutral-03 dark:bg-neutral-04"
         />
       </td>
       <td
@@ -134,10 +134,10 @@ exports[`Course Loading renders loading skeleton 1`] = `
           class="flex flex-col h-full lg:flex-row"
         >
           <p
-            class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-20 py-4 mt-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
           <p
-            class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03"
+            class="w-20 py-4 mt-2 ml-2 rounded-lg xl:mt-0 animate-pulse bg-neutral-03 dark:bg-neutral-04"
           />
         </div>
       </td>

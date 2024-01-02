@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { PiEye } from 'react-icons/pi'
@@ -37,16 +36,22 @@ const LoginPage = () => {
         router.push('/admin/dashboard')
         setIsLoading(false)
       } else {
-        toast.error('Username atau password salah', {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-        setIsLoading(false)
+        let messageError
+        if (response.error == 'Wrong password or username') {
+          messageError = 'Username atau password salah'
+        } else if (response.error == "You don't have permission to login as admin") {
+          messageError = 'Akses terlarang, role anda bukan admin'
+        } else {
+          messageError = 'Internal Server Error'
+        }
+        throw new Error(messageError)
       }
     } catch (error) {
-      setIsLoading(false)
-      toast.error('Internal Server Error', {
+      toast.error(error.message, {
         position: toast.POSITION.TOP_RIGHT,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
   return (
@@ -54,11 +59,9 @@ const LoginPage = () => {
       <div className="bg-primary-dark-blue p-8 lg:p-16 lg:w-1/3 flex items-center justify-center">
         <Image src="/img/iconPreducation.png" alt="logo" width={150} height={150} className="mx-auto" priority />
       </div>
-
       <div className="p-8 lg:p-16 lg:w-2/3 flex items-center justify-center">
         <div className="w-full lg:w-2/3">
           <h1 className="font-bold text-xl text-orange-05 mb-8 lg:mb-12 text-center">Login</h1>
-
           <div className="lg:mb-3">
             <label htmlFor="idAdmin">ID Admin</label>
             <br />
@@ -75,8 +78,6 @@ const LoginPage = () => {
               required
             />
           </div>
-
-          {/* PASSWORD */}
           <div className="block lg:mb-3">
             <label htmlFor="passInputAdmin">Password</label>
             <p className="float-right">
@@ -106,7 +107,6 @@ const LoginPage = () => {
             </div>
           </div>
           <br />
-
           <button
             disabled={isLoading || idAdmin.length === 0 || password.length === 0 ? true : false}
             onClick={handleSubmit}

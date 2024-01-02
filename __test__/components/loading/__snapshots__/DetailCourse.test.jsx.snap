@@ -6,56 +6,56 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl border-slate-900 lg:flex animate-pulse"
+        class="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl dark:bg-dark-backgroud border-slate-900 lg:flex animate-pulse"
       >
         <div
           class="flex order-1 mb-4 mr-4 text-sm lg:px-0 lg:order-2 lg:flex-col lg:mb-0 lg:ml-4"
         >
           <div
-            class="w-24 h-10 bg-gray-300 rounded-md"
+            class="w-24 h-10 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-24 h-10 ml-2 bg-gray-300 rounded-md lg:mt-2 lg:ml-0"
+            class="w-24 h-10 ml-2 bg-gray-300 rounded-md dark:bg-neutral-04 lg:mt-2 lg:ml-0"
           />
         </div>
         <div
-          class="items-center justify-between bg-white rounded-lg md:flex animate-pulse"
+          class="items-center justify-between bg-white rounded-lg dark:bg-dark-backgroud md:flex animate-pulse"
         >
           <div
-            class="w-[280px] h-[150px] md:w-[350px] md:h-[200px] lg:w-[300px] lg:h-[180px] rounded-lg bg-gray-300 mx-auto md:mx-0 flex-auto"
+            class="w-[280px] h-[150px] md:w-[350px] md:h-[200px] lg:w-[300px] lg:h-[180px] rounded-lg bg-gray-300 dark:bg-neutral-04 mx-auto md:mx-0 flex-auto"
           />
           <div
             class="flex flex-col flex-1 px-2 my-4 md:ml-4"
           >
             <div
-              class="w-[100px] h-8 bg-gray-300 rounded mb-2"
+              class="w-[100px] h-8 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
             />
             <div
-              class="w-[150px] h-6 bg-gray-300 rounded mb-2"
+              class="w-[150px] h-6 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
             />
             <div
-              class="w-[250px] h-8 bg-gray-300 rounded mb-2"
+              class="w-[250px] h-8 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
             />
             <div
-              class="w-[100px] h-4 bg-gray-300 rounded"
+              class="w-[100px] h-4 bg-gray-300 dark:bg-neutral-04 rounded"
             />
             <div
               class="flex mt-2"
             >
               <div
-                class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+                class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
               />
               <div
-                class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+                class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
               />
               <div
-                class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+                class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
               />
               <div
-                class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+                class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
               />
               <div
-                class="w-4 h-4 bg-gray-300 rounded-full"
+                class="w-4 h-4 bg-gray-300 rounded-full dark:bg-neutral-04"
               />
             </div>
           </div>
@@ -69,22 +69,22 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
         >
           <div>
             <div
-              class="w-48 h-8 mb-4 bg-gray-300 rounded-md"
+              class="w-48 h-8 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
             <div
-              class="w-full h-32 mb-8 bg-gray-300 rounded-md"
+              class="w-full h-32 mb-8 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
             <div
-              class="w-48 h-8 mb-4 bg-gray-300 rounded-md"
+              class="w-48 h-8 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
             <div
-              class="w-1/2 h-5 bg-gray-300 rounded-md"
+              class="w-1/2 h-5 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
             <div
-              class="w-3/4 h-5 mt-1 bg-gray-300 rounded-md"
+              class="w-3/4 h-5 mt-1 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
             <div
-              class="w-3/5 h-5 mt-1 bg-gray-300 rounded-md"
+              class="w-3/5 h-5 mt-1 bg-gray-300 rounded-md dark:bg-neutral-04"
             />
           </div>
         </div>
@@ -92,19 +92,19 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
           class="xl:px-[75px] py-6 lg:py-10 border border-black rounded-lg shadow-lg w-full px-[90px] md:w-1/2 md:px-[35px] lg:w-[25%] lg:h-3/5 mt-8 lg:mt-0"
         >
           <div
-            class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+            class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+            class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+            class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+            class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-32 h-6 bg-gray-300 rounded-md"
+            class="w-32 h-6 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
         </div>
       </div>
@@ -112,56 +112,56 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
   </body>,
   "container": <div>
     <div
-      class="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl border-slate-900 lg:flex animate-pulse"
+      class="items-center justify-between p-4 mt-4 bg-white border rounded-lg shadow-xl dark:bg-dark-backgroud border-slate-900 lg:flex animate-pulse"
     >
       <div
         class="flex order-1 mb-4 mr-4 text-sm lg:px-0 lg:order-2 lg:flex-col lg:mb-0 lg:ml-4"
       >
         <div
-          class="w-24 h-10 bg-gray-300 rounded-md"
+          class="w-24 h-10 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
         <div
-          class="w-24 h-10 ml-2 bg-gray-300 rounded-md lg:mt-2 lg:ml-0"
+          class="w-24 h-10 ml-2 bg-gray-300 rounded-md dark:bg-neutral-04 lg:mt-2 lg:ml-0"
         />
       </div>
       <div
-        class="items-center justify-between bg-white rounded-lg md:flex animate-pulse"
+        class="items-center justify-between bg-white rounded-lg dark:bg-dark-backgroud md:flex animate-pulse"
       >
         <div
-          class="w-[280px] h-[150px] md:w-[350px] md:h-[200px] lg:w-[300px] lg:h-[180px] rounded-lg bg-gray-300 mx-auto md:mx-0 flex-auto"
+          class="w-[280px] h-[150px] md:w-[350px] md:h-[200px] lg:w-[300px] lg:h-[180px] rounded-lg bg-gray-300 dark:bg-neutral-04 mx-auto md:mx-0 flex-auto"
         />
         <div
           class="flex flex-col flex-1 px-2 my-4 md:ml-4"
         >
           <div
-            class="w-[100px] h-8 bg-gray-300 rounded mb-2"
+            class="w-[100px] h-8 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
           />
           <div
-            class="w-[150px] h-6 bg-gray-300 rounded mb-2"
+            class="w-[150px] h-6 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
           />
           <div
-            class="w-[250px] h-8 bg-gray-300 rounded mb-2"
+            class="w-[250px] h-8 bg-gray-300 dark:bg-neutral-04 rounded mb-2"
           />
           <div
-            class="w-[100px] h-4 bg-gray-300 rounded"
+            class="w-[100px] h-4 bg-gray-300 dark:bg-neutral-04 rounded"
           />
           <div
             class="flex mt-2"
           >
             <div
-              class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+              class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
             />
             <div
-              class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+              class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
             />
             <div
-              class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+              class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
             />
             <div
-              class="w-4 h-4 mr-1 bg-gray-300 rounded-full"
+              class="w-4 h-4 mr-1 bg-gray-300 rounded-full dark:bg-neutral-04"
             />
             <div
-              class="w-4 h-4 bg-gray-300 rounded-full"
+              class="w-4 h-4 bg-gray-300 rounded-full dark:bg-neutral-04"
             />
           </div>
         </div>
@@ -175,22 +175,22 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
       >
         <div>
           <div
-            class="w-48 h-8 mb-4 bg-gray-300 rounded-md"
+            class="w-48 h-8 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-full h-32 mb-8 bg-gray-300 rounded-md"
+            class="w-full h-32 mb-8 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-48 h-8 mb-4 bg-gray-300 rounded-md"
+            class="w-48 h-8 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-1/2 h-5 bg-gray-300 rounded-md"
+            class="w-1/2 h-5 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-3/4 h-5 mt-1 bg-gray-300 rounded-md"
+            class="w-3/4 h-5 mt-1 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
           <div
-            class="w-3/5 h-5 mt-1 bg-gray-300 rounded-md"
+            class="w-3/5 h-5 mt-1 bg-gray-300 rounded-md dark:bg-neutral-04"
           />
         </div>
       </div>
@@ -198,19 +198,19 @@ exports[`Detail Course Loading renders loading skeleton 1`] = `
         class="xl:px-[75px] py-6 lg:py-10 border border-black rounded-lg shadow-lg w-full px-[90px] md:w-1/2 md:px-[35px] lg:w-[25%] lg:h-3/5 mt-8 lg:mt-0"
       >
         <div
-          class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+          class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
         <div
-          class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+          class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
         <div
-          class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+          class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
         <div
-          class="w-32 h-6 mb-4 bg-gray-300 rounded-md"
+          class="w-32 h-6 mb-4 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
         <div
-          class="w-32 h-6 bg-gray-300 rounded-md"
+          class="w-32 h-6 bg-gray-300 rounded-md dark:bg-neutral-04"
         />
       </div>
     </div>

@@ -1,8 +1,9 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { navVariants, slideIn } from '../../utils/motion'
+import { slideIn } from '../../utils/motion'
 
 const Footer = () => {
   return (
