@@ -16,6 +16,9 @@ import ErrorData from '@/components/ErrorData'
 import PaginationButton from '@/components/button/PaginationButton'
 import DataNotFound from '@/components/DataNotFound'
 import UserList from './components/UserList'
+import NotifModal from './components/NotifModal'
+import ActionButton from '@/components/button/ActionButton'
+import NotifButton from '@/components/button/NotifButton'
 
 export default function Page() {
   const [name, setName] = useState('')
@@ -24,6 +27,7 @@ export default function Page() {
   })
   const [showModalAdd, setShowModalAdd] = useState(false)
   const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [showModalNotif, setShowModalNotif] = useState(false)
   const [updateId, setUpdateId] = useState('')
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -63,6 +67,10 @@ export default function Page() {
     setUpdateId(id)
   }
 
+  const handleShowNotifModal = () => {
+    setShowModalNotif(true)
+  }
+
   const handleDeleteUser = async (id) => {
     const isConfirmed = await ConfirmDeleteAlert('Hapus User')
     if (isConfirmed) {
@@ -84,19 +92,20 @@ export default function Page() {
   }, [showModalAdd])
 
   useEffect(() => {
-    if (showModalAdd || showModalUpdate) {
+    if (showModalAdd || showModalUpdate || showModalNotif) {
       document.body.classList.add('overflow-hidden')
     }
     return () => {
       document.body.classList.remove('overflow-hidden')
     }
-  }, [showModalAdd, showModalUpdate])
+  }, [showModalAdd, showModalUpdate, showModalNotif])
 
   return (
     <div className={`md:px-12 px-4`}>
       <div className="relative flex items-center justify-between md:pt-2">
         <p className="text-xl font-bold dark:text-dark-grey-02">User</p>
         <div className="relative flex items-center">
+          <NotifButton handleShowModal={handleShowNotifModal} />
           <AddButton onClick={handleAddUser} />
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
           {showElements.showInput && (
@@ -140,6 +149,7 @@ export default function Page() {
                     key={user._id}
                     handleDeleteUser={handleDeleteUser}
                     handleUpdateUser={handleUpdateUser}
+                    handleShowNotifModal={handleShowNotifModal}
                     user={user}
                   />
                 ))
@@ -157,7 +167,7 @@ export default function Page() {
         ) : null}
       </div>
 
-      {showModalUpdate && (
+      {showModalUpdate ? (
         <ModalUpdateUser
           onClose={() => setShowModalUpdate(false)}
           token={token}
@@ -165,15 +175,24 @@ export default function Page() {
           userId={updateId}
           setShowModal={setShowModalUpdate}
         />
-      )}
-      {showModalAdd && (
+      ) : null}
+      {showModalAdd ? (
         <ModalCreateUser
           onClose={() => setShowModalAdd(false)}
           token={token}
           mutate={mutate}
           setShowModal={setShowModalAdd}
         />
-      )}
+      ) : null}
+
+      {showModalNotif ? (
+        <NotifModal
+          handleShowNotifModal={handleShowNotifModal}
+          onClose={() => setShowModalNotif(false)}
+          token={token}
+          setShowModal={setShowModalNotif}
+        />
+      ) : null}
     </div>
   )
 }

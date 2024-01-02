@@ -180,3 +180,16 @@ export const getAllCourse = async () => {
   const data = await response.json()
   return data
 }
+
+export const createNotif = async (token, notifData) => {
+  const response = await fetch(`${BASE_URL}/notifications`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(notifData),
+  })
+
+  return response
+}
