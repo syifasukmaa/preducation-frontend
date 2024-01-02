@@ -1,13 +1,13 @@
-import BackButton from '@/components/button/BackButton';
-import CardAdmin from '@/components/card/CardAdmin';
-import Navbar from '@/components/navbar/Navbar';
-import Sidenavbar from '@/components/sidebar/Sidebar';
-import React from 'react';
+import BackButton from '@/components/button/BackButton'
+import CardAdmin from '@/components/card/CardAdmin'
+import Navbar from '@/components/navbar/Navbar'
+import Sidenavbar from '@/components/sidebar/Sidebar'
+import React from 'react'
 
 export const metadata = {
-  title: 'Preducation | Admin',
+  title: 'Preducation | Kelola User',
   description: 'Preducation online course',
-};
+}
 
 export default function Layout({ children }) {
   return (
@@ -20,5 +20,5 @@ export default function Layout({ children }) {
         {children}
       </main>
     </div>
-  );
+  )
 }

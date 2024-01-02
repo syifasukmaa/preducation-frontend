@@ -1,9 +1,7 @@
-import CardAdmin from '@/components/card/CardAdmin'
-import Navbar from '@/components/navbar/Navbar'
 import React from 'react'
 
 export const metadata = {
-  title: 'Preducation | Dashboard',
+  title: 'Preducation | Kelola Transaksi',
   description: 'Preducation online course',
 }
 

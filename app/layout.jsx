@@ -1,27 +1,21 @@
-import { Montserrat } from 'next/font/google';
-import './globals.css';
-import NextAuthProvider from './Provider';
+import { Montserrat } from 'next/font/google'
+import './globals.css'
+import NextAuthProvider from './Provider'
 
-const monserrat = Montserrat({ subsets: ['latin'] });
+const monserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Preducation',
-  description: 'Preducation online course',
+  description: 'Preducation online course | Selamat datang',
   icons: { apple: '/img/iconPreducation.png', icon: '/img/iconPreducation.png' },
-};
+}
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      id="theme"
-    >
-      <body
-        className={`${monserrat.className} no-scrollbar dark:bg-dark-backgroud`}
-        suppressHydrationWarning={true}
-      >
+    <html lang="en" id="theme">
+      <body className={`${monserrat.className} no-scrollbar dark:bg-dark-backgroud`} suppressHydrationWarning={true}>
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
-  );
+  )
 }
