@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Preducation
 
-## Getting Started
+We created an Preducation website display that contains a landing page and admin page
 
-First, run the development server:
+## Demo Locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+http://localhost:{PORT}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+example :
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  http://localhost:{PORT}/landingpage
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech Stack and Tools
 
-## Learn More
+NEXT JS, Tailwindcss, NEXT Auth JS, SWR, Frammer Motion, Railway, Github
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Clone the project
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+  git clone https://github.com/LMS-Binar-C6/frontend
+```
 
-## Deploy on Vercel
+Go to the project directory
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+  cd frontend
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Install dependencies
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`API_URL`
+
+`NEXTAUTH_SECRET`
+
+`NEXTAUTH_URL`
+
+## Run Locally
+
+Start the server
+
+```bash
+  npm run start
+```
+
+Development
+
+```bash
+  npm run dev
+```
+
+## Testing
+
+Run for testing
+
+```bash
+ npm run test
+```
+
+## Routes Reference
+
+#### Landing Page
+
+```
+  http://localhost:${PORT}/landingpage
+```
+
+#### Login Admin
+
+```
+  http://localhost:${PORT}/login
+```
+
+#### Dashboard
+
+```
+  http://localhost:${PORT}/admin/dashboard
+```
+
+#### User Management
+
+```
+  http://localhost:${PORT}/admin/user
+```
+
+#### Course Management
+
+##### Course Page
+
+```
+  http://localhost:${PORT}/admin/course
+```
+
+##### Chapter Page
+
+```
+  http://localhost:${PORT}/admin/chapter/${idCourse}
+```
+
+##### Video Page
+
+```
+  http://localhost:${PORT}/admin/video/${idChapter}
+```
+
+#### Payment Management
+
+```
+  http://localhost:${PORT}/admin/payment
+```
+
+## 🚀 About Us
+
+We are students MSIB 5 Binar Academy and full stack developer...
