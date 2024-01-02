@@ -82,9 +82,9 @@ export default function Page() {
 
   return (
     <div className={`md:px-12 px-4`}>
-      <div className="relative flex items-center justify-between md:pt-2">
-        <p className="text-xl font-bold dark:text-dark-grey-02">Kelola Chapter</p>
-        <div className="relative flex items-center">
+      <div className='relative flex items-center justify-between md:pt-2'>
+        <p className='text-xl font-bold dark:text-dark-grey-02'>Kelola Chapter</p>
+        <div className='relative flex items-center'>
           <AddButton onClick={() => handleAddChapter(idCourse)} />
           <SearchButton onClick={() => setShowElements({ ...showElements, showInput: true })} />
           {showElements.showInput ? (
@@ -95,22 +95,23 @@ export default function Page() {
             />
           ) : null}
         </div>
+
       </div>
 
-      <div className="mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6">
-        <div className="overflow-y-auto">
-          <table className="min-w-full bg-white rounded-lg dark:bg-dark-backgroud">
-            <thead className="text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05">
-              <tr className="text-left">
-                <th className="px-4 py-3">No</th>
-                <th className="px-4 py-3 w-72">Nama Chapter</th>
-                <th className="px-4 py-3">Total Durasi</th>
-                <th className="px-4 py-3">Link Video</th>
-                <th className="px-4 py-3">Aksi</th>
+      <div className='mt-4 mb-24 overflow-x-auto lg:mb-32 md:mt-6'>
+        <div className='overflow-y-auto'>
+          <table className='min-w-full bg-white rounded-lg dark:bg-dark-backgroud'>
+            <thead className='text-sm font-semibold bg-orange-04 dark:bg-dark-grey-04 dark:text-dark-grey-05 text-neutral-05'>
+              <tr className='text-left'>
+                <th className='px-4 py-3'>No</th>
+                <th className='px-4 py-3 w-72'>Nama Chapter</th>
+                <th className='px-4 py-3'>Total Durasi</th>
+                <th className='px-4 py-3'>Link Video</th>
+                <th className='px-4 py-3'>Aksi</th>
               </tr>
             </thead>
 
-            <tbody className="text-gray-700  text-[10px]">
+            <tbody className='text-gray-700  text-[10px]'>
               {isLoading ? (
                 <>
                   {[...Array(8)].map((_, index) => (
@@ -124,19 +125,19 @@ export default function Page() {
                   <td colSpan="7" className="py-8 text-center">
                     <div className="flex flex-col items-center justify-center md:items-start md:flex-row">
                       <Image
-                        src="/img/empty_3d.jpg"
+                        src='/img/empty_3d.png'
                         width={80}
                         height={80}
-                        alt="empty image"
-                        className="w-[80px] h-[80px] mt-2"
-                        priority="true"
+                        alt='empty image'
+                        className='w-[80px] h-[80px] mt-2'
+                        priority='true'
                       />
-                      <div className="ml-4 md:text-start">
-                        <p className="mt-4 text-xl font-bold text-orange-05">Chapter masih kosong</p>
-                        <p className="mt-1 text-base dark:text-dark-grey-02">
+                      <div className='ml-4 md:text-start'>
+                        <p className='mt-4 text-xl font-bold text-orange-05'>Chapter masih kosong</p>
+                        <p className='mt-1 text-base dark:text-dark-grey-02'>
                           Cobalah untuk{' '}
                           <span
-                            className="text-blue-600 cursor-pointer hover:underline"
+                            className='text-blue-600 cursor-pointer hover:underline'
                             onClick={() => handleAddChapter(idCourse)}
                           >
                             menambahkan chapter
