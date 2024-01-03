@@ -119,7 +119,13 @@ const NavBar = () => {
           </ul>
         </div>
         <div className='flex items-center gap-6'>
-          <button className='bg-orange-05 text-white px-5 py-2 rounded-[10px] hover:scale-95'>Download</button>
+          <a
+            className='bg-orange-05 text-white px-5 py-2 rounded-[10px] hover:scale-95'
+            href='https://drive.google.com/file/d/1RFhv-nI7x74oNpBPk6Hhag0j6Wb27yRk/view?usp=sharing'
+            target='_blank'
+          >
+            Download
+          </a>
           <div className='flex-col items-center justify-center hidden px-1 py-1 text-2xl rounded-lg dark:bg-orange-06 text-dark-grey-02 md:flex disp md:py-2 md:px-3 bg-orange-05 hover:scale-95'>
             <DarkModeButton />
           </div>
